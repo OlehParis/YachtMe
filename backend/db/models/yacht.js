@@ -51,13 +51,29 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: { type: DataTypes.STRING, allowNull: false },
       price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           min: 1,
         },
       },
+    
+    length: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 1,
+        max: 300,
+      },
     },
+    year: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 1940,
+        max: 3000,
+      },
+    },
+  },
     {
       sequelize,
       modelName: "Yacht",
