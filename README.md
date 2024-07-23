@@ -11,6 +11,12 @@ This web application is built using Express and Render. It provides a platform f
 - **Update:** Users can update the details of existing yachts.
 - **Delete:** Users can remove yachts from the platform.
 
+### Full CRUD Operations on Bookings
+- **Create:** Users can book yachts for specified dates.
+- **Read:** Users can view booking details.
+- **Update:** Users can modify existing bookings.
+- **Delete:** Users can cancel bookings.
+
 ### Post a Yacht
 Users can post information about new yachts available for charter.
 
@@ -35,6 +41,41 @@ Users can manually set the booking status of a yacht to indicate whether it is b
 ## **Installation**
 
 ### Clone the Repository
+using HTTPS:
+
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/OlehParis/YachtMe.git
+```
+
+## Install Dependencies
+
+```bash
+cd backend && npm i && cd .. 
+```
+
+```bash
+cd frontend && npm i && cd ..
+```
+## Set Up Environment Variables
+Create a .env file in the root directory and add the following variables:
+
+```bash
+PORT=your_port_number
+DATABASE_URL=your_database_url
+API_KEY=your_google_maps_api_key
+DB_FILE=db/dev.db
+JWT_SECRET=your_jwt_secret
+SCHEMA=your_db_schema
+```
+## Run the Application
+from the root directory 
+
+```bash
+cd backend && npm start && cd ../frontend && npm run dev
+```
+
+## Database 
+to reset database run script:
+```bash
+npm run dbReset
 ```
