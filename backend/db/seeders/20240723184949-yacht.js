@@ -28,11 +28,10 @@ module.exports = {
         },
         {
           ownerId: "2",
-          address: "",
+          address: "La pier 2",
           city: "Monaco",
           state: "Monaco",
           country: "France",
-          
           name: "WavesKing",
           description: "Stylish Yacht with 2 cautes and room for 2 crew members   ",
           price: "343",
