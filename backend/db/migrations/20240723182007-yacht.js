@@ -49,17 +49,47 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      price: {
+      price4: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        
+      },
+      price6: {
+        type: Sequelize.INTEGER,
+        
+      },
+      price8: {
+        type: Sequelize.INTEGER,
+       
       },
       length: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      builder:{
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      guests:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
      
+      cabins:{
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      speed:{
+        type: Sequelize.INTEGER,
+        allowNull: true,
+
+      },
+      bathrooms:{
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       year: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

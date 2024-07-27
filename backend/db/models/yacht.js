@@ -50,9 +50,23 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       description: { type: DataTypes.STRING, allowNull: false },
-      price: {
+      price4: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        
+        validate: {
+          min: 1,
+        },
+      },
+      price6: {
+        type: DataTypes.INTEGER,
+        
+        validate: {
+          min: 1,
+        },
+      },
+      price8: {
+        type: DataTypes.INTEGER,
+        
         validate: {
           min: 1,
         },
@@ -71,6 +85,39 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 1940,
         max: 3000,
+      },
+    },
+    builder: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+      validate: {
+        len: [1, 150]
+      },
+    },
+    guests: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 1,
+        max: 300,
+      },
+    },
+    cabins: {
+      type: DataTypes.INTEGER,
+      
+    },
+    speed: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 1,
+        max: 500,
+      },
+    },
+    bathrooms: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0,
+        max: 20,
       },
     },
   },

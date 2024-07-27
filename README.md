@@ -20,6 +20,12 @@ This web application is built using Express and Render. It provides a platform f
 - **Update:** Users can modify existing bookings.
 - **Delete:** Users can cancel bookings.
 
+### Partial CRUD on Reviews
+
+- **Create:** Create Review: Users can post reviews after booking a yacht.
+- **Read:** View Review: Users can view Reviews and star ratings.
+- **Delete:** Delete Review: Users can delete a review that belongs to them.
+
 ### Post a Yacht
 
 Users can post information about new yachts available for charter.

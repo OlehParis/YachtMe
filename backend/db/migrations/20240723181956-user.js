@@ -24,19 +24,31 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        username: {
-          type: Sequelize.STRING(30),
-          allowNull: false,
-          unique: true,
-        },
+      
         email: {
           type: Sequelize.STRING(256),
           allowNull: false,
           unique: true,
         },
         image: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        credit: {
+          type: Sequelize.INTEGER, 
+          allowNull: true,
+        },
+        phoneNumber:{
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        referralCode:{
           type: Sequelize.STRING(256),
-         
+          allowNull: true,
+        },
+        ReferralId:{
+          type: Sequelize.INTEGER,
+          allowNull: true,
         },
         hashedPassword: {
           type: Sequelize.STRING.BINARY,

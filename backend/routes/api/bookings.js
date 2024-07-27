@@ -52,8 +52,8 @@ router.get("/current", requireAuth, async (req, res, next) => {
         previewImage: previewImage,
       },
       userId: booking.userId,
-      startDate: formatDate(booking.startDate),
-      endDate: formatDate(booking.endDate),
+      startDateTime: formatDate(booking.startDateTime),
+      endDateTime: formatDate(booking.endDateTime),
       createdAt: formatWithTime(booking.createdAt),
       updatedAt: formatWithTime(booking.updatedAt),
     };
@@ -80,8 +80,8 @@ router.delete("/:bookingId", requireAuth, async (req, res, next) => {
     });
   }
 
-  const bs = allBooking[0].startDate.getTime();
-  const be = allBooking[0].endDate.getTime();
+  const bs = allBooking[0].startDateTime.getTime();
+  const be = allBooking[0].endDateTime.getTime();
   const curTime = new Date().getTime();
   //  console.log(curTime > bs && curTime < be)
   if (curTime > bs && curTime < be) {
@@ -108,25 +108,25 @@ router.delete("/:bookingId", requireAuth, async (req, res, next) => {
   }
 });
 const validateBooking = [
-  check("startDate")
+  check("startDateTime")
     .exists({ checkFalsy: true })
-    .withMessage("startDate is required")
+    .withMessage("startDateTime is required")
     .isISO8601()
-    .withMessage("startDate must be a valid date")
+    .withMessage("startDateTime must be a valid date")
     .custom((value, { req }) => {
       if (new Date(value) < new Date()) {
-        throw new Error("startDate cannot be in the past");
+        throw new Error("startDateTime cannot be in the past");
       }
       return true;
     }),
-  check("endDate")
+  check("endDateTime")
     .exists({ checkFalsy: true })
-    .withMessage("endDate is required")
+    .withMessage("endDateTime is required")
     .isISO8601()
-    .withMessage("endDate must be a valid date")
+    .withMessage("endDateTime must be a valid date")
     .custom((value, { req }) => {
-      if (new Date(value) <= new Date(req.body.startDate)) {
-        throw new Error("endDate cannot be on or before start date");
+      if (new Date(value) <= new Date(req.body.startDateTime)) {
+        throw new Error("endDateTime cannot be on or before start date");
       }
       return true;
     }),
@@ -141,7 +141,7 @@ router.put(
   validateBooking,
   async (req, res, next) => {
     const curUserId = req.user.id;
-    const { startDate, endDate } = req.body;
+    const { startDateTime, endDateTime } = req.body;
     const { bookingId } = req.params;
     const bookingById = await Booking.findAll({
       where: { id: bookingId },
@@ -157,10 +157,10 @@ router.put(
       });
     }
 
-    const bs = new Date(bookingById[0].startDate).getTime();
-    const be = new Date(bookingById[0].endDate).getTime();
-    const s = new Date(startDate).getTime();
-    const e = new Date(endDate).getTime();
+    const bs = new Date(bookingById[0].startDateTime).getTime();
+    const be = new Date(bookingById[0].endDateTime).getTime();
+    const s = new Date(startDateTime).getTime();
+    const e = new Date(endDateTime).getTime();
     const curTime = new Date().getTime();
 
     if (curTime > be) {
@@ -183,16 +183,16 @@ router.put(
     let hasConflict = false;
 
     for (let booking of otherBookings) {
-      const oS = new Date(booking.startDate).getTime();
-      const oE = new Date(booking.endDate).getTime();
+      const oS = new Date(booking.startDateTime).getTime();
+      const oE = new Date(booking.endDateTime).getTime();
 
       if ((s <= oE && e > oS) || (oS <= e && oE > s)) {
         hasConflict = true;
         if ((s >= oS && s <= oE) || (s < oS && e > oE)) {
-          conflicts.startDate = "Start date conflicts with an existing booking";
+          conflicts.startDateTime = "Start date conflicts with an existing booking";
         }
         if ((e >= oS && e <= oE) || (e > oE && s < oS)) {
-          conflicts.endDate = "End date conflicts with an existing booking";
+          conflicts.endDateTime = "End date conflicts with an existing booking";
         }
       }
     }
@@ -205,8 +205,8 @@ router.put(
     }
     if (curUserId === bookingById[0].userId) {
       const editBooking = await bookingById[0].update({
-        startDate: startDate,
-        endDate: endDate,
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
         createdAt: bookingById[0].createdAt,
         updatedAt: bookingById[0].updatedAt,
       });
@@ -214,8 +214,8 @@ router.put(
         id: editBooking.id,
         yachtId: editBooking.yachtId,
         userId: editBooking.userId,
-        startDate: formatDate(editBooking.startDate),
-        endDate: formatDate(editBooking.endDate),
+        startDateTime: formatDate(editBooking.startDateTime),
+        endDateTime: formatDate(editBooking.endDateTime),
         createdAt: formatWithTime(editBooking.createdAt),
         updatedAt: formatWithTime(editBooking.updatedAt),
       };
