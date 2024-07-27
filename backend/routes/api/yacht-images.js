@@ -9,7 +9,6 @@ const {
   Yacht,
   User,
   Review,
-  ReviewImage,
   YachtImage,
 } = require("../../db/models");
 
