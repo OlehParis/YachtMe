@@ -58,10 +58,10 @@ function ProfileButton({ user }) {
             {/* <li>{user.username}</li> */}
             <li>{user.email}</li>
             <hr />
-           <li> <Link  className='linkManageSpot' to="/spots/current">Manage Spots</Link></li>
+           <li> <Link  className='linkManageYacht' to="/spots/current">Manage Yachts</Link></li>
        
-           <li> <Link  className='linkManageSpot' to="/reviews/current">Manage Reviews</Link></li>
-           <li> <Link  className='linkManageSpot' to="/bookings/manage">Your Bookings</Link></li>
+           <li> <Link  className='linkManageYacht' to="/reviews/current">Manage Reviews</Link></li>
+           <li> <Link  className='linkManageYacht' to="/bookings/manage">Your Bookings</Link></li>
 
             <li>
               <button id='logoutButton'onClick={logout}>Log Out</button>
@@ -87,6 +87,3 @@ function ProfileButton({ user }) {
 }
 
 export default ProfileButton;
-
-
-

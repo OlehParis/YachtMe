@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import { fetchSpotReview } from '../../store/reviews';
+import { fetchYachtReview } from '../../store/reviews';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useModal } from '../../context/Modal';
 import './ReviewFromModal.css';
@@ -66,7 +66,7 @@ function ReviewFromModal({ spotId}) {
       review,
       stars
     };
-    dispatch(fetchSpotReview(Reviews))
+    dispatch(fetchYachtReview(Reviews))
       .then(() => {
         closeModal();
       });

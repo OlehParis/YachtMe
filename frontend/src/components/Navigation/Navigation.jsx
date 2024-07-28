@@ -32,9 +32,9 @@ if(!sessionUser) {
    
       {isLoaded && (
         <div className='profile'>
-            <div className='newSpot'>
-               <NavLink to='/spots/new' className='newSpotLink'>
-                Create a New Spot
+            <div className='newYacht'>
+               <NavLink to='/spots/new' className='newYachtLink'>
+                Create a New Yacht
                 </NavLink>
             </div>
           <ProfileButton user={sessionUser} />

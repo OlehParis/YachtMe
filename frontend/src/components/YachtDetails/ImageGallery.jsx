@@ -11,7 +11,7 @@ const ImageGallery = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!spotImages || !spotImages.SpotImages || Object.keys(spotImages.SpotImages).length === 0) {
+        if (!spotImages || !spotImages.YachtImages || Object.keys(spotImages.YachtImages).length === 0) {
             dispatch(fetchImages(spotId));
         }
     }, [dispatch, spotId, spotImages]);
@@ -29,8 +29,8 @@ const ImageGallery = () => {
 
     return (
         <div className="gallery">
-            {spotImages.SpotImages && Object.keys(spotImages.SpotImages).length > 0
-                ? Object.entries(spotImages.SpotImages).map(([id, image]) => (
+            {spotImages.YachtImages && Object.keys(spotImages.YachtImages).length > 0
+                ? Object.entries(spotImages.YachtImages).map(([id, image]) => (
                     <img 
                         key={id} 
                         className='gridImg' 

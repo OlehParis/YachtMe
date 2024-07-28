@@ -1,16 +1,16 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { fetchDeleteSpot } from '../../store/yachts';
-// import { fetchSpot } from '../../store/spots';
+import { fetchDeleteYacht } from '../../store/yachts';
+// import { fetchYacht } from '../../store/yachts';
 import "./DeleteReviewModal.css"
 
-function DeleteSpotModal( {spotId} ) {
+function DeleteYachtModal( {yachtId} ) {
 
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const handleDeleteSpot = () => {
-        dispatch(fetchDeleteSpot(spotId))
+    const handleDeleteYacht = () => {
+        dispatch(fetchDeleteYacht(yachtId))
         .then(closeModal)
        
     };
@@ -20,14 +20,14 @@ function DeleteSpotModal( {spotId} ) {
             <div className="modal-content">
                 <span className="close" onClick={closeModal}>&times;</span>
                 <h2>Confirm Delete</h2>
-                <p>Are you sure you want to remove this spot?</p>
+                <p>Are you sure you want to remove this yacht?</p>
                 <div className="modal-buttons">
-                <button id='yes' onClick={() => handleDeleteSpot()}>Yes (Delete Spot)</button>
-                    <button id='no' onClick={(closeModal)}>No (Keep Spot)</button>
+                <button id='yes' onClick={() => handleDeleteYacht()}>Yes (Delete Yacht)</button>
+                    <button id='no' onClick={(closeModal)}>No (Keep Yacht)</button>
                 </div>
             </div>
         </div>
     );
 }
 
-export default DeleteSpotModal;
+export default DeleteYachtModal;

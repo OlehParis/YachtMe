@@ -2,43 +2,43 @@ import { csrfFetch } from "./csrf";
 
 import { loadReviewData } from "./reviews";
 
-export const fetchSpotByID = (yacht) => ({
+export const fetchYachtByID = (yacht) => ({
   type: "FETCH_YACHT_BYID",
   payload: yacht,
 });
 
-export const fetchSpotsSuccess = (yachts) => ({
+export const fetchYachtsSuccess = (yachts) => ({
   type: "FETCH_YACHTS_SUCCESS",
   payload: yachts,
 });
 
-export const DeleteSpot = (yachtId) => {
+export const DeleteYacht = (yachtId) => {
   return {
     type: "FETCH_DELETE_YACHT",
     payload: yachtId,
   };
 };
 
-export const fetchCreateSpot = (yacht) => ({
+export const fetchCreateYacht = (yacht) => ({
   type: "FETCH_CREATE_YACHT",
   payload: yacht,
 });
-export const fetchEditSpot = (yacht) => ({
+export const fetchEditYacht = (yacht) => ({
   type: "FETCH_EDIT_YACHT",
   payload: yacht,
 });
 
-export const fetchDeleteSpot = (yachtId) => {
+export const fetchDeleteYacht = (yachtId) => {
   return async (dispatch) => {
     const response = await csrfFetch(`/api/yachts/${yachtId}`, {
       method: "DELETE",
     });
-    dispatch(DeleteSpot(yachtId));
+    dispatch(DeleteYacht(yachtId));
     return response;
   };
 };
 
-export const fetchSpots = () => {
+export const fetchYachts = () => {
   return async (dispatch) => {
     const response = await fetch("/api/yachts");
     if (!response.ok) {
@@ -47,12 +47,12 @@ export const fetchSpots = () => {
     const data = await response.json();
     const page = data.page;
     const size = data.size;
-    const allSpotsData = { ...data.Spots, page, size };
+    const allYachtsData = { ...data.Yachts, page, size };
 
-    dispatch(fetchSpotsSuccess(allSpotsData));
+    dispatch(fetchYachtsSuccess(allYachtsData));
   };
 };
-export const fetchSpot = (yachtId) => {
+export const fetchYacht = (yachtId) => {
   return async (dispatch) => {
     const response = await csrfFetch(`/api/yachts/${yachtId}`);
     const res2 = await csrfFetch(`/api/yachts/${yachtId}/reviews`);
@@ -62,27 +62,27 @@ export const fetchSpot = (yachtId) => {
     }
     const yachtDetails = await response.json();
     const reviews = await res2.json();
-    
+
     // Extract image data
-    const yachtImages = yachtDetails[0].SpotImages;
+    const yachtImages = yachtDetails[0].YachtImages;
 
     // Normalize image data
     const normalizedImages = Object.fromEntries(
-      yachtImages.map(image => [image.id, image])
+      yachtImages.map((image) => [image.id, image])
     );
 
-    // Replace yachtDetails.SpotImages with normalized image data
-    const normalizedSpotDetails = {
+    // Replace yachtDetails.YachtImages with normalized image data
+    const normalizedYachtDetails = {
       ...yachtDetails[0],
-      SpotImages: normalizedImages
+      YachtImages: normalizedImages,
     };
-    console.log(normalizedSpotDetails)
-    dispatch(fetchSpotByID(normalizedSpotDetails));
+    console.log(normalizedYachtDetails);
+    dispatch(fetchYachtByID(normalizedYachtDetails));
     dispatch(loadReviewData(reviews.Reviews));
   };
 };
 
-export const fetchNewSpot = (yacht) => {
+export const fetchNewYacht = (yacht) => {
   return async (dispatch) => {
     const response = await csrfFetch("/api/yachts", {
       method: "POST",
@@ -107,18 +107,18 @@ export const fetchNewSpot = (yacht) => {
     });
     const images = await responseImages.json();
 
-    const newSpotDataWithImg = {
+    const newYachtDataWithImg = {
       ...data,
       previewImage: images.url,
-      SpotImages: [images],
+      YachtImages: [images],
     };
 
-    dispatch(fetchCreateSpot(newSpotDataWithImg));
-    return newSpotDataWithImg;
+    dispatch(fetchCreateYacht(newYachtDataWithImg));
+    return newYachtDataWithImg;
   };
 };
 
-export const fetchEditNewSpot = (yacht, yachtId) => {
+export const fetchEditNewYacht = (yacht, yachtId) => {
   return async (dispatch) => {
     const response = await csrfFetch(`/api/yachts/${yachtId}`, {
       method: "PUT",
@@ -133,7 +133,6 @@ export const fetchEditNewSpot = (yacht, yachtId) => {
     const data = await response.json();
 
     // const yachtId = data.id;
- 
 
     const responseImages = await csrfFetch(`/api/yachts/${yachtId}/images`, {
       method: "POST",
@@ -144,14 +143,14 @@ export const fetchEditNewSpot = (yacht, yachtId) => {
     });
     const images = await responseImages.json();
 
-    const newSpotDataWithImg = {
+    const newYachtDataWithImg = {
       ...data,
       previewImage: images.url,
-      SpotImages: [images],
+      YachtImages: [images],
     };
 
-    dispatch(fetchEditSpot(newSpotDataWithImg));
-    return newSpotDataWithImg;
+    dispatch(fetchEditYacht(newYachtDataWithImg));
+    return newYachtDataWithImg;
   };
 };
 
@@ -159,7 +158,7 @@ const initialState = {};
 
 const yachtsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_YACHTS_SUCCESS":{
+    case "FETCH_YACHTS_SUCCESS": {
       let nextState = {};
       Object.entries(action.payload).forEach(([key, value]) => {
         if (key !== "page" && key !== "size") {
@@ -169,9 +168,10 @@ const yachtsReducer = (state = initialState, action) => {
       return {
         ...state,
         ...nextState,
-      };}
+      };
+    }
 
-    case "FETCH_YACHT_BYID":{
+    case "FETCH_YACHT_BYID": {
       const yachtId = action.payload.id;
 
       return {
@@ -179,25 +179,27 @@ const yachtsReducer = (state = initialState, action) => {
         // [yachtId]: { ...action.payload }
         [yachtId]: { ...state[yachtId], ...action.payload },
       };
-}
-    case "FETCH_CREATE_YACHT":{
-      const newSpotId = action.payload.id;
+    }
+    case "FETCH_CREATE_YACHT": {
+      const newYachtId = action.payload.id;
       return {
         ...state,
-        [newSpotId]: { ...action.payload },
-      };}
-    case "FETCH_EDIT_YACHT":{
-      const editedSpotId = action.payload.id;
+        [newYachtId]: { ...action.payload },
+      };
+    }
+    case "FETCH_EDIT_YACHT": {
+      const editedYachtId = action.payload.id;
       return {
         ...state,
-        [editedSpotId]: { ...action.payload },
-      };}
-    case "FETCH_DELETE_YACHT":{
+        [editedYachtId]: { ...action.payload },
+      };
+    }
+    case "FETCH_DELETE_YACHT": {
       const yachtIdToDelete = action.payload;
       const newState = { ...state };
       delete newState[yachtIdToDelete];
       return newState;
-}
+    }
     default:
       return state;
   }

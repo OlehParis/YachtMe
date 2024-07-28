@@ -1,14 +1,14 @@
 // import { GooglePlacesAutocomplete } from 'react-google-autocomplete';
 // import Autocomplete from "react-google-autocomplete";
 import { useState} from 'react';
-import './CreateSpot.css';
-import { fetchNewSpot } from '../../store/yachts';
+import './CreateYacht.css';
+import { fetchNewYacht } from '../../store/yachts';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useGoogle from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 
 
-const CreateSpot = () => {
+const CreateYacht = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [errors, setErrors] = useState({});
@@ -118,8 +118,8 @@ const validateForm = () => {
     setErrors(formErrors);
    
     if (Object.keys(formErrors).length === 0) { 
-      dispatch(fetchNewSpot(formData)).then(response => {
-    navigate(`/spots/${response.id}`)
+      dispatch(fetchNewYacht(formData)).then(response => {
+    navigate(`/yachts/${response.id}`)
        
     });
    
@@ -128,10 +128,10 @@ const validateForm = () => {
   };
 
   return (
-    <div className='createspot-container'>
-    <div className="create-spot-form">
+    <div className='createyacht-container'>
+    <div className="create-yacht-form">
 
-      <h2>Create a New Spot</h2>
+      <h2>Create a New Yacht</h2>
 
  
       <h4>Where&apos;s your place located?</h4>
@@ -206,18 +206,18 @@ const validateForm = () => {
         <textarea id="description"  placeholder="Please write at least 30 characters"name="description" value={formData.description} onChange={handleChange} />
         {errors.description && <div className="error">{errors.description}</div>}
           
-         <h4>Create a title for your spot</h4> 
-         <p>Catch guest&apos;s attention with a spot title that highlights what makes your place special.</p>
+         <h4>Create a title for your yacht</h4> 
+         <p>Catch guest&apos;s attention with a yacht title that highlights what makes your place special.</p>
         <label htmlFor="title"></label>
-        <input type="text" placeholder='Name of your spot' id="name" name="name" value={formData.name} onChange={handleChange} />
+        <input type="text" placeholder='Name of your yacht' id="name" name="name" value={formData.name} onChange={handleChange} />
         {errors.name && <div className="error">{errors.name}</div>}
 
         <label htmlFor="price">Competitive pricing can help your listing stand out and rank higher in search results</label>
         <input type="number" placeholder='Price per night (USD)' id="price" name="price" value={formData.price} onChange={handleChange} />
         {errors.price && <div className="error">{errors.price}</div>}
 
-        <h4>Liven up your spot with photos</h4> 
-        <label htmlFor="url">Submit a link to at least one photo to publish your spot.</label>
+        <h4>Liven up your yacht with photos</h4> 
+        <label htmlFor="url">Submit a link to at least one photo to publish your yacht.</label>
         <input type="text" placeholder='Preview Image URL' id="url" name="url" value={formData.url} onChange={handleChange} />
         {errors.url && <div className="error">{errors.url}</div>}
         {errors.urlFormat && <div className="error">{errors.urlFormat}</div>}
@@ -232,7 +232,7 @@ const validateForm = () => {
         <p></p>
         <input type="text" placeholder="Image URL" id="url5" name="url5" value={formData.url5} onChange={handleChange} />
         <p></p>
-        <button type="submit">Create Spot</button>
+        <button type="submit">Create Yacht</button>
     </div>    
       </form>
     </div>
@@ -240,4 +240,4 @@ const validateForm = () => {
   );
 };
 
-export default CreateSpot;
+export default CreateYacht;

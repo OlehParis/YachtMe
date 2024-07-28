@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-// import { fetchSpotByID } from "./yachts";
+// import { fetchYachtByID } from "./yachts";
 
 export const loadReviewData = (reviewsArr) => ({
   type: "LOAD_REVIEW_DATA",
@@ -58,7 +58,7 @@ export const deleteReview = (reviewId) => {
   };
 };
 
-export const fetchSpotReview = (yacht) => {
+export const fetchYachtReview = (yacht) => {
   return async (dispatch) => {
     const yachtId = yacht.yachtId;
     const response = await csrfFetch(`/api/yachts/${yachtId}/reviews`, {
@@ -77,7 +77,7 @@ export const fetchSpotReview = (yacht) => {
   };
 };
 
-export const fetchUpdateSpotReview = (review) => {
+export const fetchUpdateYachtReview = (review) => {
   return async (dispatch) => {
     console.log(review);
     const { reviewId } = review;
@@ -124,7 +124,7 @@ const reviewReducer = (state = initialState, action) => {
       });
       return newState;
     }
-    
+
     case "FETCH_ALL_REVIEWS": {
       return {
         ...state,
