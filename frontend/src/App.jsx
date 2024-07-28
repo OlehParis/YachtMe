@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import * as sessionActions from './store/session';
 import YachtCard from './components/Yachts/Yachts';
-import { fetchYachts } from './store/yachts';
+// import { fetchYachts } from './store/yachts';
 import Navigation from './components/Navigation/Navigation';
 import YachtDetails from './components/YachtDetails/YachtDetails';
 import CreateYacht from './components/CreateYacht/CreateYacht';
@@ -28,9 +28,9 @@ function App() {
     });
   }, [dispatch]);
   
-  useEffect(() => {
-    dispatch(fetchYachts()); // Fetch yacht data when component mounts
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchYachts()); 
+  // }, [dispatch]);
 
   const Layout = () => (
     <>

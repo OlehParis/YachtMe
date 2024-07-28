@@ -1,4 +1,4 @@
-// backend/routes/api/users.js
+
 const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
@@ -109,17 +109,17 @@ router.get("/", handleValidateQuery, async (req, res) => {
     options.where.price = { [Op.lte]: maxPrice };
   }
   let allYachts = await Yacht.findAll(options);
-
+  console.log('line112', allYachts)
   allYachts = allYachts.map((yacht) => {
-    const reviews = yacht.Reviews;
-    const numReviews = reviews.length;
-    let sum = 0;
-    reviews.forEach((review) => {
-      sum += review.stars;
-    });
-    const avgRating = Math.round((sum / numReviews) * 10) / 10;
-    yacht.dataValues.avgRating = avgRating;
-    delete yacht.dataValues.Reviews;
+    // const reviews = yacht.Reviews;
+    // const numReviews = reviews?.length;
+    // let sum = 0;
+    // reviews.forEach((review) => {
+    //   sum += review.stars;
+    // });
+    // const avgRating = Math.round((sum / numReviews) * 10) / 10;
+    // yacht.dataValues.avgRating = avgRating;
+    // delete yacht.dataValues.Reviews;
 
     yacht.dataValues.previewImage = "";
     if (yacht.dataValues.YachtImages) {
