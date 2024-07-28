@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { fetchSpot } from '../../store/yachts';
-import './SpotDetails.css';
+import { fetchYacht } from '../../store/yachts';
+import './YachtDetails.css';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ReviewFromModal from '../ReviewFromModal/ReviewFromModal'
@@ -15,10 +15,10 @@ import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
 import MapComponent from './Map';
 
 
-function SpotDetails() {
-    const { spotId } = useParams();
+function YachtDetails() {
+    const { yachtId } = useParams();
     const dispatch = useDispatch()
-    const spotData = useSelector(state => state.spots[spotId]);
+    const yachtData = useSelector(state => state.yachts[yachtId]);
     const session = useSelector(state => state.session)
     const reviews = useSelector(state => state.reviews)
     const bookings = useSelector(state => state.bookings)
@@ -57,28 +57,28 @@ function SpotDetails() {
 
 
     useEffect(() => {
-        dispatch(fetchSpot(spotId));
-      }, [dispatch, spotId]);
+        dispatch(fetchYacht(yachtId));
+      }, [dispatch, yachtId]);
 
       useEffect(() => {
         async function fetchBookingsData() {
           try {
-            await dispatch(fetchBookings(spotId));
+            await dispatch(fetchBookings(yachtId));
             // setLoadingBookings(false);
           } catch (error) {
             console.error('Error fetching bookings:', error);
           }
         }
         fetchBookingsData();
-      }, [dispatch, spotId]);
+      }, [dispatch, yachtId]);
 
       const isReservationDisabled = () => {
         if (!checkIn || !checkOut) return true; // If check-in or check-out dates are not selected, disable reservation
         const bookingKeys = Object.keys(bookings);
        { for (const bookingKey of bookingKeys) {
             const booking = bookings[bookingKey];
-            const newId = booking.spotId;
-            if (Number(spotId) === Number(newId)) {
+            const newId = booking.yachtId;
+            if (Number(yachtId) === Number(newId)) {
               const startDate = booking.startDate;
               const endDate = booking.endDate;
               if(checkIn && checkOut){
@@ -93,40 +93,40 @@ function SpotDetails() {
         return false; // Enable reservation if selected dates are not within the blocked range
     };
 
-      if (!spotData ) {
+      if (!yachtData ) {
         return <div>Loading...</div>;
     }
 
 
     const curUserId = session.user?.id ?? null;
-    const spotOwnerId = spotData.ownerId
+    const yachtOwnerId = yachtData.ownerId
     let reviewMatchCurUserId = false;
       for (let reviewId in reviews) {
     const review = reviews[reviewId];
-       if ( Number(review.spotId) === Number(spotId) && review.userId === curUserId ) {
+       if ( Number(review.yachtId) === Number(yachtId) && review.userId === curUserId ) {
         reviewMatchCurUserId = true;
         break; 
        }
       }  
 
-    const dontShowButton = reviewMatchCurUserId || curUserId === spotOwnerId;
-    const onwerOfSpot = curUserId === spotOwnerId;
+    const dontShowButton = reviewMatchCurUserId || curUserId === yachtOwnerId;
+    const onwerOfYacht = curUserId === yachtOwnerId;
     const notLogIn = session.user === null;
-    const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, spotId);
+    const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
      
     return ( 
       
-        <div className="spot-details">
+        <div className="yacht-details">
     
      
-        <h2>{spotData.name}</h2>
-        <p>{spotData.address}, {spotData.state},  {spotData.country}</p>
+        <h2>{yachtData.name}</h2>
+        <p>{yachtData.address}, {yachtData.state},  {yachtData.country}</p>
         <div className='images'>
-          {spotData.SpotImages && Object.values(spotData.SpotImages).map(spot => (
-            spot.preview ? <img key={spot.id} className='mainImage' src={spot.url} alt={`Spot ${spot.id}`} /> : null
+          {yachtData.YachtImages && Object.values(yachtData.YachtImages).map(yacht => (
+            yacht.preview ? <img key={yacht.id} className='mainImage' src={yacht.url} alt={`Yacht ${yacht.id}`} /> : null
               ))}
           <div className="image-gallery">
-    {spotData.SpotImages && Object.entries(spotData.SpotImages).filter(([, image]) => image.preview === false).slice(0, 4).map(([, image], index) => (
+    {yachtData.YachtImages && Object.entries(yachtData.YachtImages).filter(([, image]) => image.preview === false).slice(0, 4).map(([, image], index) => (
         <img key={index} className='gridImg' src={image.url} alt={`Image ${index + 1}`} />
     ))}
 </div>
@@ -134,21 +134,21 @@ function SpotDetails() {
         </div>
       <div className="details">
             <div className='info'>
-            {spotData.Owner && (<h2> Hosted by {spotData.Owner.firstName} {spotData.Owner.lastName}</h2>)}
-            <p>{spotData.description}</p>
+            {yachtData.Owner && (<h2> Hosted by {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}
+            <p>{yachtData.description}</p>
             </div>
             <div className='container-price'>
                 <div className='container-inner'>
                   
                     <div className='container'>
-                    <div className='price'><h3>${spotData.price}</h3> <p>night</p></div>
+                    <div className='price'><h3>${yachtData.price}</h3> <p>night</p></div>
                     <p className='rating'><FaStar color="#ffc107"/> 
                     {Number(avgStars) ? ` ${avgStars}` : ' New'}   
                     {reviewCount !== 0 && ( reviewCount ? ` · ${reviewCount}` : ' · 0' ) }
                     {reviewCount !== 0 && (reviewCount === 1 ? ' Review' : ' Reviews')}</p>
                     </div>
               
-                 {!notLogIn && !onwerOfSpot &&  < div className='bookingContainer'> 
+                 {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                     <div>check-in<OpenModalButton 
                    onButtonClick={() => {setBeError(null)}}
                         buttonText={    <input
@@ -157,7 +157,7 @@ function SpotDetails() {
                           readOnly/>}
                         modalComponent={<CalendarModal 
                         onCheckInDateChange={setCheckIn}
-                        spotId={spotId}
+                        yachtId={yachtId}
                         onCheckOutDateChange={setCheckOut} />}
                     />
                     </div>
@@ -175,7 +175,7 @@ function SpotDetails() {
                     </div>
                     </div>}
                   
-             {!notLogIn && !onwerOfSpot && <button 
+             {!notLogIn && !onwerOfYacht && <button 
                onClick={handleReserveClick}
                disabled={isReservationDisabled()}>Reserve</button> }
                 </div>
@@ -191,15 +191,15 @@ function SpotDetails() {
                                        
         </h3> 
         <div id='postReviewButton'>
-        {!reviewMatchCurUserId && curUserId !== spotOwnerId && !notLogIn && (
+        {!reviewMatchCurUserId && curUserId !== yachtOwnerId && !notLogIn && (
           <OpenModalButton
             buttonText="Post Your Review" 
-            modalComponent={<ReviewFromModal spotId={spotId}   />}
+            modalComponent={<ReviewFromModal yachtId={yachtId}   />}
           />
         )}
         </div>
 {reviewCount !==0 && sortedR.map(review => {
-    if (Number(review.spotId) === Number(spotId)) {
+    if (Number(review.yachtId) === Number(yachtId)) {
         return (
             <div key={review.id} className='wow'>
                 <h3>{review.User?.firstName || session.user.firstName}</h3>
@@ -222,11 +222,11 @@ function SpotDetails() {
         {reviewCount == 0 && !notLogIn && !dontShowButton &&  <h2>Be the first to post a review! </h2> }
         </div>
 
-        <div id="map" className="spot-map"></div>
-        <MapComponent lat={spotData.lat} lng ={spotData.lng}></MapComponent>
+        <div id="map" className="yacht-map"></div>
+        <MapComponent lat={yachtData.lat} lng ={yachtData.lng}></MapComponent>
     </div>
 );
 
 }
 
-export default SpotDetails;
+export default YachtDetails;

@@ -1,4 +1,4 @@
-import './SpotDetails.css';
+import './YachtDetails.css';
 import { useState } from 'react';
 import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
@@ -6,7 +6,7 @@ import { useSelector} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
 
 
-function CalendarModal({ onCheckInDateChange, spotId, onCheckOutDateChange }) {
+function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const { closeModal } = useModal();
     const bookings = useSelector(state => state.bookings)
     const [checkInDate, setCheckInDate] = useState(null);
@@ -41,8 +41,8 @@ function CalendarModal({ onCheckInDateChange, spotId, onCheckOutDateChange }) {
         const dateString = date.toISOString().split('T')[0]; // Convert date to string in 'YYYY-MM-DD' format
         for (const bookingKey of bookingKeys) {
             const booking = bookings[bookingKey];
-            const newId = booking.spotId;
-            if (Number(spotId) === Number(newId)) {
+            const newId = booking.yachtId;
+            if (Number(yachtId) === Number(newId)) {
                 const startDate = booking.startDate.split(' ')[0]; 
                 const endDate = booking.endDate.split(' ')[0]; 
                 if (dateString >= startDate && dateString <= endDate) {

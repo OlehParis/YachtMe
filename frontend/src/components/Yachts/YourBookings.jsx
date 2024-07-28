@@ -1,7 +1,7 @@
 import { useSelector , useDispatch} from 'react-redux';
 // import { useNavigate } from 'react-router-dom'
 import {  useEffect } from 'react';
-import './Spots.css';
+import './Yachts.css';
 import { fetchUserBookings } from '../../store/bookings';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ModalCalendar from '../YachtDetails/ModalCalendar'
@@ -10,16 +10,16 @@ import DeleteReservation from '../DeleteReviewModal/DeleteReservation';
 function YourBookings() {
     const dispatch = useDispatch();
     // const navigate = useNavigate();
-    // const spotsData = useSelector(state => state.spots);
+    // const yachtsData = useSelector(state => state.yachts);
     useEffect(() => {
         dispatch(fetchUserBookings()); 
     }, [dispatch]);
     
-    const spotsData = useSelector(state => state.bookings)
+    const yachtsData = useSelector(state => state.bookings)
 
     
     // const handleClick = (id) => {
-    //     navigate(`/spots/${id}`); 
+    //     navigate(`/yachts/${id}`); 
     //   };
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -30,25 +30,25 @@ function YourBookings() {
     }
  
    
-    if (spotsData && Object.keys(spotsData).length > 0) {
+    if (yachtsData && Object.keys(yachtsData).length > 0) {
         return (
             <>
                 <h1>Your Bookings</h1>
-                <div className="spot-card">
-                    {Object.values(spotsData).map((spot) => {
-                        if (spot.Spot) {
+                <div className="yacht-card">
+                    {Object.values(yachtsData).map((yacht) => {
+                        if (yacht.Yacht) {
                             return (
-                                <div key={spot.id} className="spot">
+                                <div key={yacht.id} className="yacht">
                                     <div className="tooltip">
-                                        <span className="tooltiptext">{spot.Spot.name}</span>
-                                        <img className="spot-img" src={spot.Spot.previewImage} alt={spot.Spot.name} />
+                                        <span className="tooltiptext">{yacht.Yacht.name}</span>
+                                        <img className="yacht-img" src={yacht.Yacht.previewImage} alt={yacht.Yacht.name} />
                                         <div className="address-price">
-                                            <div>{spot.Spot.city}, {spot.Spot.state}</div>
-                                            <div>${spot.Spot.price} per night</div>
+                                            <div>{yacht.Yacht.city}, {yacht.Yacht.state}</div>
+                                            <div>${yacht.Yacht.price} per night</div>
                                         </div>
                                         <div className="address-price">
-                                            <div>Dates: {formatDate(spot.startDate)} - {formatDate(spot.endDate)}</div>
-                                            <div>Total: ${spot.totalPrice}</div>
+                                            <div>Dates: {formatDate(yacht.startDate)} - {formatDate(yacht.endDate)}</div>
+                                            <div>Total: ${yacht.totalPrice}</div>
                                         </div>
                                         <div className="address-price">
                                             <OpenModalButton
@@ -57,7 +57,7 @@ function YourBookings() {
                                             />
                                             <OpenModalButton
                                                 buttonText="Cancel"
-                                                modalComponent={<DeleteReservation bookingId={spot.id} />}
+                                                modalComponent={<DeleteReservation bookingId={yacht.id} />}
                                             />
                                         </div>
                                     </div>

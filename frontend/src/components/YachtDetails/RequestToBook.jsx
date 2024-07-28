@@ -1,10 +1,10 @@
-import './SpotDetails.css';
+import './YachtDetails.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import './SpotDetails.css';
+import './YachtDetails.css';
 import { FaStar } from 'react-icons/fa';
-import { fetchSpot } from '../../store/yachts';
+import { fetchYacht } from '../../store/yachts';
 import { useLocation } from 'react-router-dom';
 import { fetchBooking} from '../../store/bookings';
 import { useNavigate } from 'react-router-dom'
@@ -12,17 +12,17 @@ import { useNavigate } from 'react-router-dom'
 
 function RequestToBook ()  {
   const navigate = useNavigate();
-    const { spotId } = useParams();
+    const { yachtId } = useParams();
     const location = useLocation();
     const { checkIn, checkOut } = location.state;
     const dispatch = useDispatch()
-    const spotData = useSelector(state => state.spots[spotId]);
+    const yachtData = useSelector(state => state.yachts[yachtId]);
     const [selectedDays, setSelectedDays] = useState(0);
    
     
     useEffect(() => {
-      dispatch(fetchSpot(spotId));
-    }, [dispatch, spotId]);
+      dispatch(fetchYacht(yachtId));
+    }, [dispatch, yachtId]);
     
  
     const reviews = useSelector(state => state.reviews)
@@ -30,13 +30,13 @@ function RequestToBook ()  {
    
     
 
-      function calculateStarsAndReviews(reviews, spotId) {
+      function calculateStarsAndReviews(reviews, yachtId) {
         let totalStars = 0;
         let reviewCount = 0;
       
         Object.keys(reviews).forEach(reviewId => {
           const review = reviews[reviewId];
-          if (Number(review.spotId) === Number(spotId)) {
+          if (Number(review.yachtId) === Number(yachtId)) {
             totalStars += review.stars;
             reviewCount++;
           }
@@ -63,11 +63,11 @@ function RequestToBook ()  {
         setSelectedDays(calculateSelectedDays(checkIn, checkOut));
     }, [checkIn, checkOut]);
       
-      const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, spotId);
+      const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
        
       const handleReserveClick = () => {
   
-        const bookingsPost = { spotId, startDate: checkIn, endDate: checkOut , totalPrice };
+        const bookingsPost = { yachtId, startDate: checkIn, endDate: checkOut , totalPrice };
         dispatch(fetchBooking(bookingsPost))
           .then(() => {
             
@@ -81,23 +81,23 @@ function RequestToBook ()  {
         //     });
         //   });
       };
-      if (!spotData ) {
+      if (!yachtData ) {
         return <div>Loading...</div>;}
-       let totalPrice= (spotData.price*selectedDays+150+(spotData.price*selectedDays*0.07)).toFixed(2)
+       let totalPrice= (yachtData.price*selectedDays+150+(yachtData.price*selectedDays*0.07)).toFixed(2)
        
 return ( <>
 
     <h1>Request to book</h1>
     <div className="details">
     <div className='info'>
-    {spotData.Owner && (<h2> Hosted by {spotData.Owner.firstName} {spotData.Owner.lastName}</h2>)}
+    {yachtData.Owner && (<h2> Hosted by {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}
 
     </div>
     <div className='container-price'>
         <div className='container-inner'>
           
             <div className='container'>
-            <p>{spotData.name}</p>
+            <p>{yachtData.name}</p>
             <p className='rating'><FaStar color="#ffc107"/> 
             {Number(avgStars) ? ` ${avgStars}` : ' New'}   
             {reviewCount !== 0 && ( reviewCount ? ` · ${reviewCount}` : ' · 0' ) }
@@ -107,9 +107,9 @@ return ( <>
             <hr />
             <div className='price-cal'>
                 <div className='fee-price'>
-                     <div>${spotData.price} x {selectedDays} nights</div>
+                     <div>${yachtData.price} x {selectedDays} nights</div>
                      <div className='price-total'>
-                        ${spotData.price*selectedDays}
+                        ${yachtData.price*selectedDays}
                      </div>
                 </div>
                 <div className='fee-price'>
@@ -133,7 +133,7 @@ return ( <>
                    Taxes
                 </div>
                 <div>
-                ${(spotData.price*selectedDays*0.07).toFixed(2)}
+                ${(yachtData.price*selectedDays*0.07).toFixed(2)}
                 </div>
             </div>
 

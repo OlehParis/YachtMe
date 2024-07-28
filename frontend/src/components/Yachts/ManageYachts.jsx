@@ -1,55 +1,55 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import './Spots.css';
+import './Yachts.css';
 import { FaStar } from 'react-icons/fa';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import DeleteSpotModal from '../DeleteReviewModal/DeleteYachtModal';
+import DeleteYachtModal from '../DeleteReviewModal/DeleteYachtModal';
 
-function ManageSpots() {
+function ManageYachts() {
   
   const navigate = useNavigate();
-  const spotsData = useSelector(state => state.spots);
+  const yachtsData = useSelector(state => state.yachts);
   const session = useSelector(state => state.session);
   const curUserId = session.user?.id ?? null;
 
   const handleClick = (id) => {
    
-    navigate(`/spots/${id}`);
+    navigate(`/yachts/${id}`);
 
   };
 
   const handleUpdate = (id) => {
 
-    navigate(`/spots/${id}/edit`);
+    navigate(`/yachts/${id}/edit`);
   };
 
 
 
 
-  const userHasSpots = Object.values(spotsData).some(spot => spot.ownerId === curUserId);
+  const userHasYachts = Object.values(yachtsData).some(yacht => yacht.ownerId === curUserId);
 
-  if (spotsData && userHasSpots) {
+  if (yachtsData && userHasYachts) {
     return (
-     <div className='spots-container'>
-        <h1> Manage Your Spots</h1>
-        <div className="spot-card" >
-          {Object.values(spotsData).map((spot) => (
-            spot.ownerId === curUserId &&
-            <div key={spot.id} className="spot">
+     <div className='yachts-container'>
+        <h1> Manage Your Yachts</h1>
+        <div className="yacht-card" >
+          {Object.values(yachtsData).map((yacht) => (
+            yacht.ownerId === curUserId &&
+            <div key={yacht.id} className="yacht">
               <div className="tooltip"  >
-                <span className="tooltiptext" >{spot.name} </span>
-                <img className='spot-img'  src={spot.previewImage} alt={spot.name} onClick={() => handleClick(spot.id)} />
+                <span className="tooltiptext" >{yacht.name} </span>
+                <img className='yacht-img'  src={yacht.previewImage} alt={yacht.name} onClick={() => handleClick(yacht.id)} />
                 <div className='addressAvgRating'>
-                  <p>{spot.city}, {spot.state}</p>
-                  <p><FaStar color="#ffc107"/> {(spot.avgRating) ? spot.avgRating : 'New'}</p>
+                  <p>{yacht.city}, {yacht.state}</p>
+                  <p><FaStar color="#ffc107"/> {(yacht.avgRating) ? yacht.avgRating : 'New'}</p>
                 </div>
-                <div>${spot.price} night</div>
+                <div>${yacht.price} night</div>
               
               <div className='buttons'> 
-                <button className='hey' onClick={()=> handleUpdate(spot.id)}> Update </button>
+                <button className='hey' onClick={()=> handleUpdate(yacht.id)}> Update </button>
                 <OpenModalButton
                   buttonText="Delete"
-                  modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                  modalComponent={<DeleteYachtModal yachtId={yacht.id} />}
                 />
               </div>
               </div>
@@ -61,13 +61,13 @@ function ManageSpots() {
         );
   } else {
     return (
-      <div className='spots-container'> 
-        <h1> Manage Your Spots</h1>
+      <div className='yachts-container'> 
+        <h1> Manage Your Yachts</h1>
       
-        <button className='hey' onClick={()=> navigate('/spots/new')} >Create New Spot</button>
+        <button className='hey' onClick={()=> navigate('/yachts/new')} >Create New Yacht</button>
       </div>
     );
   }
 }
 
-export default ManageSpots;
+export default ManageYachts;
