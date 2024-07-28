@@ -1,0 +1,128 @@
+.spot-card {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    column-count: 4;
+    gap: 45px;
+    margin-right: 40px;
+    
+    /* justify-content: center; */
+    padding: 20px;
+  justify-content: center;
+  align-content: center;
+  }
+  .tooltip {
+    display: inline-block;
+    
+  }
+  .addressAvgRating {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 10px; 
+  }
+  svg {
+    width: 16px;
+  }
+  .spot {
+    position: relative;
+    display: flex;
+    /* margin-left: 20px; */
+    justify-content: center;
+  align-content: center;
+  }
+
+  .spot {
+    transition: transform 0.3s ease;
+}
+
+.spot:hover {
+    transform: scale(1.03); 
+    cursor: pointer;
+}
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+   
+    background-color: rgba(51, 51, 51, 0.5);;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip text */
+    position: absolute;
+    
+    /* Fade in tooltip - uses opacity: 0 to 1 transition */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .spot:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+.spot-img {
+    width: 279px;
+    height: 265px;
+    border-radius: 15px;
+  }
+
+  .spots-container > h1,
+.spots-container > button {
+ margin-left: 40px;
+}
+.buttons{
+  padding-top: 10px;
+}
+.buttons button {
+  margin-right: 10px;
+}
+.spotDbuttons {
+  background: #f0f0f0;
+  box-shadow: 5px 5px 10px #c4c4c4, -5px -5px 10px #ffffff;
+  border: none;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+
+
+.spotDbuttons:hover {
+  transform:scale(1.1)
+} 
+
+
+@media screen and (max-width: 1200px) {
+  .spot-card {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+
+.buttonAction {
+  background-color: red;
+}
+
+.deleteButton {
+  /* Your styling properties */
+  background-color: red;
+  color: white;
+  border: none;
+  /* Add more styles as needed */
+}
+.address-price{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}

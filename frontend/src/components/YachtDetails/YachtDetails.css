@@ -1,0 +1,297 @@
+.spot-details {
+  padding: 20px; 
+}
+
+.spot-details h2 {
+  font-size: 24px; 
+  margin-bottom: 10px; }
+
+ h1 {
+  margin-left: 40px;
+}
+.spot-details p {
+  width: auto;
+  margin-bottom: 10px;
+}
+.reviewButtons button{
+  background-color: black;
+}
+
+
+.reviewButtons button{
+  background: #f0f0f0;
+  box-shadow: 5px 5px 10px #c4c4c4, -5px -5px 10px #ffffff;
+  border: none;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.imagesButton {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin: 0px 0px 10px 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+}
+.imagesButton:hover {
+  transform: scale(1.1);
+}
+
+.reviewButtons button:hover {
+  transform:scale(1.1)
+} 
+
+
+.images {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: auto;
+  max-height: 420px;
+  gap: 10px;
+   
+}
+/* .spot-details button {
+  margin-right: 30px;
+} */
+.mainImage {
+  width: 100%;
+  /* max-height: 410px; */
+ 
+}
+.mainImage, .image-gallery {
+  width: 100%;
+  max-width: 630px; /* Set a max-width to keep the layout consistent */
+  height: 410px; /* Set a fixed height for consistency */
+}
+.image-gallery {
+  width: 100%;
+  gap: 10px;
+ 
+  max-height: 630px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  
+  white-space: nowrap;
+  
+}
+.gridImg {
+width: 100%;
+height: 100%;
+
+}
+.gridImg img {
+ /* max-width: fit-content; */
+  object-fit: cover;
+  
+}
+
+.gallery {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  grid-template-rows: 1fr 1fr;
+}
+
+.details {
+ display: flex;
+
+}
+.info {
+  flex: 1; 
+ 
+}
+
+.container-price {
+  flex:2;
+  position: relative;
+  margin-top: 20px;
+  max-width: 250px;
+  margin-left: 10px;
+ 
+  /* height: 200px; */
+  background-color: rgba(0,1,1, 0.0);
+  border: 2px solid #ccc; 
+  border-radius: 15px; 
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.1);
+  
+}
+.price {
+  display: flex;
+  align-content: center;
+  flex: 1; 
+  /* Add some spacing between price and rating */
+}
+.price p {
+  margin-left: 6px;
+  margin-top: 21px;
+}
+.container{
+  max-height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.rating {
+ margin-top: 10px;
+  margin-left: 10px; 
+}
+
+.container-inner{
+  margin: 10px 10px 10px 10px;
+
+}
+.container-price button{
+  margin-left: 20%;
+  padding-left:20%;
+  padding-right:20%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background-color: #d41f40;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.container-price button[disabled] {
+  background-color: #ccc; /* Change the background color */
+  color: #999; /* Change the text color */
+  cursor: not-allowed; /* Change the cursor to indicate the button is not clickable */
+}
+
+
+#postReviewButton button{
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background-color: #d41f40;
+  color: white;
+  border:medium;
+  border-radius: 15px;
+  cursor: pointer;
+}
+#postReviewButton button:hover{
+  background-color: #ba406d;
+  cursor: pointer;
+}
+
+
+.modal-calendar {
+  padding: 10px 20px 20px 20px;
+  border-radius: 20px;
+}
+
+
+.bookingContainer button {
+ border: none;
+ background-color: white;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: unset;
+  box-shadow: none;
+
+}
+
+.bookingContainer button:hover {
+  transform:scale(1)
+ 
+ }
+
+.bookingContainer {
+  display: flex;
+  
+}
+.bookingContainer div {
+margin-left: 20px;
+font-size: larger;
+box-sizing:border-box;
+}
+.bookingContainer input{
+height: 23px;
+width: 70px;
+font-size: larger;
+}
+.check-in {
+  background-color: green;
+  color: white; 
+}
+
+.newError {
+  width: 230px;
+  height: 36px;
+}
+.newError p{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color: red;
+}
+
+.price-cal {
+  display: block;
+}
+.fee-price{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+@media (min-width: 1290px) {
+  .images {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100%;
+    max-height: 100%;
+    gap: 10px;
+     
+  }
+  /* .spot-details button {
+    margin-right: 30px;
+  } */
+  .mainImage {
+    width: 100%;
+    /* max-height: 410px; */
+   
+  }
+  .mainImage, .image-gallery {
+    width: 100%;
+    max-width: 100%; /* Set a max-width to keep the layout consistent */
+    height: 100%; /* Set a fixed height for consistency */
+  }
+  .image-gallery {
+    width: 100%;
+    gap: 10px;
+   
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    
+    white-space: nowrap;
+    
+  }
+  .gridImg {
+  width: 100%;
+  height: 100%;
+  
+  }
+  .gridImg img {
+   /* max-width: fit-content; */
+    object-fit: cover;
+    
+  }
+  
+  .gallery {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr;
+  }
+}
