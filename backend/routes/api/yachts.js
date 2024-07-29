@@ -142,6 +142,8 @@ router.get("/", handleValidateQuery, async (req, res) => {
   return res.status(200).json(resObj);
 });
 
+
+
 //Get all Yachts owned by the Current User
 router.get("/current", requireAuth, async (req, res, next) => {
   const curUserId = req.user.id;
@@ -492,10 +494,7 @@ router.get("/:yachtId/reviews", async (req, res, next) => {
         model: User,
       },
 
-      {
-        model: ReviewImage,
-        attributes: { exclude: ["reviewId", "createdAt", "updatedAt"] },
-      },
+    
     ],
   });
  

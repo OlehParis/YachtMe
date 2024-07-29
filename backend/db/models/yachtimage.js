@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       YachtImage.belongsTo(models.Yacht, {foreignKey: "yachtId"});
-     
+      YachtImage.belongsTo(models.Review, {foreignKey: "yachtId"})
     
     };
     
