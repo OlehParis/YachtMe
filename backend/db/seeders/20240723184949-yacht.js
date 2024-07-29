@@ -264,27 +264,7 @@ module.exports = {
           bathrooms: 5,
           year: 2017,
         },
-        {
-          ownerId: 1,
-          address: "808 Marina Way",
-          city: "Chicago",
-          state: "IL",
-          country: "USA",
-          lat: 41.8781,
-          lng: -87.6298,
-          name: "Windy City Wave",
-          description: "Cruise Lake Michigan in style.",
-          price4: 490,
-          price6: 590,
-          price8: 690,
-          length: 77,
-          builder: "Builder K",
-          guests: 14,
-          cabins: 5,
-          speed: 37,
-          bathrooms: 5,
-          year: 2019,
-        },
+       
      
       ],
       { validate: true }

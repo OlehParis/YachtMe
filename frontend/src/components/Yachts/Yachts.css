@@ -1,89 +1,120 @@
-.spot-card {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(250px, 1fr));
-    column-count: 4;
-    gap: 45px;
-    margin-right: 40px;
-    
-    /* justify-content: center; */
-    padding: 20px;
+.yacht-card {
+  display: grid;
+  margin-left: 50px;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 15px;
+  margin-right: 40px;
+  padding: 20px;
   justify-content: center;
   align-content: center;
-  }
-  .tooltip {
-    display: inline-block;
-    
-  }
-  .addressAvgRating {
-    display: flex;
-    justify-content: space-between; 
-    margin-top: 10px; 
-  }
-  svg {
-    width: 16px;
-  }
-  .spot {
-    position: relative;
-    display: flex;
-    /* margin-left: 20px; */
-    justify-content: center;
+}
+
+.city-card {
+  display: grid;
+  margin-left: 50px;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 15px;
+  margin-right: 40px;
+  padding: 20px;
+  justify-content: center;
   align-content: center;
-  }
-
-  .spot {
-    transition: transform 0.3s ease;
 }
 
-.spot:hover {
-    transform: scale(1.03); 
-    cursor: pointer;
+.city-container {
+  position: relative;
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+  overflow: hidden;
 }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-   
-    background-color: rgba(51, 51, 51, 0.5);;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    
-    /* Position the tooltip text */
-    position: absolute;
-    
-    /* Fade in tooltip - uses opacity: 0 to 1 transition */
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .spot:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-.spot-img {
-    width: 279px;
-    height: 265px;
-    border-radius: 15px;
-  }
 
-  .spots-container > h1,
-.spots-container > button {
- margin-left: 40px;
+.city-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.buttons{
+
+.city-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  padding: 5px 0; /* Adjust padding to ensure text is centered */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.tooltip {
+  display: inline-block;
+}
+
+.avgRating {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  align-content: flex-start;
+}
+
+.avgRating h3 {
+  margin-top: 10px;
+}
+
+.avgRating h4 {
+  margin-top: 10px;
+  font-style: normal;
+}
+
+.price_gray {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+svg {
+  width: 16px;
+}
+
+.yacht {
+  position: relative;
+  display: flex;
+  height: 30%;
+  width: 60%;
+  justify-content: center;
+  align-content: center;
+  transition: transform 0.3s ease;
+}
+
+.yacht:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.yacht:hover h3 {
+  color: rgb(24, 193, 215);
+}
+
+.yacht-img {
+  width: 250px;
+  height: 150px;
+  border-radius: 15px;
+}
+
+.yachts-container > h1,
+.yachts-container > button {
+  margin-left: 40px;
+}
+
+.buttons {
   padding-top: 10px;
 }
+
 .buttons button {
   margin-right: 10px;
 }
-.spotDbuttons {
+
+.yachtDbuttons {
   background: #f0f0f0;
   box-shadow: 5px 5px 10px #c4c4c4, -5px -5px 10px #ffffff;
   border: none;
@@ -93,36 +124,50 @@
   cursor: pointer;
 }
 
-
-
-
-
-.spotDbuttons:hover {
-  transform:scale(1.1)
-} 
-
-
-@media screen and (max-width: 1200px) {
-  .spot-card {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  }
+.yachtDbuttons:hover {
+  transform: scale(1.1);
 }
 
+@media screen and (max-width: 1200px) {
+  .yacht-card,
+  .city-card {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
 
 .buttonAction {
   background-color: red;
 }
 
 .deleteButton {
-  /* Your styling properties */
   background-color: red;
   color: white;
   border: none;
-  /* Add more styles as needed */
 }
-.address-price{
+
+.address-price {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.see-all-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.see-all-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.see-all-button:hover {
+  background-color: #0056b3;
 }
