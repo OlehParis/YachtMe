@@ -19,6 +19,8 @@ function YachtDetails() {
     const { yachtId } = useParams();
     const dispatch = useDispatch()
     const yachtData = useSelector(state => state.yachts[yachtId]);
+   
+    
     const session = useSelector(state => state.session)
     const reviews = useSelector(state => state.reviews)
     const bookings = useSelector(state => state.bookings)
@@ -56,18 +58,17 @@ function YachtDetails() {
   const sortedR = sortedReviews.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
 
+
     useEffect(() => {
         dispatch(fetchYacht(yachtId));
       }, [dispatch, yachtId]);
 
       useEffect(() => {
         async function fetchBookingsData() {
-          try {
+         
             await dispatch(fetchBookings(yachtId));
-            // setLoadingBookings(false);
-          } catch (error) {
-            console.error('Error fetching bookings:', error);
-          }
+            
+          
         }
         fetchBookingsData();
       }, [dispatch, yachtId]);
@@ -113,12 +114,15 @@ function YachtDetails() {
     const onwerOfYacht = curUserId === yachtOwnerId;
     const notLogIn = session.user === null;
     const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
-     
+    const yachtImageObj = yachtData?.YachtImages;
+    const previewImage = yachtImageObj ? Object.values(yachtImageObj).find(image => image.preview)?.url || '' : '';
+
     return ( 
-      
+      <>
+      <div className='video-container'>
+      {previewImage && <img src={previewImage} alt="Preview" className="bg-video" />}
+      </div>
         <div className="yacht-details">
-    
-     
         <h2>{yachtData.name}</h2>
         <p>{yachtData.address}, {yachtData.state},  {yachtData.country}</p>
         <div className='images'>
@@ -225,6 +229,7 @@ function YachtDetails() {
         <div id="map" className="yacht-map"></div>
         <MapComponent lat={yachtData.lat} lng ={yachtData.lng}></MapComponent>
     </div>
+    </>
 );
 
 }
