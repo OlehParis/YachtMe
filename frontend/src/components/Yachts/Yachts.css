@@ -171,3 +171,7 @@ svg {
 .see-all-button:hover {
   background-color: #0056b3;
 }
+
+.MainScreen{
+margin-top: 100vh;
+}

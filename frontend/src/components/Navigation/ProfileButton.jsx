@@ -58,7 +58,7 @@ function ProfileButton({ user }) {
             {/* <li>{user.username}</li> */}
             <li>{user.email}</li>
             <hr />
-           <li> <Link  className='linkManageYacht' to="/spots/current">Manage Yachts</Link></li>
+           <li> <Link  className='linkManageYacht' to="/yachts/current">Manage Yachts</Link></li>
        
            <li> <Link  className='linkManageYacht' to="/reviews/current">Manage Reviews</Link></li>
            <li> <Link  className='linkManageYacht' to="/bookings/manage">Your Bookings</Link></li>

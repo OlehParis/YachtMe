@@ -6,6 +6,7 @@ import './Yachts.css';
 import { FaStar } from 'react-icons/fa';
 import { fetchYachts } from '../../store/yachts';
 import cityImages from '../../cityImages/cities';
+import FullScreenVideo from '../Video/FullScreenVideo';
 
 function YachtCard() {
     const dispatch = useDispatch();
@@ -40,6 +41,8 @@ function YachtCard() {
   
       return (
         <>
+        <FullScreenVideo />
+        <div className='MainScreen'>
           <h2>Featured Cities</h2>
           <div className="city-card">
             {allCities.map((city) => (
@@ -85,6 +88,7 @@ function YachtCard() {
             <button className="see-all-button" onClick={handleShowAllYachts}>
               {showAllYachts ? 'Show Less' : 'See All'}
             </button>
+          </div>
           </div>
         </>
       );
