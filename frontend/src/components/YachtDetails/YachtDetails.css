@@ -102,11 +102,16 @@ height: 100%;
  display: flex;
 
 }
-.info {
-  flex: 1; 
+
+.pp{
+  font-weight: bold;
+  font-size: large;
+}
+.specs{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 0.5fr))
  
 }
-
 .container-price {
   flex:2;
   position: relative;
@@ -243,4 +248,3 @@ font-size: larger;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-

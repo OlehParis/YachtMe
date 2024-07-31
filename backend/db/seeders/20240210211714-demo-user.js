@@ -33,8 +33,43 @@ module.exports = {
           phoneNumber: 7863043043,
           hashedPassword: bcrypt.hashSync("password3"),
         },
+        {
+          firstName: "Henry",
+          lastName: "London",
+          email: "user2sdd@user.io",
+          phoneNumber: 7863043043,
+          hashedPassword: bcrypt.hashSync("password3"),
+        },
+        {
+          firstName: "Nick",
+          lastName: "Milas",
+          email: "fake2asdddd22@user.io",
+          phoneNumber: 7863043243,
+          hashedPassword: bcrypt.hashSync("vbnhj123"),
+        },
+        {
+          firstName: "Michel",
+          lastName: "Hopkins",
+          email: "fake11@user.io",
+          phoneNumber: 7863243043,
+          hashedPassword: bcrypt.hashSync("vbnhj123"),
+        },
+        {
+          firstName: "Anna",
+          lastName: "Posh",
+          email: "fake2asdadd32@user.io",
+          phoneNumber: 7863043643,
+          hashedPassword: bcrypt.hashSync("vbnhj123"),
+        },
+        {
+          firstName: "Nina",
+          lastName: "Blitz",
+          email: "fakeasda@user.io",
+          phoneNumber: 7863143043,
+          hashedPassword: bcrypt.hashSync("vbnhj123"),
+        },
       ],
-     { validate: true } 
+      { validate: true } // Validate before inserting
     );
   },
 
@@ -42,10 +77,23 @@ module.exports = {
     options.tableName = "Users";
 
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, 
+    return queryInterface.bulkDelete(
+      options,
       {
-      email: { [Op.in]: ["demo@user.io", "user1@user.io", "user2@user.io"] },
-    });
-    ///...
+        email: {
+          [Op.in]: [
+            "fakeasda@user.io",
+            "demo@user.io",
+            "user1@user.io",
+            "user2@user.io",
+            "fake2asdadd32@user.io",
+            "fake11@user.io",
+            "fake2asdddd22@user.io",
+            "user2sdd@user.io",
+          ],
+        },
+      },
+      {}
+    );
   },
 };

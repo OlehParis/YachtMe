@@ -159,12 +159,39 @@ function YachtDetails() {
                         </div>
                     ))}
                 </div>
-      <div className="details">
+      {/* <div className="details"> */}
+            <h1>Specifications</h1>
             <div className='info'>
-            {yachtData.Owner && (<h2>  {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}
-            <p>{yachtData.description}</p>
+            <div className='specs'>
+              <div className='np-1'>
+                    <p className='pp'>Builder</p>
+                    <p>{yachtData.builder}</p>
+              </div>
+              <div className='np-2'>
+                    <p className='pp'>Guests</p>
+                    <p>{yachtData.guests}</p>
+              </div>
+              <div className='np-3'>
+                    <p className='pp'>Cabins</p>
+                    <p>{yachtData.cabins}</p>
+              </div>
+              <div className='np-4'>
+                    <p className='pp'>Bathrooms</p>
+                    <p>{yachtData.bathrooms}</p>
+              </div>
+              <div className='np-5'>
+                    <p className='pp'>Speed</p>
+                    <p>{yachtData.speed}</p>
+              </div>
+              <div className='np-6'>
+                    <p className='pp'>Year</p>
+                    <p>{yachtData.year}</p>
+              </div>
+              
+
+            {/* </div> */}
             </div>
-            <div className='container-price'>
+            {/* <div className='container-price'>
                 <div className='container-inner'>
                   
                 
@@ -200,7 +227,7 @@ function YachtDetails() {
                onClick={handleReserveClick}
                disabled={isReservationDisabled()}>Reserve</button> }
                 </div>
-           </div>
+           </div> */}
         </div>
         <div className='reviews'>
         <h3 className='rating2'>
