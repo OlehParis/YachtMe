@@ -27,7 +27,7 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  /* transition: background-color 0.3s ease, box-shadow 0.3s ease; */
+
 }
 
 header.transparent {
@@ -42,7 +42,7 @@ header.scrolled {
 
 
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 .profile {
   cursor: pointer;
@@ -84,7 +84,7 @@ header.scrolled {
   padding: 10px;
   height: auto;
 
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+ 
 }
 .profile-dropdown li {
   list-style-type: none;
