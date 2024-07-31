@@ -147,17 +147,18 @@ function YachtDetails() {
         <div className="yacht-details">
         <h2>{yachtData.name}</h2>
         <p>{yachtData.address}, {yachtData.state},  {yachtData.country}</p>
-        <div className='images'>
-          {yachtData.YachtImages && Object.values(yachtData.YachtImages).map(yacht => (
-            yacht.preview ? <img key={yacht.id} className='mainImage' src={yacht.url} alt={`Yacht ${yacht.id}`} /> : null
-              ))}
-          <div className="image-gallery">
-    {yachtData.YachtImages && Object.entries(yachtData.YachtImages).filter(([, image]) => image.preview === false).slice(0, 4).map(([, image], index) => (
-        <img key={index} className='gridImg' src={image.url} alt={`Image ${index + 1}`} />
-    ))}
-</div>
-            <button className='imagesButton' onClick={handleShowAllPhotos} >Show all photos</button>
-        </div>
+        
+          
+        <div className="image-gallery">
+                    {yachtData.YachtImages && Object.entries(yachtData.YachtImages).filter(([, image]) => image.preview === false).slice(0, 4).map(([, image], index) => (
+                        <div key={index} className={`image-container ${index === 3 ? 'blurred' : ''}`} onClick={index === 3 ? handleShowAllPhotos : null}>
+                            <img className='gridImg' src={image.url} alt={`Image ${index + 1}`} />
+                            {index === 3 && (
+                                <span className='imagesButton' >{Object.keys(yachtImageObj).length}+</span>
+                            )}
+                        </div>
+                    ))}
+                </div>
       <div className="details">
             <div className='info'>
             {yachtData.Owner && (<h2>  {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}

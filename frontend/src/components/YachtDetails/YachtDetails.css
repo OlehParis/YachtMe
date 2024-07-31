@@ -36,19 +36,7 @@
   cursor: pointer;
 }
 
-.imagesButton {
-  position: absolute;
-  z-index: 1;
-  display: flex;
-  justify-self: flex-end;
-  align-self: flex-end;
-  margin: 0px 0px 10px 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 15px;
-}
-.imagesButton:hover {
-  transform: scale(1.1);
-}
+
 
 .reviewButtons button:hover {
   transform:scale(1.1)
@@ -63,28 +51,28 @@
   gap: 10px;
    
 }
-/* .yacht-details button {
-  margin-right: 30px;
-} */
-.mainImage {
-  width: 100%;
-  /* max-height: 410px; */
- 
+.imagesButton {
+  position:relative; /* Absolute positioning relative to the container */
+  margin-left: -38px;
+  
+ color: white;
+  z-index: 11;
+  
+  font-size:25px;
+  text-align: center;
+  cursor: pointer;
 }
-.mainImage, .image-gallery {
-  width: 100%;
-  max-width: 630px; /* Set a max-width to keep the layout consistent */
-  height: 410px; /* Set a fixed height for consistency */
+.imagesButton:hover {
+  color: aquamarine;
 }
+
+
 .image-gallery {
   width: 100%;
   gap: 10px;
- 
   max-height: 630px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  
+  grid-template-columns: repeat(4, 24.2%);
   white-space: nowrap;
   
 }
@@ -94,9 +82,12 @@ height: 100%;
 
 }
 .gridImg img {
- /* max-width: fit-content; */
+
   object-fit: cover;
+}
+.blurred .gridImg {
   
+  filter: blur(2px);
 }
 
 .gallery {
@@ -269,11 +260,7 @@ font-size: larger;
     /* max-height: 410px; */
    
   }
-  .mainImage, .image-gallery {
-    width: 100%;
-    max-width: 100%; /* Set a max-width to keep the layout consistent */
-    height: 100%; /* Set a fixed height for consistency */
-  }
+  
   .image-gallery {
     width: 100%;
     gap: 10px;
@@ -282,7 +269,7 @@ font-size: larger;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    
+
     white-space: nowrap;
     
   }

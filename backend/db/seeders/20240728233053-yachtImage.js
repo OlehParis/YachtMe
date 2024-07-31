@@ -56,6 +56,26 @@ module.exports = {
         yachtId: 2,
         preview: false,
       },
+      {
+        url: "https://crosstalkappbuck.s3.us-east-2.amazonaws.com/yachtImg/1.jpeg",
+        yachtId: 2,
+        preview: false,
+      },
+      {
+        url: "https://crosstalkappbuck.s3.us-east-2.amazonaws.com/yachtImg/1.jpeg",
+        yachtId: 2,
+        preview: false,
+      },
+      {
+        url: "https://crosstalkappbuck.s3.us-east-2.amazonaws.com/yachtImg/1.jpeg",
+        yachtId: 2,
+        preview: false,
+      },
+      {
+        url: "https://crosstalkappbuck.s3.us-east-2.amazonaws.com/yachtImg/1.jpeg",
+        yachtId: 2,
+        preview: false,
+      },
     
       {
         url: "https://crosstalkappbuck.s3.us-east-2.amazonaws.com/yachtImg/4.jpeg",
