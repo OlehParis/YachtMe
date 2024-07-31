@@ -54,7 +54,7 @@ if(!sessionUser) {
         <div className='profile'>
             <div className='newYacht'>
                <NavLink to='/spots/new' className='newYachtLink'>
-                Create a New Yacht
+                List your yacht
                 </NavLink>
             </div>
           <ProfileButton user={sessionUser} />

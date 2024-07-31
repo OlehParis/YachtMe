@@ -17,8 +17,15 @@
 .reviewButtons button{
   background-color: black;
 }
+.yacht-main-info {
+  position: relative;
+  z-index: 10;
+  color: white;
+  text-align: center;
+  background-color: #333;
+  
 
-
+}
 .reviewButtons button{
   background: #f0f0f0;
   box-shadow: 5px 5px 10px #c4c4c4, -5px -5px 10px #ffffff;
@@ -139,6 +146,7 @@ height: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  
 }
 .rating {
  margin-top: 10px;
@@ -146,6 +154,7 @@ height: 100%;
 }
 
 .container-inner{
+  background-color: #333;
   margin: 10px 10px 10px 10px;
 
 }

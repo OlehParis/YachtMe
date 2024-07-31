@@ -46,7 +46,7 @@ function StarRating({ defaultRating, onChange }) {
   );
 }
 
-function ReviewFromModal({ spotId}) {
+function ReviewFromModal({ yachtId}) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [review, setReview] = useState('');
@@ -62,7 +62,7 @@ function ReviewFromModal({ spotId}) {
 
   const handleSubmit = () => {
     const Reviews = {
-      spotId,
+      yachtId,
       review,
       stars
     };

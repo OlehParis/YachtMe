@@ -13,6 +13,7 @@ import { fetchBookings } from '../../store/bookings';
 import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
 
 import MapComponent from './Map';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 
 function YachtDetails() {
@@ -121,6 +122,27 @@ function YachtDetails() {
       <>
       <div className='video-container'>
       {previewImage && <img src={previewImage} alt="Preview" className="bg-video" />}
+        <div className='yacht-main-info'>
+          <h1>{yachtData.length}&apos; {yachtData.name}</h1>
+          
+          <h2>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h2>
+          <div className='container-inner'> {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
+                    <OpenModalMenuItem
+                    itemText={`From $${yachtData.price4} for 4 hours`}
+                    modalComponent={CalendarModal}
+                    
+                    />
+
+                    
+
+                    </div>}
+                  
+             {!notLogIn && !onwerOfYacht && <button 
+               onClick={handleReserveClick}
+               disabled={isReservationDisabled()}>Reserve</button> }</div>
+          <span>From ${yachtData.price4}</span>
+        </div>
+     
       </div>
         <div className="yacht-details">
         <h2>{yachtData.name}</h2>
@@ -138,19 +160,13 @@ function YachtDetails() {
         </div>
       <div className="details">
             <div className='info'>
-            {yachtData.Owner && (<h2> Hosted by {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}
+            {yachtData.Owner && (<h2>  {yachtData.Owner.firstName} {yachtData.Owner.lastName}</h2>)}
             <p>{yachtData.description}</p>
             </div>
             <div className='container-price'>
                 <div className='container-inner'>
                   
-                    <div className='container'>
-                    <div className='price'><h3>${yachtData.price}</h3> <p>night</p></div>
-                    <p className='rating'><FaStar color="#ffc107"/> 
-                    {Number(avgStars) ? ` ${avgStars}` : ' New'}   
-                    {reviewCount !== 0 && ( reviewCount ? ` · ${reviewCount}` : ' · 0' ) }
-                    {reviewCount !== 0 && (reviewCount === 1 ? ' Review' : ' Reviews')}</p>
-                    </div>
+                
               
                  {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                     <div>check-in<OpenModalButton 

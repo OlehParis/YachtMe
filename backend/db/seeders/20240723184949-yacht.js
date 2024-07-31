@@ -76,7 +76,7 @@ module.exports = {
           year: 2019,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "909 Marina Rd",
           city: "Dubai",
           state: "Dubai",
@@ -97,7 +97,7 @@ module.exports = {
           year: 2021,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "1010 Marina Blvd",
           city: "Dubrovnik",
           state: "Dubrovnik-Neretva",
@@ -118,7 +118,7 @@ module.exports = {
           year: 2020,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "101 Marina Way",
           city: "Athens",
           state: "Attica",
@@ -139,7 +139,7 @@ module.exports = {
           year: 2021,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "202 Marina Rd",
           city: "Barcelona",
           state: "Catalonia",
@@ -160,7 +160,7 @@ module.exports = {
           year: 2017,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "303 Marina St",
           city: "Bodrum",
           state: "Muğla",
@@ -181,7 +181,7 @@ module.exports = {
           year: 2016,
         },
         {
-          ownerId: 1,
+          ownerId: 2,
           address: "404 Marina Ave",
           city: "British Virgin Islands",
           state: "British Virgin Islands",
@@ -202,7 +202,7 @@ module.exports = {
           year: 2015,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "505 Marina Ln",
           city: "Cancun",
           state: "Quintana Roo",
@@ -223,7 +223,7 @@ module.exports = {
           year: 2022,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "606 Marina Dr",
           city: "Cartagena",
           state: "Bolívar",
@@ -244,7 +244,7 @@ module.exports = {
           year: 2018,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "707 Marina Blvd",
           city: "Casa De Campo",
           state: "La Romana",
