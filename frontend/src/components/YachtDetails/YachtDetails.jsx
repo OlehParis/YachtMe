@@ -191,7 +191,7 @@ function YachtDetails() {
 
             {/* </div> */}
             </div>
-            {/* <div className='container-price'>
+            <div className='container-price'>
                 <div className='container-inner'>
                   
                 
@@ -227,7 +227,7 @@ function YachtDetails() {
                onClick={handleReserveClick}
                disabled={isReservationDisabled()}>Reserve</button> }
                 </div>
-           </div> */}
+           </div>
         </div>
         <div className='reviews'>
         <h3 className='rating2'>
