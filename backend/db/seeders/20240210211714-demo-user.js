@@ -10,62 +10,63 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    console.log('Seeding users...');
     await User.bulkCreate(
       [
         {
           firstName: "Mike",
           lastName: "Doe",
           email: "demo@user.io",
-          phoneNumber: 7863043243,
+          phoneNumber: "7863043243", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password"),
         },
         {
           firstName: "Nick",
           lastName: "Robson",
           email: "user1@user.io",
-          phoneNumber: 7863043143,
+          phoneNumber: "7863043143", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password2"),
         },
         {
           firstName: "Lina",
           lastName: "Pudge",
           email: "user2@user.io",
-          phoneNumber: 7863043043,
+          phoneNumber: "7863043043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password3"),
         },
         {
           firstName: "Henry",
           lastName: "London",
           email: "user2sdd@user.io",
-          phoneNumber: 7863043043,
+          phoneNumber: "7863043043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password3"),
         },
         {
           firstName: "Nick",
           lastName: "Milas",
           email: "fake2asdddd22@user.io",
-          phoneNumber: 7863043243,
+          phoneNumber: "7863043243", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
         },
         {
           firstName: "Michel",
           lastName: "Hopkins",
           email: "fake11@user.io",
-          phoneNumber: 7863243043,
+          phoneNumber: "7863243043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
         },
         {
           firstName: "Anna",
           lastName: "Posh",
           email: "fake2asdadd32@user.io",
-          phoneNumber: 7863043643,
+          phoneNumber: "7863043643", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
         },
         {
           firstName: "Nina",
           lastName: "Blitz",
           email: "fakeasda@user.io",
-          phoneNumber: 7863143043,
+          phoneNumber: "7863143043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
         },
       ],

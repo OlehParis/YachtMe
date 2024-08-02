@@ -39,7 +39,7 @@ module.exports = {
           allowNull: true,
         },
         phoneNumber:{
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING(256),
           allowNull: false,
         },
         referralCode:{
