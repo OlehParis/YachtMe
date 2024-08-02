@@ -22,7 +22,7 @@ const validateSignup = [
 ];
 
 router.post('/', validateSignup, async (req, res) => {
-  const { firstName, lastName, email, password, phoneNumber,referralCode } = req.body;
+  const { firstName, lastName, email, password, phoneNumber, referralCode } = req.body;
 
   const existingEmailUser = await User.findOne({
     where: { email: email },
@@ -32,17 +32,6 @@ router.post('/', validateSignup, async (req, res) => {
     return res.status(500).json({
       message: 'User already exists',
       errors: { email: 'User with that email already exists' },
-    });
-  }
-
-  const existingUsernameUser = await User.findOne({
-    where: { email: email },
-  });
-
-  if (existingUsernameUser) {
-    return res.status(500).json({
-      message: 'User already exists',
-      errors: { username: 'User with that email already exists' },
     });
   }
 
@@ -62,7 +51,7 @@ router.post('/', validateSignup, async (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     referralCode:user.referralCode,
-    
+    phoneNumber:user.phoneNumber
 
   };
 
@@ -71,6 +60,44 @@ router.post('/', validateSignup, async (req, res) => {
   return res.json({
     user: safeUser,
   });
+});
+
+
+// Update user profile route
+router.put("/profile", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const { email, phoneNumber, image, password } = req.body;
+
+  if (!email || !phoneNumber) {
+    return res.status(400).json({ message: "Email and phone number cannot be null or empty" });
+  }
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    if (image) user.image = image;
+    if (password) user.hashedPassword = bcrypt.hashSync(password);
+
+    await user.save();
+
+    const updatedUser = {
+      id: user.id,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      image: user.image,
+    };
+
+    return res.json({ user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 module.exports = router;

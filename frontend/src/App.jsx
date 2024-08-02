@@ -13,6 +13,7 @@ import ManageReviews from './components/YachtDetails/ManageReviews';
 import RequestToBook from './components/YachtDetails/RequestToBook';
 import YourBookings from './components/Yachts/YourBookings';
 import ImageGallery from './components/YachtDetails/ImageGallery';
+import UserProfile from './components/ManageProfile/ManageProfile';
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,10 @@ function App() {
         {
           path: '/',
           element:   <YachtCard yacht= {yachts} /> 
+        },
+        {
+          path: '/users/profile',
+          element:   <UserProfile  /> 
         },
         {
           path: "yachts/:yachtId",

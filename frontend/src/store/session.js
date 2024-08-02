@@ -41,13 +41,14 @@ export const restoreUser = () => async (dispatch) => {
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { username, firstName, lastName, email, password } = user;
+  const { firstName, lastName, phoneNumber, email, password } = user;
   const response = await csrfFetch("/api/users", {
     method: "POST",
     body: JSON.stringify({
-      username,
+      
       firstName,
       lastName,
+      phoneNumber,
       email,
       password,
     }),
@@ -64,6 +65,40 @@ export const logout = () => async (dispatch) => {
   dispatch(removeUser());
   return response;
 };
+
+export const updateUser = (user) => async (dispatch) => {
+  // Create payload dynamically
+  const payload = {};
+
+  if (user.phoneNumber) payload.phoneNumber = user.phoneNumber;
+  if (user.email) payload.email = user.email;
+  if (user.image) payload.image = user.image;
+
+  try {
+    const response = await csrfFetch("/api/users/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      dispatch(setUser(data.user));
+    } else {
+      // Handle error responses
+      console.error("Failed to update user:", data.errors || data.message);
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error in updateUser:", error);
+    throw error;
+  }
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {

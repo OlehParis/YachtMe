@@ -121,11 +121,11 @@ function YachtDetails() {
     return ( 
       <>
       <div className='video-container'>
-      {previewImage && <img src={previewImage} alt="Preview" className="bg-video" />}
+      {previewImage && <img src={previewImage} alt="Preview" className="bg-photo" />}
         <div className='yacht-main-info'>
-          <h1>{yachtData.length}&apos; {yachtData.name}</h1>
-          
-          <h2>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h2>
+          <div id='yacht-name-length'>{yachtData.length}&apos; {yachtData.name}</div>
+          <div>{yachtData.address}, {yachtData.city}, {yachtData.state}, {yachtData.country}</div>
+          <h3>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h3>
           <div className='container-inner'> {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                     <OpenModalMenuItem
                     itemText={`From $${yachtData.price4} for 4 hours`}

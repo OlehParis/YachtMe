@@ -29,8 +29,9 @@ function LoginFormModal() {
   const isSubmitDisabled = credential.length < 4 || password.length < 6;
 
   const handleDemoUserLogin = () => {
-    setCredential('vvvv');
-    setPassword('vbnhj123');
+    setCredential('demo@user.io');
+    setPassword('password');
+   
   };
 
   return (
@@ -38,7 +39,7 @@ function LoginFormModal() {
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
   {/* Username/email input */}
-  <label htmlFor="credential">Username or Email</label>
+  <label htmlFor="credential">Email</label>
   <input
     type="text"
     id="credential"
