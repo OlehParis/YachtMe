@@ -21,7 +21,7 @@ function YachtDetails() {
     const dispatch = useDispatch()
     const yachtData = useSelector(state => state.yachts[yachtId]);
    
-    
+    // test
     const session = useSelector(state => state.session)
     const reviews = useSelector(state => state.reviews)
     const bookings = useSelector(state => state.bookings)
@@ -229,6 +229,7 @@ function YachtDetails() {
                 </div>
            </div>
         </div>
+        
         <div className='reviews'>
         <h3 className='rating2'>
   <FaStar color="#ffc107"/> 
