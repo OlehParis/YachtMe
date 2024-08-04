@@ -1,7 +1,9 @@
 const express = require("express");
 const multer = require("multer");
 const AWS = require("aws-sdk");
+const fs = require("fs");
 const { requireAuth } = require("../../utils/auth");
+
 const router = express.Router();
 
 // Configure AWS
@@ -15,8 +17,10 @@ const s3 = new AWS.S3();
 const upload = multer({ dest: "uploads/" });
 
 // POST route to upload an image
-router.post("/upload", requireAuth, upload.single("image"), async (req, res) => {
+router.post("/", requireAuth, upload.single("image"), async (req, res) => {
   const fileContent = fs.readFileSync(req.file.path);
+  console.log("S3 Bucket Name:", process.env.AWS_S3_BUCKET_NAME);
+
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: `${Date.now()}_${req.file.originalname}`, // File name you want to save as in S3

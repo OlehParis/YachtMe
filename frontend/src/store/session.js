@@ -1,23 +1,26 @@
-// frontend/src/store/session.js
-
 import { csrfFetch } from "./csrf";
 
+// Action types
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
+const UPLOAD_IMAGE_SUCCESS = "session/uploadImageSuccess";
 
-const setUser = (user) => {
-  return {
-    type: SET_USER,
-    payload: user,
-  };
-};
+// Action creators
+const setUser = (user) => ({
+  type: SET_USER,
+  payload: user,
+});
 
-const removeUser = () => {
-  return {
-    type: REMOVE_USER,
-  };
-};
+const removeUser = () => ({
+  type: REMOVE_USER,
+});
 
+const uploadImageSuccess = (imageUrl) => ({
+  type: UPLOAD_IMAGE_SUCCESS,
+  payload: imageUrl,
+});
+
+// Thunks
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
@@ -45,7 +48,6 @@ export const signup = (user) => async (dispatch) => {
   const response = await csrfFetch("/api/users", {
     method: "POST",
     body: JSON.stringify({
-      
       firstName,
       lastName,
       phoneNumber,
@@ -88,7 +90,6 @@ export const updateUser = (user) => async (dispatch) => {
     if (response.ok) {
       dispatch(setUser(data.user));
     } else {
-      // Handle error responses
       console.error("Failed to update user:", data.errors || data.message);
     }
 
@@ -99,14 +100,49 @@ export const updateUser = (user) => async (dispatch) => {
   }
 };
 
-const initialState = { user: null };
+// Thunk for uploading the profile image
+export const uploadProfileImage = (imageFile) => async (dispatch) => {
+  const formData = new FormData();
+  formData.append("image", imageFile);
 
+  try {
+    const response = await csrfFetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload image");
+    }
+
+    const data = await response.json();
+    dispatch(uploadImageSuccess(data.imageUrl));
+
+    // Optionally, update user with the new image URL
+    dispatch(updateUser({ image: data.imageUrl }));
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
+};
+
+// Initial state
+const initialState = {
+  user: null,
+};
+
+// Reducer
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case UPLOAD_IMAGE_SUCCESS:
+      return {
+        ...state,
+        user: { ...state.user, image: action.payload },
+      };
     default:
       return state;
   }
