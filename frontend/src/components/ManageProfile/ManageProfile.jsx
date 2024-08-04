@@ -110,20 +110,21 @@ function UserProfile() {
           />
         </div>
         <div>
-          <label htmlFor="imageFile">Profile Image:</label>
+          <label htmlFor="imageFile" className="custom-file-upload">Select profile image</label>
           <input
             type="file"
             accept="image/*"
             id="imageFile"
             onChange={handleImageChange}
+            style={{ display: 'none' }} 
           />
         </div>
-        <button type="submit">Update Profile</button>
+        <button className="custom-file-upload" type="submit">Update Profile</button>
       </form>
       {image && (
         <div>
-          <h3>Uploaded Image:</h3>
-          <img src={image} alt="Profile" style={{ width: '200px', height: '200px' }} />
+          <h3>Profile image:</h3>
+          <img src={image} alt="Profile"  className='prof-img'  />
         </div>
       )}
     </div>
