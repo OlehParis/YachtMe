@@ -26,6 +26,7 @@ module.exports = {
           email: "user1@user.io",
           phoneNumber: "7863043143", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password2"),
+           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
         {
           firstName: "Lina",
@@ -33,6 +34,7 @@ module.exports = {
           email: "user2@user.io",
           phoneNumber: "7863043043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password3"),
+          image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
         {
           firstName: "Henry",
@@ -40,6 +42,7 @@ module.exports = {
           email: "user2sdd@user.io",
           phoneNumber: "7863043043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password3"),
+           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
         {
           firstName: "Nick",
@@ -47,6 +50,7 @@ module.exports = {
           email: "fake2asdddd22@user.io",
           phoneNumber: "7863043243", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
+             image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
         {
           firstName: "Michel",
@@ -54,6 +58,7 @@ module.exports = {
           email: "fake11@user.io",
           phoneNumber: "7863243043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
+           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
         {
           firstName: "Anna",
@@ -61,6 +66,7 @@ module.exports = {
           email: "fake2asdadd32@user.io",
           phoneNumber: "7863043643", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
+             image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
         {
           firstName: "Nina",
@@ -68,6 +74,7 @@ module.exports = {
           email: "fakeasda@user.io",
           phoneNumber: "7863143043", // Use string for phone number
           hashedPassword: bcrypt.hashSync("vbnhj123"),
+          image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
       ],
       { validate: true } // Validate before inserting

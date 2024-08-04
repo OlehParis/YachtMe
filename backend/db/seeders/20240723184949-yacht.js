@@ -13,7 +13,7 @@ module.exports = {
     await Yacht.bulkCreate(
       [
         {
-          ownerId: 1,
+          ownerId: 2,
           address: "300 Alton rd",
           city: "Miami",
           state: "FL",
@@ -55,7 +55,7 @@ module.exports = {
           year: 2018,
         },
         {
-          ownerId: 1,
+          ownerId: 3,
           address: "4441 Collins ave",
           city: "Miami Beach",
           state: "FL",
