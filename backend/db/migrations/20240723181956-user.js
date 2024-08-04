@@ -34,6 +34,11 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: true,
         },
+        title: {
+          type: Sequelize.STRING, 
+          allowNull: true,
+         
+        },
         credit: {
           type: Sequelize.INTEGER, 
           allowNull: true,

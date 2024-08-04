@@ -79,6 +79,9 @@ router.get("/",  async (req, res) => {
       firstName: user1.firstName,
       lastName: user1.lastName,
       username: user1.username,
+      phoneNumber: user1.phoneNumber,  
+      image: user1.image,
+      title: user1.title,
     };
     return res.json({
       user: safeUser,

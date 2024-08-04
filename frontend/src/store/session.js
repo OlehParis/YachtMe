@@ -75,6 +75,7 @@ export const updateUser = (user) => async (dispatch) => {
   if (user.phoneNumber) payload.phoneNumber = user.phoneNumber;
   if (user.email) payload.email = user.email;
   if (user.image) payload.image = user.image;
+  if (user.title) payload.title = user.title;
 
   try {
     const response = await csrfFetch("/api/users/profile", {

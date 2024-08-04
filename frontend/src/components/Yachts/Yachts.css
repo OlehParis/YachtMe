@@ -204,3 +204,10 @@ margin-top: 100vh;
   height: 100%;
   object-fit: cover;
  }
+
+ .custom-file-upload:disabled {
+  background-color: #cccccc; /* Gray background for disabled state */
+  color: #666666;           /* Dimmed text color */
+  cursor: not-allowed;      /* Not-allowed cursor to indicate non-clickable */
+  opacity: 0.6;             /* Reduced opacity for visual feedback */
+}

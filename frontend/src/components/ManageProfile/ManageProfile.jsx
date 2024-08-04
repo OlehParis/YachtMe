@@ -11,13 +11,17 @@ function UserProfile() {
   const [phoneNumber, setPhoneNumber] = useState(sessionUser?.phoneNumber || '');
   const [image, setImage] = useState(sessionUser?.image || '');
   const [imageFile, setImageFile] = useState(null);
+  const [title, setTitle] = useState(sessionUser?.title || 'Yacht Owner');
   const [message, setMessage] = useState('');
+
+
 
   useEffect(() => {
     if (sessionUser) {
       setEmail(sessionUser.email || '');
       setPhoneNumber(sessionUser.phoneNumber || '');
       setImage(sessionUser.image || '');
+      setTitle(sessionUser.title || 'Yacht Owner')
     }
   }, [sessionUser]);
 
@@ -56,7 +60,7 @@ function UserProfile() {
         });
 
         imageUrl = response.data.imageUrl;
-        setImage(imageUrl); // Update local state with new image URL
+        setImage(imageUrl); 
       } catch (error) {
         console.error('Error uploading image:', error);
         setMessage('Failed to upload image.');
@@ -67,7 +71,8 @@ function UserProfile() {
     const updatedUser = {
       email,
       phoneNumber,
-      image: imageUrl, // Use the uploaded image URL
+      image: imageUrl,
+      title, // Use the uploaded image URL
     };
 
     try {
@@ -89,6 +94,15 @@ function UserProfile() {
       <h2>Update Profile</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
+      {image && (
+        <div>
+          <h3>Profile image:</h3>
+          <div className='profile-image-container'>
+
+          <img src={image} alt="Profile"  className='prof-img'  />
+          </div>
+        </div>
+      )}
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -110,6 +124,19 @@ function UserProfile() {
           />
         </div>
         <div>
+          <label htmlFor="title">Title:</label>
+          <select
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          >
+            <option value="">Select a title</option>
+            <option value="Yacht Owner">Yacht Owner</option>
+            <option value="Broker">Broker</option>
+          </select>
+        </div>
+        <div>
           <label htmlFor="imageFile" className="custom-file-upload">Select profile image</label>
           <input
             type="file"
@@ -119,14 +146,15 @@ function UserProfile() {
             style={{ display: 'none' }} 
           />
         </div>
-        <button className="custom-file-upload" type="submit">Update Profile</button>
+        <button
+          className="custom-file-upload"
+          type="submit"
+          // disabled={sessionUser?.image == null} 
+          >
+          Update Profile
+        </button>
       </form>
-      {image && (
-        <div>
-          <h3>Profile image:</h3>
-          <img src={image} alt="Profile"  className='prof-img'  />
-        </div>
-      )}
+     
     </div>
   );
 }
