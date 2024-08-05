@@ -42,6 +42,7 @@ module.exports = {
         credit: {
           type: Sequelize.INTEGER, 
           allowNull: true,
+          defaultValue:0,
         },
         phoneNumber:{
           type: Sequelize.STRING(256),
@@ -50,10 +51,17 @@ module.exports = {
         referralCode:{
           type: Sequelize.STRING(256),
           allowNull: true,
+          unique: true,
         },
         ReferralId:{
           type: Sequelize.INTEGER,
           allowNull: true,
+          references: {
+            model: 'Users', // Referring to the Users table
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL',
         },
         hashedPassword: {
           type: Sequelize.STRING.BINARY,

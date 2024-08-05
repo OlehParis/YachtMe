@@ -8,9 +8,10 @@ const {
   restoreUser,
   requireAuth,
 } = require("../../utils/auth");
-const { User } = require("../../db/models");
+const { User , Referral } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+
 
 const validateLogin = [
   check("credential")
@@ -82,6 +83,8 @@ router.get("/",  async (req, res) => {
       phoneNumber: user1.phoneNumber,  
       image: user1.image,
       title: user1.title,
+      credit: user1.credit,
+      referralCode: user1.referralCode,
     };
     return res.json({
       user: safeUser,
