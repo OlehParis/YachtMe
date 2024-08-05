@@ -129,8 +129,13 @@ function YachtDetails() {
          <div className='profile-yacht'> 
             <div className='profile-image-container'>
               <img src={yachtData.Owner?.image} alt="Profile"  className='prof-img'  />
-            </div>
-          <h2>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h2> </div>
+            </div >
+
+            <div id='name-title'>
+              <h2>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h2>
+              <p>  {yachtData.Owner?.title || 'Yacht Broker'} </p>
+              </div>
+           </div>
           <div className='container-inner'> {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                     <OpenModalMenuItem
                     itemText={`From $${yachtData.price4} for 4 hours`}
