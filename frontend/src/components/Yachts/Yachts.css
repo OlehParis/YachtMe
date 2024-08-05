@@ -211,3 +211,11 @@ margin-top: 100vh;
   cursor: not-allowed;      /* Not-allowed cursor to indicate non-clickable */
   opacity: 0.6;             /* Reduced opacity for visual feedback */
 }
+
+
+#refCode {
+  cursor: pointer; 
+}
+#refCode:hover {
+  color: green  ;
+}

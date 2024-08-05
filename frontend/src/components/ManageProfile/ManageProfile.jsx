@@ -13,7 +13,7 @@ function UserProfile() {
   const [imageFile, setImageFile] = useState(null);
   const [title, setTitle] = useState(sessionUser?.title || 'Yacht Owner');
   const [message, setMessage] = useState('');
-
+  const [copyMessage, setCopyMessage] = useState(''); 
 
 
   useEffect(() => {
@@ -89,6 +89,18 @@ function UserProfile() {
     }
   };
 
+    // Function to copy the referral code
+    const copyReferralCode = async () => {
+      try {
+        await navigator.clipboard.writeText(sessionUser.referralCode);
+        setCopyMessage('Copied!');
+        setTimeout(() => setCopyMessage(''), 2000); // Clear message after 2 seconds
+      } catch (error) {
+        console.error('Failed to copy referral code:', error);
+        setCopyMessage('Failed to copy');
+      }
+    };
+
   return (
     <div className="user-inf">
       <h2>Update Profile</h2>
@@ -146,6 +158,11 @@ function UserProfile() {
             style={{ display: 'none' }} 
           />
         </div>
+        <div>
+        <p ><strong>Referral Code:</strong> <span id='refCode' onClick={copyReferralCode} >{sessionUser.referralCode}</span></p>
+        {copyMessage && <p style={{ color: 'green' }}>{copyMessage}</p>}
+      </div>
+        <p><strong>Credit: </strong> ${sessionUser.credit}</p>
         <button
           className="custom-file-upload"
           type="submit"
