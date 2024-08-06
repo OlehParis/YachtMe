@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import { fetchYachtReview } from '../../store/reviews';
-
-import yacht1 from '../../../dist/assets/yacht11.svg'
-import yacht2 from '../../../dist/assets/yacht2.svg'
+import yacht1 from '../../../dist/assets/yacht11-c65561f3.svg'
+import yacht2 from '../../../dist/assets/yacht2-f3cc1ce1.svg'
 import { useModal } from '../../context/Modal';
 import './ReviewFromModal.css';
 
