@@ -199,6 +199,16 @@ margin-top: 100vh;
   align-items: center;
   border: 2px solid #ccc; 
 }
+.review-image-container {
+  width: 50px;       
+  height: 50px;      
+  border-radius: 50%; 
+  overflow: hidden;  
+  display: flex;     
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ccc; 
+}
  .prof-img {
   width: 100%;
   height: 100%;

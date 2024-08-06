@@ -522,12 +522,10 @@ router.get("/:yachtId/reviews", async (req, res, next) => {
         id: review.User.id,
         firstName: review.User.firstName,
         lastName: review.User.lastName,
+        image: review.User.image
       },
 
-      ReviewImages: review.ReviewImages.map((image) => ({
-        id: image.id,
-        url: image.url,
-      })),
+     
     };
   });
   return res.json({ Reviews: resReviews });

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import { fetchYachtReview } from '../../store/reviews';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+
 import yacht1 from '../../../dist/assets/yacht11.svg'
 import yacht2 from '../../../dist/assets/yacht2.svg'
 import { useModal } from '../../context/Modal';
 import './ReviewFromModal.css';
-import { YearView } from 'react-calendar';
+
 
 function StarRating({ defaultRating, onChange }) {
   const totalStars = 5;

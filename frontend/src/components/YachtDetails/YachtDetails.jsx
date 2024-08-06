@@ -4,12 +4,13 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { fetchYacht } from '../../store/yachts';
 import './YachtDetails.css';
-import { FaStar, FaRegStar } from 'react-icons/fa';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ReviewFromModal from '../ReviewFromModal/ReviewFromModal'
 import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
 import CalendarModal from './ModalCalendar';
 import { fetchBookings } from '../../store/bookings';
+import yacht1 from '../../../dist/assets/yacht11.svg'
+import yacht2 from '../../../dist/assets/yacht2.svg'
 import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
 
 import MapComponent from './Map';
@@ -43,11 +44,20 @@ function YachtDetails() {
     const totalStars = 5;
   
     const filledStars = Array.from({ length: stars }, (_, index) => (
-      <FaStar key={index} color="#ffc107" />
+     
+      <img 
+      width= '30px'
+      key={index}
+      src={yacht1}
+      />
     ));
   
     const emptyStars = Array.from({ length: totalStars - stars }, (_, index) => (
-      <FaRegStar key={index} color="#e4e5e9" />
+      <img 
+      width= '30px'
+      key={index}
+      src={yacht2}
+      />
     ));
     return (
       <div>
@@ -117,7 +127,7 @@ function YachtDetails() {
     const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
     const yachtImageObj = yachtData?.YachtImages;
     const previewImage = yachtImageObj ? Object.values(yachtImageObj).find(image => image.preview)?.url || '' : '';
-
+    const userImageNull = session.user.image == null
     return ( 
       <>
       <div className='video-container'>
@@ -155,8 +165,7 @@ function YachtDetails() {
      
       </div>
         <div className="yacht-details">
-        <h2>{yachtData.name}</h2>
-        <p>{yachtData.address}, {yachtData.state},  {yachtData.country}</p>
+        <h1>Images</h1>
         
           
         <div className="image-gallery">
@@ -239,10 +248,12 @@ function YachtDetails() {
                 </div>
            </div>
         </div>
-        
-        <div className='reviews'>
+        <h1>Reviews</h1>
         <h3 className='rating2'>
-  <FaStar color="#ffc107"/> 
+        <img 
+       style={{width: '33px', }}
+      src={yacht1}
+      />
   
   {Number(avgStars) ? ` ${avgStars}` : ' New'}  
   {reviewCount !== 0 && ( reviewCount ? ` · ${reviewCount}` : ' · 0' ) }
@@ -250,36 +261,49 @@ function YachtDetails() {
                                        
         </h3> 
         <div id='postReviewButton'>
-        {!reviewMatchCurUserId && curUserId !== yachtOwnerId && !notLogIn && (
+        {!reviewMatchCurUserId && curUserId !== yachtOwnerId && !notLogIn && !userImageNull &&(
           <OpenModalButton
-            buttonText="Post Your Review" 
+            buttonText="Write Review" 
             modalComponent={<ReviewFromModal yachtId={yachtId}   />}
           />
         )}
         </div>
+        <div className='reviews'>
 {reviewCount !==0 && sortedR.map(review => {
     if (Number(review.yachtId) === Number(yachtId)) {
         return (
+        // <div className='all-reviews'>
             <div key={review.id} className='wow'>
-                <h3>{review.User?.firstName || session.user.firstName}</h3>
-                <p style={{ color: 'gray' }}>{formatDate(review.updatedAt.split(" ")[0])}</p>
-                <StarRating stars={review.stars} />
-                <p>{review.review}</p>
-                {review.userId === curUserId && (
+              <div id='tt4'> 
+              <div className='review-image-container'>
+              <img src={review.User?.image || session.user?.image} alt="Profile"  className='prof-img'  />
+              
+              </div>
+              {review.userId === curUserId && (
                     <OpenModalButton
+                    
                         buttonText="Delete"
                         modalComponent={<DeleteReviewModal reviewId={review.id} />}
                     />
                 )}
-            </div>
+                </div>
+              <div className='review-name'>
+                <h3>{review.User?.firstName || session.user.firstName} {review.User?.lastName || session.user.lastName}</h3>
+                <p className='date-review1' style={{  color: 'gray' }}>{formatDate(review.updatedAt.split(" ")[0])}</p>
+                <StarRating stars={review.stars} />
+                <p>{review.review}</p>
+               
+                </div>
+                </div>
+            // </div>
         );
     } else {
         return null;
     }
 })}
         
-        {reviewCount == 0 && !notLogIn && !dontShowButton &&  <h2>Be the first to post a review! </h2> }
         </div>
+        {reviewCount == 0 && !notLogIn && !dontShowButton &&  <h2>Be the first to post a review! </h2> }
 
         <div id="map" className="yacht-map"></div>
         <MapComponent lat={yachtData.lat} lng ={yachtData.lng}></MapComponent>

@@ -182,14 +182,15 @@ height: 100%;
 #postReviewButton button{
   padding-top: 6px;
   padding-bottom: 6px;
-  background-color: #d41f40;
-  color: white;
+  background-color: rgba(9, 193, 203, 0.2);
+  color: black;
   border:medium;
   border-radius: 15px;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 #postReviewButton button:hover{
-  background-color: #ba406d;
+  background-color:  rgba(9, 193, 203, 0.7);
   cursor: pointer;
 }
 
@@ -273,3 +274,53 @@ font-size: larger;
   gap: 15px;
 }
 
+.wow {
+  display: flex;
+  gap: 10px;
+  /* background-color: rgba(0, 0, 0, 0.02); */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.wow:hover{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.wow h3 {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.date-review1 {
+  margin-top: 0px;
+ 
+  
+}
+
+.reviews {
+  display:flex ;
+  column-gap: 10px;
+  
+}
+.review-name {
+  max-width: 200px;
+  height: 211px;
+  padding-right: 10px;
+}
+
+#tt4 button.hey {
+  
+ padding-left: 10px ;
+ padding-right: 10px;
+  
+}
+
+
+.yacht-map{
+  margin-top: 30px;
+}
+
+#tt4{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
