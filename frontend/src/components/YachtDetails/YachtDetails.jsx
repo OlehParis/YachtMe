@@ -7,6 +7,7 @@ import './YachtDetails.css';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
 import ReviewFromModal from '../ReviewFromModal/ReviewFromModal'
 import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
+import PriceModal from './PriceModal';
 import CalendarModal from './ModalCalendar';
 import { fetchBookings } from '../../store/bookings';
 import yacht1 from '../../../dist/assets/yacht11-c65561f3.svg'
@@ -24,6 +25,7 @@ function YachtDetails() {
    
     // test
     const session = useSelector(state => state.session)
+    const notLogIn = session.user === null;
     const reviews = useSelector(state => state.reviews)
     const bookings = useSelector(state => state.bookings)
     const [beError, setBeError] = useState(null);
@@ -32,7 +34,8 @@ function YachtDetails() {
     const navigate = useNavigate();
 
     const handleReserveClick = () => {
-        navigate('./booking',  { state: {checkIn, checkOut } });
+        // navigate('./booking',  { state: {checkIn, checkOut } });
+      <CalendarModal></CalendarModal>
 };
   const handleShowAllPhotos = () => {
         navigate('./gallery');
@@ -74,15 +77,14 @@ function YachtDetails() {
         dispatch(fetchYacht(yachtId));
       }, [dispatch, yachtId]);
 
-      useEffect(() => {
+        useEffect(() => {
         async function fetchBookingsData() {
-         
+          {!notLogIn &&
             await dispatch(fetchBookings(yachtId));
-            
-          
+          }
         }
         fetchBookingsData();
-      }, [dispatch, yachtId]);
+      }, [dispatch, yachtId, notLogIn]);
 
       const isReservationDisabled = () => {
         if (!checkIn || !checkOut) return true; // If check-in or check-out dates are not selected, disable reservation
@@ -123,11 +125,11 @@ function YachtDetails() {
 
     const dontShowButton = reviewMatchCurUserId || curUserId === yachtOwnerId;
     const onwerOfYacht = curUserId === yachtOwnerId;
-    const notLogIn = session.user === null;
+    
     const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
     const yachtImageObj = yachtData?.YachtImages;
     const previewImage = yachtImageObj ? Object.values(yachtImageObj).find(image => image.preview)?.url || '' : '';
-    const userImageNull = session.user.image == null
+    const userImageNull = session.user?.image == null
     return ( 
       <>
       <div className='video-container'>
@@ -149,18 +151,24 @@ function YachtDetails() {
           <div className='container-inner'> {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                     <OpenModalMenuItem
                     itemText={`From $${yachtData.price4} for 4 hours`}
-                    modalComponent={CalendarModal}
+                    modalComponent={<PriceModal yachtData={yachtData}/>}
                     
                     />
-
-                    
-
                     </div>}
                   
-             {!notLogIn && !onwerOfYacht && <button 
-               onClick={handleReserveClick}
-               disabled={isReservationDisabled()}>Reserve</button> }</div>
-          <span>From ${yachtData.price4}</span>
+                    {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
+                   <OpenModalButton 
+                   onButtonClick={() => {setBeError(null)}}
+                        buttonText={'Reserve'}
+                        modalComponent={<CalendarModal 
+                        onCheckInDateChange={setCheckIn}
+                        yachtId={yachtId}
+                        onCheckOutDateChange={setCheckOut} />}
+                    />
+                    
+                    </div>}
+               </div>
+        
         </div>
      
       </div>

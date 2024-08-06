@@ -13,22 +13,10 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const [checkOutDate, setCheckOutDate] = useState(null);
   
     const handleDateChange = (date) => {
-        if (!checkInDate) {
-            setCheckInDate(date);
-            onCheckInDateChange(date);
-        } else {
-            // If check-in date is after check-out date, swap them
-            if (checkInDate > date) {
-                setCheckOutDate(checkInDate);
-                setCheckInDate(date);
-                onCheckOutDateChange(checkInDate);
-                onCheckInDateChange(date);
-            } else {
-                setCheckOutDate(date);
-                onCheckOutDateChange(date);
-            }
-            closeModal();
-        }
+        setCheckInDate(date);
+        setCheckOutDate(date);
+        onCheckInDateChange(date);
+        onCheckOutDateChange(date);
     };
 
     const handleClearDates = () => {
@@ -37,7 +25,12 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     };
 
     const handleTileDisabled = ({ date }) => {
+        const today = new Date()
+        today.setHours(0 , 0 , 0 , 0)
         const bookingKeys = Object.keys(bookings);
+        if (date < today) {
+            return true;
+        }
         const dateString = date.toISOString().split('T')[0]; // Convert date to string in 'YYYY-MM-DD' format
         for (const bookingKey of bookingKeys) {
             const booking = bookings[bookingKey];
@@ -45,7 +38,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
             if (Number(yachtId) === Number(newId)) {
                 const startDate = booking.startDate.split(' ')[0]; 
                 const endDate = booking.endDate.split(' ')[0]; 
-                if (dateString >= startDate && dateString <= endDate) {
+                if (dateString >= startDate && dateString <= endDate ) {
                     return true;
                 }
             }
@@ -55,14 +48,11 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
 
     const tileClassName = ({ date }) => {
         if (checkInDate && date.getTime() === checkInDate.getTime()) {
-            return 'check-in';
-        } else if (checkOutDate && date.getTime() === checkOutDate.getTime()) {
-            return 'check-out';
-        } else if (checkInDate && checkOutDate && date > checkInDate && date < checkOutDate) {
-            return 'selected-range';
+            return 'check-in check-out'; // Combine classes if needed
         }
         return null;
     };
+
     
 
     return (
@@ -76,7 +66,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
                tileClassName={tileClassName}
                
             />
-            <button onClick={handleClearDates}>Clear Dates</button>
+            <button onClick={handleClearDates}>Clear Date</button>
             <button onClick={closeModal}>Close</button>
         </div>
     );

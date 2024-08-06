@@ -18,12 +18,14 @@
   background-color: black;
 }
 .yacht-main-info {
+  display: flex;
+  justify-self: start;
   position: relative;
   z-index: 10;
   color: white;
-  text-align: center;
-  margin-right: 450px;
-  margin-top: 200px;
+  /* text-align: center; */
+  
+  margin-left: 10%;
   display: block;
 }
 
@@ -154,9 +156,10 @@ height: 100%;
 }
 
 .container-inner{
-  background-color: #333;
+  display: flex;
+  /* background-color: #333; */
   margin: 10px 10px 10px 10px;
-
+  gap: 20px;
 }
 .container-price button{
   margin-left: 20%;
@@ -323,4 +326,16 @@ font-size: larger;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.price-modal{
+  /* display: flex; */
+  padding: 20px 20px 20px 20px;
+  font-size: larger;
+  
+  
+  /* margin-right: -40px; */
+}
+.price-modal h1{
+margin-left: 0px;
 }
