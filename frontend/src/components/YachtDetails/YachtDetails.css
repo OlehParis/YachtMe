@@ -193,7 +193,7 @@ height: 100%;
   margin-bottom: 20px;
 }
 #postReviewButton button:hover{
-  background-color:  rgba(9, 193, 203, 0.7);
+  background-color:  rgba(149, 218, 221, 0.1);
   cursor: pointer;
 }
 
@@ -201,6 +201,11 @@ height: 100%;
 .modal-calendar {
   padding: 10px 20px 20px 20px;
   border-radius: 20px;
+  position: absolute; 
+  background-color: rgba(255, 255, 255, 0.765);
+  /* top: 50%;  */
+  
+  transform: translateY(-55%);
 }
 
 
@@ -330,12 +335,43 @@ font-size: larger;
 
 .price-modal{
   /* display: flex; */
-  padding: 20px 20px 20px 20px;
+  padding: 20px 10px 10px 20px;
   font-size: larger;
+  width: 250px;
+  transform: translateY(-50%);
+  border-radius: 20px;
+  position: absolute; 
+  background-color: rgba(255, 255, 255, 0.765);
   
-  
-  /* margin-right: -40px; */
 }
 .price-modal h1{
 margin-left: 0px;
+}
+
+
+.react-time-picker__wrapper input {
+  
+  border-radius: 4px;
+  padding: 5px; 
+  border: 1px solid black; 
+}
+
+.react-time-picker__inputGroup__hour {
+  width: 35px !important; /* Apply width directly to hour input */
+}
+
+.react-time-picker__inputGroup__minute {
+  width: 35px !important; /* Apply width directly to hour input */
+}
+.react-time-picker__inputGroup__leadingZero {
+  display: none;
+}
+
+#all-buttons{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#continue{
+  right: 100%;
 }

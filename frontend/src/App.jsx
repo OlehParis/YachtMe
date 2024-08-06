@@ -76,7 +76,7 @@ function App() {
         },
         {
           path: "yachts/:yachtId/booking",
-          element:  <RequestToBook review = {reviews}/>
+          element:  <RequestToBook />
         },
         {
           path: "bookings/manage",

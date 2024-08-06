@@ -2,8 +2,11 @@ import './YachtDetails.css';
 import { useState } from 'react';
 import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
+// import { useNavigate } from 'react-router-dom';
+import TimePicker from 'react-time-picker';
 import { useSelector} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
+// import RequestToBook from './RequestToBook';
 
 
 function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
@@ -11,7 +14,11 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const bookings = useSelector(state => state.bookings)
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
-  
+    const [startTime, setStartTime] = useState('12:00'); 
+    const [duration, setDuration] = useState(4); 
+    const [guests, setGuests] = useState(1);
+    // const navigate = useNavigate();
+
     const handleDateChange = (date) => {
         setCheckInDate(date);
         setCheckOutDate(date);
@@ -53,7 +60,42 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
         return null;
     };
 
+    const handleTimeChange = (time) => {
+        setStartTime(time);
+    };
+    const handleGuestChange = (event) => {
+        setGuests(parseInt(event.target.value));
+    };
+    const handleDurationChange = (event) => {
+        setDuration(parseInt(event.target.value));
+    };
+       // Function to calculate and log end time
+       const calculateEndTime = () => {
+        const [hour, minute] = startTime.split(':').map(Number);
+        const startDate = new Date();
+        startDate.setHours(hour, minute);
+
+        const endDate = new Date(startDate);
+        endDate.setHours(startDate.getHours() + duration);
+
+        const endHours = endDate.getHours().toString().padStart(2, '0');
+        const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
+
+        console.log('Selected Date:', checkInDate ? checkInDate.toLocaleDateString() : 'None');
+        console.log('Selected Time:', startTime);
+        console.log('CheckOut Time:', `${endHours}:${endMinutes}`);
+        console.log('Selected Duration:', duration + ' hours');
+        console.log('Number of Guests:', guests);
+    };
     
+    const handleCloseModal = () => {
+        calculateEndTime();
+        closeModal();
+    };
+
+    // const handleContinue = () => {
+    //     navigate('/booking');
+    //     };
 
     return (
         <div className="modal-calendar">
@@ -66,8 +108,39 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
                tileClassName={tileClassName}
                
             />
-            <button onClick={handleClearDates}>Clear Date</button>
-            <button onClick={closeModal}>Close</button>
+            <div className="time-picker">
+                <h4>Select Start Time</h4>
+                <TimePicker
+                    onChange={handleTimeChange}
+                    value={startTime}
+                    disableClock={true}
+                    format='HH:mm'
+                />
+            </div>
+            <div className="duration-selection">
+                <h4>Select Duration</h4>
+                <select onChange={handleDurationChange} value={duration}>
+                    <option value={4}>4 hours</option>
+                    <option value={6}>6 hours</option>
+                    <option value={8}>8 hours</option>
+                </select>
+            </div>
+            <div className="guest-selection">
+                <h4>Select Number of Guests</h4>
+                <select onChange={handleGuestChange} value={guests}>
+                    {[...Array(100)].map((_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                            {i + 1} Guest{ i > 0 ? 's' : '' }
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div id='all-buttons'>
+                <div> 
+                    <button onClick={handleClearDates}>Clear Date</button>
+                    <button onClick={handleCloseModal}>Close</button></div>
+                    {/* <button onClick={} id='continue'>Continue</button> */}
+                </div>
         </div>
     );
 }
