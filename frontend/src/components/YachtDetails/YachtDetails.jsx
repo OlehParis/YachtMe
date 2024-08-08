@@ -9,7 +9,7 @@ import ReviewFromModal from '../ReviewFromModal/ReviewFromModal'
 import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
 import PriceModal from './PriceModal';
 import CalendarModal from './ModalCalendar';
-import { fetchBookings } from '../../store/bookings';
+
 import yacht1 from '/yacht11.svg'
 import yacht2 from '/yacht2.svg' 
 import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
@@ -27,16 +27,14 @@ function YachtDetails() {
     const session = useSelector(state => state.session)
     const notLogIn = session.user === null;
     const reviews = useSelector(state => state.reviews)
-    const bookings = useSelector(state => state.bookings)
+    // const bookings = useSelector(state => state.bookings)
     const [beError, setBeError] = useState(null);
     const [checkIn, setCheckIn] = useState(null);
     const [checkOut, setCheckOut] = useState(null);
     const navigate = useNavigate();
 
-    const handleReserveClick = () => {
-        // navigate('./booking',  { state: {checkIn, checkOut } });
-      <CalendarModal></CalendarModal>
-};
+ 
+    console.log(beError,checkIn, checkOut)
   const handleShowAllPhotos = () => {
         navigate('./gallery');
     };
@@ -77,35 +75,7 @@ function YachtDetails() {
         dispatch(fetchYacht(yachtId));
       }, [dispatch, yachtId]);
 
-        useEffect(() => {
-        async function fetchBookingsData() {
-          {!notLogIn &&
-            await dispatch(fetchBookings(yachtId));
-          }
-        }
-        fetchBookingsData();
-      }, [dispatch, yachtId, notLogIn]);
-
-      const isReservationDisabled = () => {
-        if (!checkIn || !checkOut) return true; // If check-in or check-out dates are not selected, disable reservation
-        const bookingKeys = Object.keys(bookings);
-       { for (const bookingKey of bookingKeys) {
-            const booking = bookings[bookingKey];
-            const newId = booking.yachtId;
-            if (Number(yachtId) === Number(newId)) {
-              const startDate = booking.startDate;
-              const endDate = booking.endDate;
-              if(checkIn && checkOut){
-              const newCheckIn = checkIn.toISOString().split('T')[0];
-              const newCheckOut = checkOut.toISOString().split('T')[0];
-
-                if ((newCheckIn <= startDate ) && ( newCheckOut >= endDate)) {
-                    return true; // Disable reservation if selected dates are within the blocked range
-                }}
-            }
-        }}
-        return false; // Enable reservation if selected dates are not within the blocked range
-    };
+      
 
       if (!yachtData ) {
         return <div>Loading...</div>;
@@ -158,7 +128,7 @@ function YachtDetails() {
                   
                     {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
                    <OpenModalButton 
-                   onButtonClick={() => {setBeError(null)}}
+                        onButtonClick={() => {setBeError(null)}}
                         buttonText={'Reserve'}
                         modalComponent={<CalendarModal 
                         onCheckInDateChange={setCheckIn}
@@ -218,43 +188,7 @@ function YachtDetails() {
 
             {/* </div> */}
             </div>
-            <div className='container-price'>
-                <div className='container-inner'>
-                  
-                
-              
-                 {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
-                    <div>check-in<OpenModalButton 
-                   onButtonClick={() => {setBeError(null)}}
-                        buttonText={    <input
-                          type="text"
-                          placeholder={checkIn ? checkIn.toLocaleDateString() : new Date().toLocaleDateString()}
-                          readOnly/>}
-                        modalComponent={<CalendarModal 
-                        onCheckInDateChange={setCheckIn}
-                        yachtId={yachtId}
-                        onCheckOutDateChange={setCheckOut} />}
-                    />
-                    </div>
-                    <div>check-out<OpenModalButton 
-                        buttonText={    <input
-                          type="text"
-                          placeholder={checkOut ? checkOut.toLocaleDateString() : 'Add date'}
-                          readOnly/>}
-                        modalComponent={<CalendarModal
-                        beError={beError}  
-                        onCheckInDateChange={setCheckIn}
-                        onCheckOutDateChange={setCheckOut} />}
-                    />
-                    
-                    </div>
-                    </div>}
-                  
-             {!notLogIn && !onwerOfYacht && <button 
-               onClick={handleReserveClick}
-               disabled={isReservationDisabled()}>Reserve</button> }
-                </div>
-           </div>
+       
         </div>
         <h1>Reviews</h1>
         <h3 className='rating2'>

@@ -1,12 +1,12 @@
 import './YachtDetails.css';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 // import { useNavigate } from 'react-router-dom';
 import TimePicker from 'react-time-picker';
 import { useSelector, useDispatch} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
-import { fetchCreateBooking } from '../../store/bookings';
+import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
 // import RequestToBook from './RequestToBook';
 
 
@@ -21,6 +21,11 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const [guests, setGuests] = useState(1);
     // const navigate = useNavigate();
 
+
+    useEffect(() => {
+        dispatch(fetchBookings(yachtId));
+    }, [dispatch, yachtId]);
+
     const handleDateChange = (date) => {
         setCheckInDate(date);
         setCheckOutDate(date);
@@ -34,25 +39,26 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     };
 
     const handleTileDisabled = ({ date }) => {
-        const today = new Date()
-        today.setHours(0 , 0 , 0 , 0)
-        const bookingKeys = Object.keys(bookings);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
         if (date < today) {
             return true;
         }
-        const dateString = date.toISOString().split('T')[0]; // Convert date to string in 'YYYY-MM-DD' format
-        for (const bookingKey of bookingKeys) {
+
+        for (const bookingKey in bookings) {
             const booking = bookings[bookingKey];
             const newId = booking.yachtId;
             if (Number(yachtId) === Number(newId)) {
-                const startDate = booking.startDate?.split(' ')[0]; 
-                const endDate = booking.endDate?.split(' ')[0]; 
-                if (dateString >= startDate && dateString <= endDate ) {
+                const startDateTime = new Date(booking.startDateTime);
+                const endDateTime = new Date(booking.endDateTime);
+
+                // Check if the current date falls within any existing booking's range
+                if (date >= startDateTime && date <= endDateTime) {
                     return true;
                 }
             }
         }
-        return false; // Enable the date
+        return false;
     };
 
     const tileClassName = ({ date }) => {

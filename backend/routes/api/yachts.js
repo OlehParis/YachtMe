@@ -724,8 +724,13 @@ router.get("/:yachtId/bookings", requireAuth, async (req, res, next) => {
         "lat",
         "lng",
         "name",
+        "length",
         "description",
-        "price",
+        "price4",
+        "price6",
+        "price8",
+        "builder",
+        "cabins",
         "createdAt",
         "updatedAt",
       ],
@@ -745,8 +750,11 @@ router.get("/:yachtId/bookings", requireAuth, async (req, res, next) => {
       id: booking.id,
       yachtId: yachtId,
       userId: booking.userId,
-      startDateTime: formatDate(booking.startDateTime),
-      endDateTime: formatDate(booking.endDateTime),
+      duration: booking.duration,
+      totalPrice: booking.totalPrice,
+      guests: booking.guests,
+      startDateTime: formatWithTime(booking.startDateTime),
+      endDateTime: formatWithTime(booking.endDateTime),
       createdAt: formatWithTime(booking.createdAt),
       updatedAt: formatWithTime(booking.updatedAt),
     }));
@@ -756,8 +764,8 @@ router.get("/:yachtId/bookings", requireAuth, async (req, res, next) => {
   //if you are not owner of the Yacht
   const notOwnerBookings = allYachts[0].Bookings.map((booking) => ({
     yachtId: booking.yachtId,
-    startDateTime: formatDate(booking.startDateTime),
-    endDateTime: formatDate(booking.endDateTime),
+    startDateTime: formatWithTime(booking.startDateTime),
+    endDateTime: formatWithTime(booking.endDateTime),
     id: booking.id
   }));
 
