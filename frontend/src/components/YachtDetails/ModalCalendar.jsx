@@ -4,13 +4,15 @@ import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 // import { useNavigate } from 'react-router-dom';
 import TimePicker from 'react-time-picker';
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
+import { fetchCreateBooking } from '../../store/bookings';
 // import RequestToBook from './RequestToBook';
 
 
 function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const { closeModal } = useModal();
+    const dispatch = useDispatch();
     const bookings = useSelector(state => state.bookings)
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
@@ -43,8 +45,8 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
             const booking = bookings[bookingKey];
             const newId = booking.yachtId;
             if (Number(yachtId) === Number(newId)) {
-                const startDate = booking.startDate.split(' ')[0]; 
-                const endDate = booking.endDate.split(' ')[0]; 
+                const startDate = booking.startDate?.split(' ')[0]; 
+                const endDate = booking.endDate?.split(' ')[0]; 
                 if (dateString >= startDate && dateString <= endDate ) {
                     return true;
                 }
@@ -93,9 +95,40 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
         closeModal();
     };
 
-    // const handleContinue = () => {
-    //     navigate('/booking');
-    //     };
+    // Function to calculate end time and submit the booking
+  const handleSubmitBooking = async () => {
+    if (!checkInDate || !startTime) {
+      alert('Please select a valid date and start time.');
+      return;
+    }
+
+    const [hour, minute] = startTime.split(':').map(Number);
+    const startDate = new Date(checkInDate);
+    startDate.setHours(hour, minute);
+
+    const endDate = new Date(startDate);
+    endDate.setHours(startDate.getHours() + duration);
+
+    const bookingData = {
+      yachtId,
+      startDateTime: startDate.toISOString(),
+      endDateTime: endDate.toISOString(),
+      duration,
+      guests,
+      totalPrice: 23, // Replace with actual pricing logic
+    };
+
+    console.log('Booking Data:', bookingData);
+
+    try {
+      await dispatch(fetchCreateBooking(bookingData));
+      console.log('Booking created successfully!');
+      closeModal();
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      alert('Failed to create booking. Please try again.');
+    }
+  };
 
     return (
         <div className="modal-calendar">
@@ -139,7 +172,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
                 <div> 
                     <button onClick={handleClearDates}>Clear Date</button>
                     <button onClick={handleCloseModal}>Close</button></div>
-                    {/* <button onClick={} id='continue'>Continue</button> */}
+                    <button onClick={handleSubmitBooking} >Continue</button>
                 </div>
         </div>
     );

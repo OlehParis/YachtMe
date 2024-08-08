@@ -10,7 +10,7 @@ import CreateYacht from './components/CreateYacht/CreateYacht';
 import ManageYachts from './components/Yachts/ManageYachts'
 import EditYacht from './components/CreateYacht/EditYacht';
 import ManageReviews from './components/YachtDetails/ManageReviews';
-import RequestToBook from './components/YachtDetails/RequestToBook';
+// import RequestToBook from './components/YachtDetails/RequestToBook';
 import YourBookings from './components/Yachts/YourBookings';
 import ImageGallery from './components/YachtDetails/ImageGallery';
 import UserProfile from './components/ManageProfile/ManageProfile';
@@ -74,10 +74,10 @@ function App() {
           path: "reviews/current",
           element:  <ManageReviews review = {reviews}/>
         },
-        {
-          path: "yachts/:yachtId/booking",
-          element:  <RequestToBook />
-        },
+        // {
+        //   path: "yachts/:yachtId/booking",
+        //   element:  <RequestToBook />
+        // },
         {
           path: "bookings/manage",
           element:  <YourBookings yacht = {yachts}/>

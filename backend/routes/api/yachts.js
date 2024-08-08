@@ -618,6 +618,8 @@ const validateBooking = [
     }),
   handleValidationErrors,
 ];
+
+
 //Create a Booking from a Yacht based on the Yacht's id
 
 router.post(
@@ -626,7 +628,7 @@ router.post(
   validateBooking,
   async (req, res, next) => {
     const curUserId = req.user.id;
-    const { startDateTime, endDateTime, totalPrice } = req.body;
+    const { startDateTime, endDateTime, totalPrice , duration, guests} = req.body;
     const { yachtId } = req.params;
 
     // Retrieve yacht information along with associated bookings
@@ -648,34 +650,34 @@ router.post(
     }
 
     const arrBookings = yachtByPk.dataValues.Bookings || [];
-    let hasConflict = false;
-    const conflicts = {};
+    // let hasConflict = false;
+    // const conflicts = {};
 
-    for (let booking of arrBookings) {
-      const bs = new Date(booking.startDateTime).getTime();
-      const be = new Date(booking.endDateTime).getTime();
-      const s = new Date(startDateTime).getTime();
-      const e = new Date(endDateTime).getTime();
+    // for (let booking of arrBookings) {
+    //   const bs = new Date(booking.startDateTime).getTime();
+    //   const be = new Date(booking.endDateTime).getTime();
+    //   const s = new Date(startDateTime).getTime();
+    //   const e = new Date(endDateTime).getTime();
 
-      // Check for overlap between the existing booking and the new booking
-      if ((s <= be && e > bs) || (bs <= e && be > s)) {
-        hasConflict = true;
-        if ((s >= bs && s <= be) || (s < bs && e > be)) {
+    //   // Check for overlap between the existing booking and the new booking
+    //   if ((s <= be && e > bs) || (bs <= e && be > s)) {
+    //     hasConflict = true;
+    //     if ((s >= bs && s <= be) || (s < bs && e > be)) {
        
-          conflicts.startDateTime = "Start date conflicts with an existing booking";
-        }
-        if ((e >= bs && e <= be) || (e > be && s < bs)) {
-          conflicts.endDateTime = "End date conflicts with an existing booking";
-        }
-      }
-    }
+    //       conflicts.startDateTime = "Start date conflicts with an existing booking";
+    //     }
+    //     if ((e >= bs && e <= be) || (e > be && s < bs)) {
+    //       conflicts.endDateTime = "End date conflicts with an existing booking";
+    //     }
+    //   }
+    // }
 
-    if (hasConflict) {
-      return res.status(403).json({
-        message: "Sorry, this yacht is already booked for the specified dates",
-        errors: conflicts,
-      });
-    }
+    // if (hasConflict) {
+    //   return res.status(403).json({
+    //     message: "Sorry, this yacht is already booked for the specified dates",
+    //     errors: conflicts,
+    //   });
+    // }
 
 
 
@@ -686,14 +688,18 @@ router.post(
       totalPrice: totalPrice,
       startDateTime: startDateTime,
       endDateTime: endDateTime,
+      duration,
+      guests,
     });
     const resBooking = {
       id: newBooking.id,
       yachtId: Number(newBooking.yachtId),
       userId: newBooking.userId,
-      totalPrice: newBooking,totalPrice,
-      startDateTime: formatDate(newBooking.startDateTime),
-      endDateTime: formatDate(newBooking.endDateTime),
+      totalPrice: newBooking.totalPrice,
+      startDateTime: formatWithTime(newBooking.startDateTime),
+      endDateTime: formatWithTime(newBooking.endDateTime),
+      duration: newBooking.duration,
+      guests: newBooking.guests,
       createdAt: formatWithTime(newBooking.createdAt),
       updatedAt: formatWithTime(newBooking.updatedAt),
     };

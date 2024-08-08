@@ -39,6 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         type: Sequelize.STRING
       },
       yachtId: DataTypes.INTEGER,
+      duration: {
+        type: DataTypes.INTEGER, // Duration in hours
+        allowNull: false,
+      },
+      guests: {
+        type: DataTypes.INTEGER, // Number of guests
+        allowNull: false,
+      },
     },
     {
       sequelize,

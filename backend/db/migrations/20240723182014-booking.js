@@ -29,7 +29,14 @@ module.exports = {
       },
       totalPrice: {
         type: Sequelize.STRING,
-        
+      },
+      duration: {
+        type: Sequelize.INTEGER, 
+        allowNull: false,
+      },
+      guests: {
+        type: Sequelize.INTEGER, 
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

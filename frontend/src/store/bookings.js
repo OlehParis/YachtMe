@@ -1,21 +1,27 @@
 import { csrfFetch } from "./csrf";
 
+// Action Types
+const POST_BOOKING = 'POST_BOOKING';
+const GET_BOOKINGS = 'GET_BOOKINGS';
+const USER_BOOKINGS = 'USER_BOOKINGS';
+const DELETE_BOOKING = 'DELETE_BOOKING';
+
 export const postBooking = (bookings) => ({
-  type: "POST_BOOKING",
+  type: POST_BOOKING,
   payload: bookings,
 });
 
 export const getBookings = (bookings) => ({
-  type: "GET_BOOKINGS",
+  type: GET_BOOKINGS,
   payload: bookings,
 });
 
 export const getUserBookings = (bookings) => ({
-  type: 'USER_BOOKINGS',
+  type: USER_BOOKINGS,
   payload:bookings,
 });
 export const deleteBookingById = (bookingId) => ({
-  type: "DELETE_BOOKING",
+  type: DELETE_BOOKING,
   payload: bookingId,
 });
 
@@ -23,9 +29,7 @@ export const deleteBooking = (bookingId) => {
   return async (dispatch) => {
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+     
     });
 
     if (response.ok) {
@@ -64,7 +68,7 @@ export const fetchBookings = (bookings) => {
   };
 };
 
-export const fetchBooking = (bookings) => {
+export const fetchCreateBooking = (bookings) => {
   return async (dispatch) => {
     const yachtId = bookings.yachtId;
     const response = await csrfFetch(`/api/yachts/${yachtId}/bookings`, {
@@ -86,25 +90,25 @@ const initialState = {};
 
 const bookingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "POST_BOOKING": {
+    case POST_BOOKING: {
       return {
         ...state,
         [action.payload.id]: action.payload,
       };
     }
-    case "GET_BOOKINGS": {
+    case GET_BOOKINGS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case "USER_BOOKINGS": {
+    case USER_BOOKINGS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case "DELETE_BOOKING": {
+    case DELETE_BOOKING: {
       const newState = { ...state };
       delete newState[action.payload];
       return newState;
