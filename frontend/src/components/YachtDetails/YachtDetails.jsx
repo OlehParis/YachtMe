@@ -10,8 +10,8 @@ import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
 import PriceModal from './PriceModal';
 import CalendarModal from './ModalCalendar';
 import { fetchBookings } from '../../store/bookings';
-import yacht1 from '../../../dist/assets/yacht11-c65561f3.svg'
-import yacht2 from '../../../dist/assets/yacht2-f3cc1ce1.svg'
+import yacht1 from '/yacht11.svg'
+import yacht2 from '/yacht2.svg'
 import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
 
 import MapComponent from './Map';
