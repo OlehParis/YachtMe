@@ -631,6 +631,17 @@ router.post(
     const { startDateTime, endDateTime, totalPrice , duration, guests} = req.body;
     const { yachtId } = req.params;
 
+// Helper function to adjust date by a specified hour offset
+const adjustDateByOffset = (dateString, hourOffset) => {
+  const date = new Date(dateString);
+  date.setHours(date.getHours() + hourOffset);
+  return date;
+};
+// Helper function to format date with time
+const formatWithTime = (date) => {
+  return date.toISOString().replace('T', ' ').substring(0, 16);
+};
+
     // Retrieve yacht information along with associated bookings
     const yachtByPk = await Yacht.findByPk(yachtId, {
       include: [Booking],
@@ -681,13 +692,16 @@ router.post(
 
 
 
+    // Adjust startDateTime and endDateTime by -4 hours
+    const adjustedStartDateTime = adjustDateByOffset(startDateTime, -4);
+    const adjustedEndDateTime = adjustDateByOffset(endDateTime, -4);
     // Create new booking
     const newBooking = await Booking.create({
       yachtId: yachtId,
       userId: curUserId,
       totalPrice: totalPrice,
-      startDateTime: startDateTime,
-      endDateTime: endDateTime,
+      startDateTime:adjustedStartDateTime,
+      endDateTime: adjustedEndDateTime,
       duration,
       guests,
     });
@@ -696,8 +710,8 @@ router.post(
       yachtId: Number(newBooking.yachtId),
       userId: newBooking.userId,
       totalPrice: newBooking.totalPrice,
-      startDateTime: formatWithTime(newBooking.startDateTime),
-      endDateTime: formatWithTime(newBooking.endDateTime),
+      startDateTime: formatWithTime(adjustedStartDateTime),
+      endDateTime: formatWithTime(adjustedEndDateTime),
       duration: newBooking.duration,
       guests: newBooking.guests,
       createdAt: formatWithTime(newBooking.createdAt),

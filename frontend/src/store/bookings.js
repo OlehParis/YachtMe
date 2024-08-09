@@ -81,7 +81,7 @@ export const fetchCreateBooking = (bookings) => {
     
 
     const data = await response.json();
-
+    console.log('from store',data)
     dispatch(postBooking(data));
   };
 };
