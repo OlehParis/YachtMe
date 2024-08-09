@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 // import { useNavigate } from 'react-router-dom';
-import TimePicker from 'react-time-picker';
+// import TimePicker from 'react-time-picker';
 import { useSelector, useDispatch} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
 import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
@@ -17,7 +17,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
     const [selectedSlot, setSelectedSlot] = useState(null);
-    const [startTime, setStartTime] = useState('12:00'); 
+    // const [ setStartTime] = useState('12:00'); 
     const [duration, setDuration] = useState(4); 
     const [guests, setGuests] = useState(1);
     // const navigate = useNavigate();
@@ -70,9 +70,9 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
         return null;
     };
 
-    const handleTimeChange = (time) => {
-        setStartTime(time);
-    };
+    // const handleTimeChange = (time) => {
+    //     setStartTime(time);
+    // };
     const handleGuestChange = (event) => {
         setGuests(parseInt(event.target.value));
     };
