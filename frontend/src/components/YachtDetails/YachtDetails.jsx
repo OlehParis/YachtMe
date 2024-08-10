@@ -257,3 +257,7 @@ function YachtDetails() {
 }
 
 export default YachtDetails;
+
+
+
+

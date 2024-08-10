@@ -202,12 +202,16 @@ height: 100%;
   padding: 10px 20px 20px 20px;
   border-radius: 20px;
   position: absolute; 
-  background-color: rgba(255, 255, 255, 0.765);
+  background-color: rgba(255, 255, 255, 0.843);
   width: 350px;
   
   transform: translateY(-55%);
 }
-
+.modal-calendar #secondPart {
+height: 670px;
+gap: 10px;
+font-size: 20px;
+}
 
 .bookingContainer button {
  border: none;
