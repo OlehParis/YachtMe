@@ -133,6 +133,7 @@ function YachtDetails() {
                         modalComponent={<CalendarModal 
                         onCheckInDateChange={setCheckIn}
                         yachtId={yachtId}
+                        yachtData={yachtData}
                         onCheckOutDateChange={setCheckOut} />}
                     />
                     

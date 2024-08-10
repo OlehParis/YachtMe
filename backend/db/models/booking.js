@@ -17,13 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       startDateTime: {
         type: DataTypes.DATE,
-        validate: {
-          isInFuture(value) {
-            if (value < new Date()) {
-              throw new Error("startDateTime cannot be in the past");
-            }
-          },
-        },
+       
       },
       endDateTime: {
         type: DataTypes.DATE,

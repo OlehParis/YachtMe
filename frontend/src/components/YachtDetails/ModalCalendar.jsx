@@ -3,30 +3,34 @@ import { useState, useEffect} from 'react';
 import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 // import { useNavigate } from 'react-router-dom';
-// import TimePicker from 'react-time-picker';
 import { useSelector, useDispatch} from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
 import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
-// import RequestToBook from './RequestToBook';
+import RequestToBook from './RequestToBook';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 
-function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
+function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange , yachtData}) {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
     const bookings = useSelector(state => state.bookings)
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
     const [selectedSlot, setSelectedSlot] = useState(null);
-    // const [ setStartTime] = useState('12:00'); 
     const [duration, setDuration] = useState(4); 
     const [guests, setGuests] = useState(1);
+    const [isFirstPartVisible, setIsFirstPartVisible] = useState(true);
     // const navigate = useNavigate();
 
     const timeSlots = ['6:00','07:00','08:00','9:00', '10:00', '11:00','12:00','13:00', '14:00', '15:00', '16:00','17:00', '18:00', '19:00', '20:00',];
-    console.log(selectedSlot)
+  
     useEffect(() => {
         dispatch(fetchBookings(yachtId));
     }, [dispatch, yachtId]);
+
+    const handleToggle = () => {
+        setIsFirstPartVisible(!isFirstPartVisible);
+      };
 
     const handleDateChange = (date) => {
         setCheckInDate(date);
@@ -39,6 +43,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
         setCheckInDate(null);
         setCheckOutDate(null);
     };
+  
 
     const handleTileDisabled = ({ date }) => {
         const today = new Date();
@@ -62,10 +67,17 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
     };
     const isSlotDisabled = (slot) => {
         if (!checkInDate) return true;
-
+        const now = new Date();
         const [slotHour, slotMinute] = slot.split(':').map(Number);
         const slotDateTime = new Date(checkInDate);
         slotDateTime.setHours(slotHour, slotMinute);
+
+        if (
+            slotDateTime.toDateString() === now.toDateString() &&
+            slotDateTime.getTime() <= now.getTime()
+        ) {
+            return true;
+        }
 
         for (const bookingKey in bookings) {
             const booking = bookings[bookingKey];
@@ -155,6 +167,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
 
     return (
         <div className="modal-calendar">
+            {isFirstPartVisible ? (<div id='firstPart'>
             <h3>Select check-in date</h3>
          
             <Calendar
@@ -197,21 +210,33 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
                     ))}
                 </select>
             </div>
-            <div id='all-buttons'>
+            <div className='all-buttons'>
                 <div> 
                     <button onClick={handleClearDates}>Clear Date</button>
-                    <button onClick={handleCloseModal}>Close</button></div>
+                    <button onClick={handleCloseModal}>Close</button>
+                    <button onClick={handleToggle}> pop</button>
+                    </div>
                     <button onClick={handleSubmitBooking} >Continue</button>
                 </div>
+                </div>): (
+                    <div id='secondPart'>
+                    <h1>Confirm your booking</h1>
+                    <div>Name of the yacht: {yachtData.name}</div>
+                    <div>Charter location: {yachtData.address}, {yachtData.city}, {yachtData.state}</div>
+                    <div>Charter day and time: {checkInDate && formatToLocalDateTime(checkInDate.toISOString())} </div>
+                   
+                    <div>Duration: {duration} hours</div>
+                    <div>End time: </div>
+                    <div>Total price: </div>
+                    <div className='all-buttons'>
+                        <button  onClick={handleToggle}>back</button>
+                    </div>
+                </div>
+                )}
+
+                
         </div>
     );
 }
 
 export default CalendarModal;
-
-
-
-// const handleCloseModal = () => {
-        
-//     closeModal();
-// };

@@ -593,26 +593,45 @@ router.post(
   handleValidationErrors
 );
 
+// Helper function to adjust date by a specified hour offset
+const adjustDateByOffset = (dateString, hourOffset) => {
+  const date = new Date(dateString);
+  date.setHours(date.getHours() + hourOffset);
+  return date;
+};
+
 const validateBooking = [
-  check("startDateTime")
+  check('startDateTime')
     .exists({ checkFalsy: true })
-    .withMessage("startDateTime is required")
+    .withMessage('startDateTime is required')
     .isISO8601()
-    .withMessage("startDateTime must be a valid date")
+    .withMessage('startDateTime must be a valid date and time')
     .custom((value, { req }) => {
-      if (new Date(value) < new Date()) {
-        throw new Error("startDateTime cannot be in the past");
+      const startDate = new Date(value); // Already in UTC
+      const now = new Date(); // Also in UTC
+      // Log the values for debugging
+      const nowAdjusted = adjustDateByOffset(new Date(now), -4);
+      const StartDateTAdjusted = adjustDateByOffset(startDate, -4)
+      console.log('startDate:', StartDateTAdjusted.toISOString());
+      console.log('now:', nowAdjusted.toISOString());
+
+      // Adjust 'now' to match the expected local time for comparison
+      if (StartDateTAdjusted.getTime() < nowAdjusted.getTime()) {
+     
+        throw new Error('startDateTime cannot be in the past');
       }
       return true;
     }),
-  check("endDateTime")
+  check('endDateTime')
     .exists({ checkFalsy: true })
-    .withMessage("endDateTime is required")
+    .withMessage('endDateTime is required')
     .isISO8601()
-    .withMessage("endDateTime must be a valid date")
+    .withMessage('endDateTime must be a valid date and time')
     .custom((value, { req }) => {
-      if (new Date(value) <= new Date(req.body.startDateTime)) {
-        throw new Error("endDateTime cannot be on or before start date");
+      const startDate = new Date(req.body.startDateTime);
+      const endDate = new Date(value);
+      if (endDate.getTime() <= startDate.getTime()) {
+        throw new Error('endDateTime cannot be on or before the start date and time');
       }
       return true;
     }),
@@ -629,6 +648,7 @@ router.post(
   async (req, res, next) => {
     const curUserId = req.user.id;
     const { startDateTime, endDateTime, totalPrice , duration, guests} = req.body;
+ 
     const { yachtId } = req.params;
 
 // Helper function to adjust date by a specified hour offset
@@ -659,38 +679,6 @@ const formatWithTime = (date) => {
         message: "Forbidden",
       });
     }
-
-    const arrBookings = yachtByPk.dataValues.Bookings || [];
-    // let hasConflict = false;
-    // const conflicts = {};
-
-    // for (let booking of arrBookings) {
-    //   const bs = new Date(booking.startDateTime).getTime();
-    //   const be = new Date(booking.endDateTime).getTime();
-    //   const s = new Date(startDateTime).getTime();
-    //   const e = new Date(endDateTime).getTime();
-
-    //   // Check for overlap between the existing booking and the new booking
-    //   if ((s <= be && e > bs) || (bs <= e && be > s)) {
-    //     hasConflict = true;
-    //     if ((s >= bs && s <= be) || (s < bs && e > be)) {
-       
-    //       conflicts.startDateTime = "Start date conflicts with an existing booking";
-    //     }
-    //     if ((e >= bs && e <= be) || (e > be && s < bs)) {
-    //       conflicts.endDateTime = "End date conflicts with an existing booking";
-    //     }
-    //   }
-    // }
-
-    // if (hasConflict) {
-    //   return res.status(403).json({
-    //     message: "Sorry, this yacht is already booked for the specified dates",
-    //     errors: conflicts,
-    //   });
-    // }
-
-
 
     // Adjust startDateTime and endDateTime by -4 hours
     const adjustedStartDateTime = adjustDateByOffset(startDateTime, -4);
