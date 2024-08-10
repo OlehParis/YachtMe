@@ -32,7 +32,7 @@ if(!sessionUser) {
     <header className={isScrolled ? 'header scrolled' : 'header transparent'}>
       <div className="logo-navbar">
         <NavLink to="/" >
-        <img className='logo' src={isScrolled ? logo : whiteLogo} alt="Yachtme" />
+        <img className='logo' src={isScrolled ? logo : logo} alt="Yachtme" />
         </NavLink>
       </div>
       {isLoaded && (
@@ -46,7 +46,7 @@ if(!sessionUser) {
       <header className={isScrolled ? 'header scrolled' : 'header transparent'}>
       <div className="logo-navbar">
         <NavLink to="/" >
-           <img className='logo' src={isScrolled ? logo : whiteLogo} alt="Yachtme" />
+           <img className='logo' src={isScrolled ? logo : logo} alt="Yachtme" />
         </NavLink>
       </div>
    

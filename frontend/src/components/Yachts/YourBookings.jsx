@@ -33,7 +33,7 @@ function YourBookings() {
     if (yachtsData && Object.keys(yachtsData).length > 0) {
         return (
             <>
-                <h1>Your Bookings</h1>
+                <h1 id='h1-bok'>Your Bookings</h1>
                 <div className="yacht-card">
                     {Object.values(yachtsData).map((yacht) => {
                         if (yacht.Yacht) {

@@ -53,8 +53,6 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
             if (Number(yachtId) === Number(newId)) {
                 const startDateTime = new Date(booking.startDateTime);
                 const endDateTime = new Date(booking.endDateTime);
-
-                // Check if the current date falls within any existing booking's range
                 if (date >= startDateTime && date <= endDateTime) {
                     return true;
                 }
@@ -62,41 +60,6 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
         }
         return false;
     };
-
-    const tileClassName = ({ date }) => {
-        if (checkInDate && date.getTime() === checkInDate.getTime()) {
-            return 'check-in check-out'; // Combine classes if needed
-        }
-        return null;
-    };
-
-    // const handleTimeChange = (time) => {
-    //     setStartTime(time);
-    // };
-    const handleGuestChange = (event) => {
-        setGuests(parseInt(event.target.value));
-    };
-    const handleDurationChange = (event) => {
-        setDuration(parseInt(event.target.value));
-    };
-    //    // Function to calculate and log end time
-    //    const calculateEndTime = () => {
-    //     const [hour, minute] = startTime.split(':').map(Number);
-    //     const startDate = new Date();
-    //     startDate.setHours(hour, minute);
-
-    //     const endDate = new Date(startDate);
-    //     endDate.setHours(startDate.getHours() + duration);
-
-    //     const endHours = endDate.getHours().toString().padStart(2, '0');
-    //     const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
-
-    //     console.log('Selected Date:', checkInDate ? checkInDate.toLocaleDateString() : 'None');
-    //     console.log('Selected Time:', startTime);
-    //     console.log('CheckOut Time:', `${endHours}:${endMinutes}`);
-    //     console.log('Selected Duration:', duration + ' hours');
-    //     console.log('Number of Guests:', guests);
-    // };
     const isSlotDisabled = (slot) => {
         if (!checkInDate) return true;
 
@@ -111,16 +74,33 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
                 const startDateTime = new Date(booking.startDateTime);
                 const endDateTime = new Date(booking.endDateTime);
 
-                if (slotDateTime >= startDateTime && slotDateTime < endDateTime) {
+                if (slotDateTime >= startDateTime && slotDateTime <= endDateTime) {
                     return true;
                 }
             }
         }
         return false;
     };
+
+    const tileClassName = ({ date }) => {
+        if (checkInDate && date.getTime() === checkInDate.getTime()) {
+            return 'check-in check-out'; // Combine classes if needed
+        }
+        return null;
+    };
+   
+    const handleGuestChange = (event) => {
+        setGuests(parseInt(event.target.value));
+    };
+    const handleDurationChange = (event) => {
+        setDuration(parseInt(event.target.value));
+    };
+    //    // Function to calculate and log end time
+
+ 
     
     const handleCloseModal = () => {
-        // calculateEndTime();
+        
         closeModal();
     };
     function formatToLocalDateTime(isoString) {
@@ -228,3 +208,10 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange }) {
 }
 
 export default CalendarModal;
+
+
+
+// const handleCloseModal = () => {
+        
+//     closeModal();
+// };

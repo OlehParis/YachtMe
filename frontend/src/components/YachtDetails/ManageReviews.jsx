@@ -26,7 +26,7 @@ function ManageReviews() {
       }
 
     return (<>
-       <h1>Manage Reviews</h1>
+       <h1 id='h1-rev'>Manage Reviews</h1>
        <div className="yacht-details">
                 {Object.keys(reviewsById).map(reviewId => {
                     const review = reviewsById[reviewId];
