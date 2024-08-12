@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import logo from './../../../../Images/logoYachtme.png'
-import whiteLogo from './../../../../Images/logoYachtmeWhite.png'
+// import whiteLogo from './../../../../Images/logoYachtmeWhite.png'
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -53,7 +53,7 @@ if(!sessionUser) {
       {isLoaded && (
         <div className='profile'>
             <div className='newYacht'>
-               <NavLink to='/spots/new' className='newYachtLink'>
+               <NavLink to='/yachts/new' className='newYachtLink'>
                 List your yacht
                 </NavLink>
             </div>

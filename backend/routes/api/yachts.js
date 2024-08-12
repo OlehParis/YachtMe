@@ -323,26 +323,31 @@ const validateYachtBody = [
     .withMessage("Longitude must be between -180 and 180"),
   check("name")
     .notEmpty()
-    .isLength({ max: 50 })
+    // .isLength({ max: 50 })
     .withMessage("Name must be less than 50 characters"),
   check("description")
     .notEmpty()
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
-  check("price")
+  check("price4")
     .notEmpty()
-    .isFloat({ min: 0 })
-    .withMessage("Price per day must be a positive number"),
+    .isInt({ min: 0 })
+    .withMessage("Price must be a positive number"),
+  check("price6")
+    .notEmpty()
+    .isInt({ min: 0 })
+    .withMessage("Price must be a positive number"),
+  check("price8")
+    .notEmpty()
+    .isInt({ min: 0 })
+    .withMessage("Price must be a positive number"),
   handleValidationErrors,
 ];
 
 //Edit a Yacht
 //Updates and returns an existing yacht.
-router.put(
-  "/:yachtId",
-  requireAuth,
-  validateYachtBody,
-  async (req, res, next) => {
+router.put("/:yachtId", requireAuth, validateYachtBody, async (req, res, next) => {
+  try {
     const { yachtId } = req.params;
     const curUserId = req.user.id;
     const {
@@ -354,7 +359,18 @@ router.put(
       lng,
       name,
       description,
-      price,
+      price4,
+      price6,
+      price8,
+      builder,
+      year,
+      bathrooms,
+      cabins,
+      length,
+      guests,
+      speed,
+      previewUrl,
+      url2,
     } = req.body;
 
     const yacht = await Yacht.findByPk(yachtId);
@@ -378,11 +394,59 @@ router.put(
       lng,
       name,
       description,
-      price,
+      price4,
+      price6,
+      price8,
+      builder,
+      year,
+      bathrooms,
+      cabins,
+      length,
+      guests,
+      speed,
+      previewUrl,
+      url2,
+      updatedAt: new Date(),
     });
+
     let resYacht = {
-      id: yacht.id,
-      ownerId: yacht.ownerId,
+      id: editYacht.id,
+      ownerId: editYacht.ownerId,
+      address: editYacht.address,
+      city: editYacht.city,
+      state: editYacht.state,
+      country: editYacht.country,
+      lat: editYacht.lat,
+      lng: editYacht.lng,
+      name: editYacht.name,
+      description: editYacht.description,
+      price4: editYacht.price4,
+      price6: editYacht.price6,
+      price8: editYacht.price8,
+      builder: editYacht.builder,
+      year: editYacht.year,
+      bathrooms: editYacht.bathrooms,
+      cabins: editYacht.cabins,
+      length: editYacht.length,
+      guests: editYacht.guests,
+      speed: editYacht.speed,
+      previewUrl: editYacht.previewUrl,
+      url2: editYacht.url2,
+      createdAt: formatWithTime(editYacht.createdAt),
+      updatedAt: formatWithTime(editYacht.updatedAt),
+    };
+
+    return res.status(200).json(resYacht);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Create a Yacht (require Auth)
+
+router.post("/", requireAuth, validateYachtBody, async (req, res, next) => {
+  try {
+    const {
       address,
       city,
       state,
@@ -391,53 +455,79 @@ router.put(
       lng,
       name,
       description,
-      price,
-      createdAt: formatWithTime(editYacht.createdAt),
-      updateAt: currentTime,
+      price4,
+      price6,
+      price8,
+      builder,
+      year,
+      bathrooms,
+      cabins,
+      length,
+      guests,
+      speed,
+      previewUrl,
+        
+    } = req.body;
+
+    const newYacht = await Yacht.create({
+      ownerId: req.user.id,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price4,
+      price6,
+      price8,
+      builder,
+      year,
+      bathrooms,
+      cabins,
+      length,
+      guests,
+      speed,
+      previewUrl,
+     
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const resYacht = {
+      id: newYacht.id,
+      ownerId: newYacht.ownerId,
+      address: newYacht.address,
+      city: newYacht.city,
+      state: newYacht.state,
+      country: newYacht.country,
+      lat: newYacht.lat,
+      lng: newYacht.lng,
+      name: newYacht.name,
+      description: newYacht.description,
+      price4: newYacht.price4,
+      price6: newYacht.price6,
+      price8: newYacht.price8,
+      builder: newYacht.builder,
+      year: newYacht.year,
+      bathrooms: newYacht.bathrooms,
+      cabins: newYacht.cabins,
+      length: newYacht.length,
+      guests: newYacht.guests,
+      speed: newYacht.speed,
+      previewUrl: newYacht.previewUrl,
+      
+      createdAt: formatWithTime(newYacht.createdAt),
+      updatedAt: formatWithTime(newYacht.updatedAt),
     };
 
-    return res.status(200).json(resYacht);
+    return res.status(201).json(resYacht);
+  } catch (err) {
+    next(err);
   }
-);
-
-//Create a Yacht (require Auth)
-router.post("/", requireAuth, validateYachtBody, async (req, res, next) => {
-  const { address, city, state, country, lat, lng, name, description, price } =
-    req.body;
-
-  const newYacht = await Yacht.create({
-    ownerId: req.user.id,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
-  const resYacht = {
-    id: newYacht.id,
-    ownerId: newYacht.ownerId,
-    address: newYacht.address,
-    city: newYacht.city,
-    state: newYacht.state,
-    country: newYacht.country,
-    lat: newYacht.lat,
-    lng: newYacht.lng,
-    name: newYacht.name,
-    description: newYacht.description,
-    price: newYacht.price,
-    createdAt: formatWithTime(newYacht.createdAt),
-    updatedAt: formatWithTime(newYacht.updatedAt),
-  };
-
-  return res.status(201).json(resYacht);
 });
+
 
 //Add an Image to a Yacht based on the Yacht's id (Auth require)
 

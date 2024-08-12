@@ -1,75 +1,70 @@
-// import { GooglePlacesAutocomplete } from 'react-google-autocomplete';
-// import Autocomplete from "react-google-autocomplete";
-import { useState} from 'react';
+import { useState } from 'react';
 import './CreateYacht.css';
 import { fetchNewYacht } from '../../store/yachts';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useGoogle from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 
-
 const CreateYacht = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
-  
   const [placeSelected, setPlaceSelected] = useState(false);
-  // const apiKey = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
+
   const [formData, setFormData] = useState({
     address: '',
     city: '',
     state: '',
     country: '',
     name: '',
-    price: '',
+    price4: '',
+    price6: '',
+    price8: '',
     description: '',
     lat: '',
     lng: '',
-    url: '', preview: true,
-    url2: '',
-    url3: '',
-    url4: '',
-    url5: '',
+    builder: '',
+    year: '',
+    bathrooms: '',
+    cabins: '',
+    length: '',
+    guests: '',
+    speed: '',
+    previewUrl: '',
+  
   });
 
   const hasImageExtension = (str) => {
-    return str.includes('png') || str.includes('jpeg') || str.includes('jpg')
+    return str.includes('png') || str.includes('jpeg') || str.includes('jpg');
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const {
     placesService,
     placePredictions,
     getPlacePredictions,
-    isPlacePredictionsLoading
+    isPlacePredictionsLoading,
   } = useGoogle({
     debounce: 200,
     language: 'en',
-    apiKey: process.env.REACT_APP_GOOGLE_PLACES_API_KEY
+    apiKey: process.env.REACT_APP_GOOGLE_PLACES_API_KEY,
   });
 
-
   const handlePlaceSelected = (place) => {
-    // Extracting place details
-   
     const { formatted_address, address_components, geometry } = place;
     const { lat, lng } = geometry.location;
- 
-    // Initialize city, state, and country
+
     let city = '';
     let state = '';
     let country = '';
-  
-    // Loop through address components to find city, state, and country
-    address_components.forEach(component => {
+
+    address_components.forEach((component) => {
       if (component.types.includes('locality')) {
         city = component.long_name;
-    
       }
       if (component.types.includes('administrative_area_level_1')) {
         state = component.long_name;
@@ -78,8 +73,7 @@ const CreateYacht = () => {
         country = component.long_name;
       }
     });
-  
-    // Update formData with the extracted data
+
     setFormData({
       ...formData,
       address: formatted_address.split(',')[0],
@@ -90,66 +84,53 @@ const CreateYacht = () => {
       lng: lng(),
     });
     document.getElementById('address').value = formatted_address.split(',')[0];
-    setPlaceSelected(true)
-};
+    setPlaceSelected(true);
+  };
 
-const validateForm = () => {
-  const newErrors = {};
-  if (formData.description.length < 30) newErrors.description = "Description must be at least 30 characters long.";
-  if (formData.country.length < 1) newErrors.country = "Country is required";
-  if (formData.address.length < 1) newErrors.address = "Address is required";
-  if (formData.city.length < 1) newErrors.city = "City is required";
-  if (formData.state.length < 1) newErrors.state = "State is required";
-  if (formData.name.length < 1) newErrors.name = "Name is required";
-  if (formData.price < 1) newErrors.price = "Price is required";
-  if (formData.url.length < 1) newErrors.url = "Preview Image is required";
-  if (!hasImageExtension(formData.url)) newErrors.urlFormat = "Preview Image has to be image format";
-  if (!(parseFloat(formData.lat) > -90 && parseFloat(formData.lat) < 90)) newErrors.lat = "Latitude must be between -90 and 90";
-  if (formData.lat.length < 1) newErrors.lat2 = "Latitude is required";
-  if (!(parseFloat(formData.lng) > -180 && parseFloat(formData.lng) < 180)) newErrors.lng = "Longitude must be between -180 and 180";
-  if (formData.lng.length < 1) newErrors.lng2 = "Longitude is required";
+  const validateForm = () => {
+    const newErrors = {};
+    if (formData.description.length < 30) newErrors.description = "Description must be at least 30 characters long.";
+    if (formData.country.length < 1) newErrors.country = "Country is required.";
+    if (formData.address.length < 1) newErrors.address = "Address is required.";
+    if (formData.city.length < 1) newErrors.city = "City is required.";
+    if (formData.state.length < 1) newErrors.state = "State is required.";
+    if (formData.name.length < 1) newErrors.name = "Name is required.";
+    if (formData.price4 < 1 || formData.price6 < 1 || formData.price8 < 1) newErrors.price = "Prices for all durations are required.";
+    if (formData.previewUrl.length < 1) newErrors.previewUrl = "Preview Image is required.";
+    if (!hasImageExtension(formData.previewUrl)) newErrors.previewUrlFormat = "Preview Image must be in a valid image format.";
 
-  return newErrors;
-};
- 
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = validateForm();
     setErrors(formErrors);
-   
-    if (Object.keys(formErrors).length === 0) { 
-      dispatch(fetchNewYacht(formData)).then(response => {
-    navigate(`/yachts/${response.id}`)
-       
-    });
-   
 
-  }
+    if (Object.keys(formErrors).length === 0) {
+      dispatch(fetchNewYacht(formData)).then((response) => {
+        navigate(`/yachts/${response.id}`);
+      });
+    }
   };
 
   return (
-    <div className='createyacht-container'>
-    <div className="create-yacht-form">
+    <div className="createyacht-container">
+      <div className="create-yacht-form">
+        <h2>List your Yacht</h2>
 
-      <h2>Create a New Yacht</h2>
+        <h4>Where&apos;s your yacht located?</h4>
 
- 
-      <h4>Where&apos;s your place located?</h4>
-      <p>Guests will only get your exact address once they booked a reservation.</p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="country">Country</label>
-        <input type="text" placeholder='Country' id="country" name="country" value={formData.country} onChange={handleChange} />
-        {errors.country && <div className="error">{errors.country}</div>}
-
-        <label htmlFor="address">Street Address</label>
+        <form onSubmit={handleSubmit}>
           <div className="eag-mb-20">
             <input
-              id="address" name="address"
+              id="address"
+              name="address"
               type="text"
               placeholder="Address"
               onChange={(e) => {
                 getPlacePredictions({
-                  input: e.target.value
+                  input: e.target.value,
                 });
               }}
             />
@@ -162,80 +143,205 @@ const validateForm = () => {
                       { placeId: item.place_id },
                       (placeDetails) => handlePlaceSelected(placeDetails)
                     );
-                  }}>
+                  }}
+                >
                   {!placeSelected && item.description}
                 </div>
               ))}
           </div>
           {errors.address && <div className="error">{errors.address}</div>}
-  
-   
-        
-        <div className="city-state">
-    <div className="input-group" id='state1' style={{width:'100%'}}>
-        <label htmlFor="city">City</label>
-        <input type="text" style={{width:'100%'}} placeholder='City' id="city" name="city" value={formData.city} onChange={handleChange} />
-        {errors.city && <div className="error">{errors.city}</div>}
-    </div>
 
-    <div className="input-group" id="state2">
-        <label htmlFor="state">State</label>
-        <input type="text" placeholder='STATE' id="state" name="state" value={formData.state} onChange={handleChange} />
-        {errors.state && <div className="error">{errors.state}</div>}
-    </div>
-</div>
- <div className="city-state">
-  <div className="input-group" id='lon-con' >
-        <label htmlFor="Latitude">Latitude</label>
-        <input type="text" placeholder='Latitude' id="lat" name="lat" value={formData.lat} onChange={handleChange} />
-        {errors.lat && <div className="error">{errors.lat}</div>}
-        {errors.lat2 && <div className="error">{errors.lat2}</div>}
-        </div>
-        <div className="input-group" id = 'lat-con'>
-        <label htmlFor="Longitude">Longitude</label>
-        <input type="text" placeholder='Longitude' id="lng" name="lng" value={formData.lng} onChange={handleChange} />
-        {errors.lng && <div className="error">{errors.lng}</div>}
-        {errors.lng2 && <div className="error">{errors.lng2}</div>}
-        </div>
-        </div>
+          <input
+            type="text"
+            placeholder="Country"
+            id="country"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+          />
+          {errors.country && <div className="error">{errors.country}</div>}
 
+          <div className="city-state">
+            <div className="input-group" style={{ width: '100%' }}>
+              <input
+                type="text"
+                style={{ width: '100%' }}
+                placeholder="City"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+              />
+              {errors.city && <div className="error">{errors.city}</div>}
+            </div>
 
-        <h4>Describe your place to guests</h4>
-        <p>Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.</p>
-        <label htmlFor="description"></label>
-        <textarea id="description"  placeholder="Please write at least 30 characters"name="description" value={formData.description} onChange={handleChange} />
-        {errors.description && <div className="error">{errors.description}</div>}
-          
-         <h4>Create a title for your yacht</h4> 
-         <p>Catch guest&apos;s attention with a yacht title that highlights what makes your place special.</p>
-        <label htmlFor="title"></label>
-        <input type="text" placeholder='Name of your yacht' id="name" name="name" value={formData.name} onChange={handleChange} />
-        {errors.name && <div className="error">{errors.name}</div>}
+            <div className="input-group">
+              <label htmlFor="state">State</label>
+              <input
+                type="text"
+                placeholder="State"
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+              />
+              {errors.state && <div className="error">{errors.state}</div>}
+            </div>
+          </div>
 
-        <label htmlFor="price">Competitive pricing can help your listing stand out and rank higher in search results</label>
-        <input type="number" placeholder='Price per night (USD)' id="price" name="price" value={formData.price} onChange={handleChange} />
-        {errors.price && <div className="error">{errors.price}</div>}
+          <h4>Describe your yacht</h4>
+          <p>Mention the best features of your yacht</p>
+          <label htmlFor="description"></label>
+          <textarea
+            id="description"
+            placeholder="Please write at least 30 characters"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+          {errors.description && <div className="error">{errors.description}</div>}
 
-        <h4>Liven up your yacht with photos</h4> 
-        <label htmlFor="url">Submit a link to at least one photo to publish your yacht.</label>
-        <input type="text" placeholder='Preview Image URL' id="url" name="url" value={formData.url} onChange={handleChange} />
-        {errors.url && <div className="error">{errors.url}</div>}
-        {errors.urlFormat && <div className="error">{errors.urlFormat}</div>}
-        
-<div className='sub-images'>
-    <p></p>
-        <input type="text" placeholder="Image URL " id="url2" name="url2" value={formData.url2} onChange={handleChange} />
-        <p></p>
-        <input type="text" placeholder="Image URL" id="url3" name="url3" value={formData.url3} onChange={handleChange} />
-        <p></p>
-        <input type="text" placeholder="Image URL" id="url4" name="url4" value={formData.url4} onChange={handleChange} />
-        <p></p>
-        <input type="text" placeholder="Image URL" id="url5" name="url5" value={formData.url5} onChange={handleChange} />
-        <p></p>
-        <button type="submit">Create Yacht</button>
-    </div>    
-      </form>
-    </div>
+          <div>
+            <h4>Yacht Name</h4>
+            <input
+              type="text"
+              placeholder="Name of your yacht"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            {errors.name && <div className="error">{errors.name}</div>}
+          </div>
+              <h4>Prices</h4>
+          <label htmlFor="price4">
+            Competitive pricing can help your listing stand out and rank higher in search results
+          </label>
+          <input
+            type="number"
+            placeholder="Price for 4 hours"
+            id="price4"
+            name="price4"
+            value={formData.price4}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            placeholder="Price for 6 hours"
+            id="price6"
+            name="price6"
+            value={formData.price6}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            placeholder="Price for 8 hours"
+            id="price8"
+            name="price8"
+            value={formData.price8}
+            onChange={handleChange}
+          />
+          {errors.price && <div className="error">{errors.price}</div>}
+
+          <h4>Additional info</h4>
+
+          <div>
+            <label htmlFor="builder">Builder</label>
+            <input
+              type="text"
+              placeholder="Builder"
+              id="builder"
+              name="builder"
+              value={formData.builder}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="year">Year</label>
+            <input
+              type="text"
+              placeholder="Year"
+              id="year"
+              name="year"
+              value={formData.year}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="bathrooms">Bathrooms</label>
+            <input
+              type="text"
+              placeholder="Bathrooms"
+              id="bathrooms"
+              name="bathrooms"
+              value={formData.bathrooms}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="cabins">Cabins</label>
+            <input
+              type="text"
+              placeholder="Cabins"
+              id="cabins"
+              name="cabins"
+              value={formData.cabins}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="length">Length</label>
+            <input
+              type="text"
+              placeholder="Length"
+              id="length"
+              name="length"
+              value={formData.length}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="guests">Amount of Guests</label>
+            <input
+              type="text"
+              placeholder="Guests"
+              id="guests"
+              name="guests"
+              value={formData.guests}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="speed">Speed</label>
+            <input
+              type="text"
+              placeholder="Speed"
+              id="speed"
+              name="speed"
+              value={formData.speed}
+              onChange={handleChange}
+            />
+          </div>
+          <h4>Liven up your yacht with photos</h4>
+          <label htmlFor="previewUrl">Submit a link to at least one photo to publish your yacht.</label>
+          <input
+            type="text"
+            placeholder="Preview Image URL"
+            id="previewUrl"
+            name="previewUrl"
+            value={formData.previewUrl}
+            onChange={handleChange}
+          />
+          {errors.previewUrl && <div className="error">{errors.previewUrl}</div>}
+          {errors.previewUrlFormat && <div className="error">{errors.previewUrlFormat}</div>}
+          <div className="sub-images">
+            <p></p>
+            <div className='all-buttons'>
+            <button   type="submit">Create Yacht</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
