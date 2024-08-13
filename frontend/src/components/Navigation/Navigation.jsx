@@ -51,15 +51,21 @@ if(!sessionUser) {
       </div>
    
       {isLoaded && (
-        <div className='profile'>
-            <div className='newYacht'>
-               <NavLink to='/yachts/new' className='newYachtLink'>
-                List your yacht
-                </NavLink>
-            </div>
-          <ProfileButton user={sessionUser} />
-        </div>
-      )}
+      <div className="profile">
+        {sessionUser.image ? (
+          <div className="newYacht">
+            <NavLink to="/yachts/new" className="newYachtLink">
+              List your yacht
+            </NavLink>
+          </div>
+        ) : (
+          <NavLink to="/users/profile" className="newYachtLink">
+            List your yacht
+          </NavLink>
+        )}
+        <ProfileButton user={sessionUser} />
+      </div>
+    )}
     </header>
     )
   }

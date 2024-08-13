@@ -22,6 +22,9 @@ function UserProfile() {
       setPhoneNumber(sessionUser.phoneNumber || '');
       setImage(sessionUser.image || '');
       setTitle(sessionUser.title || 'Yacht Owner')
+      if (!sessionUser.image) {
+        alert('Please upload a profile image to get started');
+      }
     }
   }, [sessionUser]);
 
