@@ -50,16 +50,20 @@ function CityYachts() {
       <div className="yacht-card">
         {filteredYachts.map((yacht) => (
           <div key={yacht.id} onClick={() => handleClick(yacht.id)} className="tooltip">
-            <img className="yacht-img" src={yacht.previewImage} alt={yacht.name} />
+            <img className="yacht-img" 
+            src={yacht.previewImage} 
+            alt={yacht.name} />
             <div className="avgRating">
               <h3>
                 {yacht.length}&apos; {yacht.name}
               </h3>
               <h4>
-                <FaStar color="#ffc107" /> {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
-              </h4>
+                      <FaStar color="#ffc107" />{' '}
+                      {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
+                    </h4>
             </div>
-            <div className="price_gray">${yacht.price4} 4 hours</div>
+            <div className="price_gray">
+                ${yacht.price4} 4 hours</div>
           </div>
         ))}
       </div>
