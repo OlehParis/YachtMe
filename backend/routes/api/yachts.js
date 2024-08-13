@@ -146,71 +146,7 @@ router.get("/", handleValidateQuery, async (req, res) => {
   return res.status(200).json(resObj);
 });
 
-// Get all yachts in a specific city
-router.get("/:city", handleValidateQuery, async (req, res) => {
-  let { page = 1, size = 20, minPrice, maxPrice } = req.query;
-  const { city } = req.params; // Get city from URL parameters
 
-  page = parseInt(page) || 1;
-  size = parseInt(size) || 20;
-
-  let limit = size;
-  let offset = size * (page - 1);
-
-  const options = {
-    include: [
-      { model: YachtImage, where: { preview: true }, required: false },
-      { model: Review },
-    ],
-    where: {
-      city: { [Op.iLike]: city }, // Filter by city
-    },
-    limit,
-    offset,
-  };
-
-  if (minPrice) {
-    options.where.price = {
-      ...options.where.price,
-      [Op.gte]: minPrice,
-    };
-  }
-  if (maxPrice) {
-    options.where.price = {
-      ...options.where.price,
-      [Op.lte]: maxPrice,
-    };
-  }
-
-  let cityYachts = await Yacht.findAll(options);
-  
-  cityYachts = cityYachts.map((yacht) => {
-    const reviews = yacht.Reviews;
-    const numReviews = reviews?.length || 0;
-    let sum = 0;
-    reviews.forEach((review) => {
-      sum += review.stars;
-    });
-    const avgRating = numReviews ? Math.round((sum / numReviews) * 10) / 10 : null;
-    yacht.dataValues.avgRating = avgRating;
-    delete yacht.dataValues.Reviews;
-
-    yacht.dataValues.previewImage = "";
-    if (yacht.dataValues.YachtImages) {
-      const foundYachtImage = yacht.dataValues.YachtImages.find((image) => image.preview);
-      yacht.dataValues.previewImage = foundYachtImage ? foundYachtImage.url : null;
-    }
-
-    yacht.dataValues.createdAt = formatWithTime(yacht.dataValues.createdAt);
-    yacht.dataValues.updatedAt = formatWithTime(yacht.dataValues.updatedAt);
-
-    delete yacht.dataValues.YachtImages;
-    return yacht;
-  });
-
-  const resObj = { Yachts: cityYachts, page, size };
-  return res.status(200).json(resObj);
-});
 
 
 //Get all Yachts owned by the Current User
@@ -365,6 +301,71 @@ router.get("/:yachtId", async (req, res, next) => {
   return res.json(getYachtsRes);
 });
 
+// Get all yachts in a specific city
+router.get("/:city", handleValidateQuery, async (req, res) => {
+  let { page = 1, size = 20, minPrice, maxPrice } = req.query;
+  const { city } = req.params; // Get city from URL parameters
+
+  page = parseInt(page) || 1;
+  size = parseInt(size) || 20;
+
+  let limit = size;
+  let offset = size * (page - 1);
+
+  const options = {
+    include: [
+      { model: YachtImage, where: { preview: true }, required: false },
+      { model: Review },
+    ],
+    where: {
+      city: { [Op.iLike]: city }, // Filter by city
+    },
+    limit,
+    offset,
+  };
+
+  if (minPrice) {
+    options.where.price = {
+      ...options.where.price,
+      [Op.gte]: minPrice,
+    };
+  }
+  if (maxPrice) {
+    options.where.price = {
+      ...options.where.price,
+      [Op.lte]: maxPrice,
+    };
+  }
+
+  let cityYachts = await Yacht.findAll(options);
+  
+  cityYachts = cityYachts.map((yacht) => {
+    const reviews = yacht.Reviews;
+    const numReviews = reviews?.length || 0;
+    let sum = 0;
+    reviews.forEach((review) => {
+      sum += review.stars;
+    });
+    const avgRating = numReviews ? Math.round((sum / numReviews) * 10) / 10 : null;
+    yacht.dataValues.avgRating = avgRating;
+    delete yacht.dataValues.Reviews;
+
+    yacht.dataValues.previewImage = "";
+    if (yacht.dataValues.YachtImages) {
+      const foundYachtImage = yacht.dataValues.YachtImages.find((image) => image.preview);
+      yacht.dataValues.previewImage = foundYachtImage ? foundYachtImage.url : null;
+    }
+
+    yacht.dataValues.createdAt = formatWithTime(yacht.dataValues.createdAt);
+    yacht.dataValues.updatedAt = formatWithTime(yacht.dataValues.updatedAt);
+
+    delete yacht.dataValues.YachtImages;
+    return yacht;
+  });
+
+  const resObj = { Yachts: cityYachts, page, size };
+  return res.status(200).json(resObj);
+});
 const validateYachtBody = [
   check("address")
     .exists({ checkFalsy: true })
