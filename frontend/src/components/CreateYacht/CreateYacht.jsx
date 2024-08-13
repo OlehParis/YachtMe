@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import './CreateYacht.css';
 import { fetchNewYacht } from '../../store/yachts';
 import { useDispatch } from 'react-redux';
@@ -33,6 +33,10 @@ const CreateYacht = () => {
     previewUrl: '',
   });
 
+  useEffect(() => {
+    // console.log('Updated form data:', formData);
+  }, [formData]); // This will run whenever formData changes
+
   const [imageFile, setImageFile] = useState(null); // For image upload
 
   const handleFileChange = (e) => {
@@ -54,8 +58,10 @@ const CreateYacht = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl }));
-      console.log('Image updated');
+      setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl}));
+
+      console.log('form data from image', formData);
+      console.log('form data from respone', response);
     } catch (error) {
       console.error('Error uploading image:', error);
       setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Failed to upload image" }));

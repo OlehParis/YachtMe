@@ -83,6 +83,7 @@ export const fetchYacht = (yachtId) => {
 };
 
 export const fetchNewYacht = (yacht) => {
+  console.log(yacht , 'from store 86')
   return async (dispatch) => {
     const response = await csrfFetch("/api/yachts", {
       method: "POST",
@@ -97,13 +98,17 @@ export const fetchNewYacht = (yacht) => {
     const data = await response.json();
 
     const yachtId = data.id;
-
+    
+    const imageBody = {
+      url: yacht.previewUrl, 
+      preview: true,
+    };
     const responseImages = await csrfFetch(`/api/yachts/${yachtId}/images`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(yacht),
+      body: JSON.stringify(imageBody),
     });
     const images = await responseImages.json();
 
