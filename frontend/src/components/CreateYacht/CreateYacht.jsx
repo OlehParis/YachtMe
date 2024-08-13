@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './CreateYacht.css';
 import { fetchNewYacht } from '../../store/yachts';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useGoogle from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 
@@ -10,7 +11,6 @@ const CreateYacht = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [placeSelected, setPlaceSelected] = useState(false);
-
   const [formData, setFormData] = useState({
     address: '',
     city: '',
@@ -31,16 +31,40 @@ const CreateYacht = () => {
     guests: '',
     speed: '',
     previewUrl: '',
-  
   });
 
-  const hasImageExtension = (str) => {
-    return str.includes('png') || str.includes('jpeg') || str.includes('jpg');
+  const [imageFile, setImageFile] = useState(null); // For image upload
+
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const handleImageUpload = async () => {
+    if (!imageFile) {
+      setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Image file is required" }));
+      return;
+    }
+
+    const imageData = new FormData(); // Change the variable name to avoid conflicts
+    imageData.append('image', imageFile);
+
+    try {
+      const response = await axios.post('/api/upload', imageData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl }));
+      console.log('Image updated');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Failed to upload image" }));
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const {
@@ -74,21 +98,22 @@ const CreateYacht = () => {
       }
     });
 
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       address: formatted_address.split(',')[0],
       city: city,
       state: state,
       country: country,
       lat: lat(),
       lng: lng(),
-    });
+    }));
     document.getElementById('address').value = formatted_address.split(',')[0];
     setPlaceSelected(true);
   };
 
   const validateForm = () => {
     const newErrors = {};
+    console.log(formData, 'form dataaaaaa');
     if (formData.description.length < 30) newErrors.description = "Description must be at least 30 characters long.";
     if (formData.country.length < 1) newErrors.country = "Country is required.";
     if (formData.address.length < 1) newErrors.address = "Address is required.";
@@ -97,7 +122,6 @@ const CreateYacht = () => {
     if (formData.name.length < 1) newErrors.name = "Name is required.";
     if (formData.price4 < 1 || formData.price6 < 1 || formData.price8 < 1) newErrors.price = "Prices for all durations are required.";
     if (formData.previewUrl.length < 1) newErrors.previewUrl = "Preview Image is required.";
-    if (!hasImageExtension(formData.previewUrl)) newErrors.previewUrlFormat = "Preview Image must be in a valid image format.";
 
     return newErrors;
   };
@@ -213,7 +237,7 @@ const CreateYacht = () => {
             />
             {errors.name && <div className="error">{errors.name}</div>}
           </div>
-              <h4>Prices</h4>
+          <h4>Prices</h4>
           <label htmlFor="price4">
             Competitive pricing can help your listing stand out and rank higher in search results
           </label>
@@ -323,21 +347,15 @@ const CreateYacht = () => {
             />
           </div>
           <h4>Liven up your yacht with photos</h4>
-          <label htmlFor="previewUrl">Submit a link to at least one photo to publish your yacht.</label>
-          <input
-            type="text"
-            placeholder="Preview Image URL"
-            id="previewUrl"
-            name="previewUrl"
-            value={formData.previewUrl}
-            onChange={handleChange}
-          />
+          <input type="file" onChange={handleFileChange} />
+          <button type="button" onClick={handleImageUpload}>
+            Upload Image
+          </button>
           {errors.previewUrl && <div className="error">{errors.previewUrl}</div>}
-          {errors.previewUrlFormat && <div className="error">{errors.previewUrlFormat}</div>}
           <div className="sub-images">
             <p></p>
             <div className='all-buttons'>
-            <button   type="submit">Create Yacht</button>
+              <button type="submit">Create Yacht</button>
             </div>
           </div>
         </form>

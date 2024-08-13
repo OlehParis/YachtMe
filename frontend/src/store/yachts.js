@@ -109,7 +109,7 @@ export const fetchNewYacht = (yacht) => {
 
     const newYachtDataWithImg = {
       ...data,
-      previewImage: images.url,
+      // previewImage: images.url,
       YachtImages: [images],
     };
 
