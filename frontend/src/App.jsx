@@ -14,6 +14,7 @@ import ManageReviews from './components/YachtDetails/ManageReviews';
 import YourBookings from './components/Yachts/YourBookings';
 import ImageGallery from './components/YachtDetails/ImageGallery';
 import UserProfile from './components/ManageProfile/ManageProfile';
+import CityYachts from './components/Yachts/CityYachts';
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,10 @@ function App() {
         {
           path: "yachts/:yachtId/edit",
           element:  <EditYacht yacht = {yachts}/>
+        },
+        {
+          path: "/:city",
+          element:  <CityYachts/>
         },
          {
           path: "reviews/current",

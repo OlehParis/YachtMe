@@ -22,6 +22,9 @@ function YachtCard() {
     const handleClick = (id) => {
       navigate(`/yachts/${id}`);
     };
+    const handleCityClick = (city) => {
+      navigate(`/${city}`);
+    };
   
     const handleShowAllYachts = () => {
       setShowAllYachts(!showAllYachts);
@@ -38,7 +41,8 @@ function YachtCard() {
         }
         return acc;
       }, []);
-  
+      
+      
       return (
         <>
         <FullScreenVideo />
@@ -46,7 +50,10 @@ function YachtCard() {
           <h2>Featured Cities</h2>
           <div className="city-card">
             {allCities.map((city) => (
-              <div key={city} className="city-container">
+              
+              <div key={city}
+               className="city-container"
+               onClick={() => handleCityClick(city)}>
                 <img
                   className="city-img"
                   src={cityImages[city] || cityImages.default}
