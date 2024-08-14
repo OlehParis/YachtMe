@@ -23,8 +23,8 @@ function CityYachts() {
     if (city && Object.keys(yachts).length > 0) {
       const yachtsInCity = [];
 
-      // Iterate over the yachts object
-      for (const [id, yacht] of Object.entries(yachts)) {
+
+      for (const [, yacht] of Object.entries(yachts)) {
         if (yacht.city && yacht.city.toLowerCase() == city.toLowerCase()) {
           yachtsInCity.push(yacht);
         }

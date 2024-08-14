@@ -32,8 +32,8 @@ function YourBookings() {
    
     if (yachtsData && Object.keys(yachtsData).length > 0) {
         return (
-            <>
-                <h1 id='h1-bok'>Your Bookings</h1>
+            <><div id='h1-bok'>
+                <h1 >Your Bookings</h1>
                 <div className="yacht-card">
                     {Object.values(yachtsData).map((yacht) => {
                         if (yacht.Yacht) {
@@ -68,11 +68,16 @@ function YourBookings() {
                         }
                     })}
                 </div>
+                </div>
             </>
         );
     } else {
-        return <h2>You currently don&apos;t have any bookings</h2>;
+        return (<div id='h1-bok'>
+        <h2>You currently don&apos;t have any bookings</h2>
+        </div>
+        )
     }
+    
 }
 
 export default YourBookings;
