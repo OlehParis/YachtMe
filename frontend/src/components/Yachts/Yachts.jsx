@@ -47,7 +47,7 @@ function YachtCard() {
         <>
         <FullScreenVideo />
         <div className='MainScreen'>
-          <h2>Featured Cities</h2>
+          <h2 id='feat-citi'>Featured Cities</h2>
           <div className="city-card">
             {allCities.map((city) => (
               

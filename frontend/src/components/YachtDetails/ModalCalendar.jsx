@@ -234,7 +234,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
         </div>
       ) : (
         <div id="secondPart">
-          <h1>Confirm your booking</h1>
+          <h2>Confirm your booking</h2>
           <div>Name of the yacht: {yachtData.name}</div>
           <div>
             Charter location: {yachtData.address}, {yachtData.city}, {yachtData.state}

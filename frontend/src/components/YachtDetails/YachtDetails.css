@@ -209,8 +209,13 @@ height: 100%;
 }
 .modal-calendar #secondPart {
 height: 670px;
-gap: 10px;
-font-size: 20px;
+display: flex;
+flex-direction: column; /* Stack inner divs vertically */
+gap: 20px; /* Add a gap between each inner div */
+padding: 20px; /* Optional padding around the div */
+background-color: #f9f9f9; /* Light background */
+border-radius: 10px; /* Rounded corners */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
 .bookingContainer button {

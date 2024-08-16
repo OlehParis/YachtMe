@@ -116,6 +116,8 @@ header.scrolled {
   margin-right: 15px;
   border-radius: 5px;
   text-decoration: none;
-
+  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
   transition: background-color 0.3s ease;
 }

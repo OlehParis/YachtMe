@@ -165,7 +165,7 @@ const CreateYacht = () => {
               }}
             />
             {!isPlacePredictionsLoading &&
-              placePredictions.map((item) => (
+              placePredictions?.map((item) => (
                 <div
                   key={item.place_id}
                   onClick={() => {
@@ -206,7 +206,7 @@ const CreateYacht = () => {
             </div>
 
             <div className="input-group">
-              <label htmlFor="state">State</label>
+             
               <input
                 type="text"
                 placeholder="State"
@@ -274,9 +274,9 @@ const CreateYacht = () => {
           {errors.price && <div className="error">{errors.price}</div>}
 
           <h4>Additional info</h4>
-
+ <div className='additional-info'>
           <div>
-            <label htmlFor="builder">Builder</label>
+          
             <input
               type="text"
               placeholder="Builder"
@@ -287,7 +287,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="year">Year</label>
+          
             <input
               type="text"
               placeholder="Year"
@@ -298,7 +298,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="bathrooms">Bathrooms</label>
+           
             <input
               type="text"
               placeholder="Bathrooms"
@@ -309,7 +309,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="cabins">Cabins</label>
+          
             <input
               type="text"
               placeholder="Cabins"
@@ -320,7 +320,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="length">Length</label>
+           
             <input
               type="text"
               placeholder="Length"
@@ -331,7 +331,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="guests">Amount of Guests</label>
+         
             <input
               type="text"
               placeholder="Guests"
@@ -342,7 +342,7 @@ const CreateYacht = () => {
             />
           </div>
           <div>
-            <label htmlFor="speed">Speed</label>
+           
             <input
               type="text"
               placeholder="Speed"
@@ -351,6 +351,7 @@ const CreateYacht = () => {
               value={formData.speed}
               onChange={handleChange}
             />
+          </div>
           </div>
           <h4>Liven up your yacht with photos</h4>
           <input type="file" onChange={handleFileChange} />

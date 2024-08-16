@@ -114,7 +114,7 @@ function YachtDetails() {
             </div >
 
             <div id='name-title'>
-              <h2>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h2>
+              <h3>  {yachtData.Owner?.firstName} {yachtData.Owner?.lastName}</h3>
               <p>  {yachtData.Owner?.title || 'Yacht Broker'} </p>
               </div>
            </div>
@@ -257,7 +257,3 @@ function YachtDetails() {
 }
 
 export default YachtDetails;
-
-
-
-

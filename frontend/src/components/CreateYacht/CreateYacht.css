@@ -6,6 +6,11 @@
     border-radius: 5px;
     background-color: #f9f9f9;
   }
+  .create-yacht-form input {
+    margin-right: 10px;
+    max-width: 400px;
+    margin-top: 10px;
+  }
   .createyacht-container {
     margin-top: 88px;
   }
@@ -25,8 +30,9 @@
   .create-spot-form textarea {
     width: 100%;
     padding: 8px;
+    
     overflow-x:scroll;
-
+    font-size: large;
     border: 1px solid #ccc;
     border-radius: 3px;
   }
@@ -83,4 +89,11 @@
   display: flex;
   justify-content: center;
   
+}
+
+.additional-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Two equal columns */
+  /* gap: 10px;  */
+  padding: 0px;
 }
