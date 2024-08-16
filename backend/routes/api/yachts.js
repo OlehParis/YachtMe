@@ -683,7 +683,7 @@ router.put("/:yachtId/images/:imageId", requireAuth, async (req, res, next) => {
     url: yachtImage.url,
     preview: yachtImage.preview,
   };
-
+  console.log('resIMan', resImage)
   return res.json(resImage);
 });
 
