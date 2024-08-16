@@ -6,7 +6,10 @@ export const fetchYachtByID = (yacht) => ({
   type: "FETCH_YACHT_BYID",
   payload: yacht,
 });
-
+export const fetchUserYachtsSuccess = (yachts) => ({
+  type: "FETCH_USER_YACHTS_SUCCESS",
+  payload: yachts,
+});
 export const fetchYachtsSuccess = (yachts) => ({
   type: "FETCH_YACHTS_SUCCESS",
   payload: yachts,
@@ -35,6 +38,21 @@ export const fetchDeleteYacht = (yachtId) => {
     });
     dispatch(DeleteYacht(yachtId));
     return response;
+  };
+};
+
+export const fetchUserYachts = () => {
+  return async (dispatch) => {
+    const response = await fetch("/api/yachts");
+    if (!response.ok) {
+      throw new Error("Failed to fetch yachts");
+    }
+    const data = await response.json();
+    const page = data.page;
+    const size = data.size;
+    const allYachtsData = { ...data.Yachts, page, size };
+
+    dispatch(fetchUserYachtsSuccess(allYachtsData));
   };
 };
 
@@ -123,7 +141,7 @@ export const fetchNewYacht = (yacht) => {
   };
 };
 
-export const fetchEditNewYacht = (yacht, yachtId) => {
+export const fetchEditNewYacht = (yacht, yachtId, imageId) => {
   return async (dispatch) => {
     const response = await csrfFetch(`/api/yachts/${yachtId}`, {
       method: "PUT",
@@ -137,10 +155,10 @@ export const fetchEditNewYacht = (yacht, yachtId) => {
     }
     const data = await response.json();
 
-    // const yachtId = data.id;
+    console.log(imageId, '158')
 
-    const responseImages = await csrfFetch(`/api/yachts/${yachtId}/images`, {
-      method: "POST",
+    const responseImages = await csrfFetch(`/api/yachts/${yachtId}/images/${imageId}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -150,7 +168,6 @@ export const fetchEditNewYacht = (yacht, yachtId) => {
 
     const newYachtDataWithImg = {
       ...data,
-      previewImage: images.url,
       YachtImages: [images],
     };
 
@@ -204,6 +221,19 @@ const yachtsReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState[yachtIdToDelete];
       return newState;
+    }
+
+    case "FETCH_USER_YACHTS_SUCCESS": {
+      let nextState = {};
+      Object.entries(action.payload).forEach(([key, value]) => {
+        if (key !== "page" && key !== "size") {
+          nextState[value.id] = value;
+        }
+      });
+      return {
+        ...state,
+        ...nextState,
+      };
     }
     default:
       return state;

@@ -1,7 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -150,58 +150,70 @@ router.get("/", handleValidateQuery, async (req, res) => {
 
 
 //Get all Yachts owned by the Current User
-router.get("/current", requireAuth, async (req, res, next) => {
+router.get("/current", handleValidateQuery, async (req, res) => {
+  let { page = 1, size = 20, city, minPrice, maxPrice } = req.query;
   const curUserId = req.user.id;
-  const allYachts = await Yacht.findAll({
-    where: { ownerId: curUserId },
+
+  page = parseInt(page) || 1;
+  size = parseInt(size) || 20;
+
+  let limit = size;
+  let offset = size * (page - 1);
+
+  const options = {
+    where: { ownerId: curUserId }, // Only fetch yachts owned by the current user
     include: [
-      {
-        model: YachtImage,
-      },
-      {
-        model: Review,
-      },
+      { model: YachtImage, where: { preview: true }, required: false },
+      { model: Review },
     ],
-  });
+    limit,
+    offset,
+  };
 
-  if (!allYachts && curUserId !== allYachts[0].ownerId) {
-    return res.status(403).json({
-      message: "Forbidden",
-    });
+  // Extend the `where` clause with additional filters if provided
+  if (minPrice) {
+    options.where.price = { ...(options.where.price || {}), [Op.gte]: minPrice };
   }
-  const getYachtsRes = allYachts.map((yacht) => {
-    let totalStars = 0;
-    let avgRating = null;
+  if (maxPrice) {
+    options.where.price = { ...(options.where.price || {}), [Op.lte]: maxPrice };
+  }
+  if (city) {
+    options.where.city = { [Op.iLike]: city };
+  }
 
-    if (yacht.Reviews && yacht.Reviews.length > 0) {
-      yacht.Reviews.forEach((review) => {
-        totalStars += review.stars;
+  let allYachts = await Yacht.findAll(options);
+
+  allYachts = allYachts.map((yacht) => {
+    const reviews = yacht.Reviews;
+    const numReviews = reviews?.length;
+    let sum = 0;
+    reviews.forEach((review) => {
+      sum += review.stars;
+    });
+    const avgRating = Math.round((sum / numReviews) * 10) / 10;
+    yacht.dataValues.avgRating = avgRating;
+    delete yacht.dataValues.Reviews;
+
+    yacht.dataValues.previewImage = "";
+    if (yacht.dataValues.YachtImages) {
+      const foundYachtImage = yacht.dataValues.YachtImages.find((image) => {
+        return image.preview;
       });
-
-      avgRating = totalStars / yacht.Reviews.length;
+      if (foundYachtImage) {
+        yacht.dataValues.previewImage = foundYachtImage.url;
+      } else {
+        yacht.dataValues.previewImage = null;
+      }
     }
-    const previewImage =
-      yacht.YachtImages.length > 0 ? yacht.YachtImages[0].url : null;
-    return {
-      id: yacht.id,
-      ownerId: yacht.ownerId,
-      address: yacht.address,
-      city: yacht.city,
-      state: yacht.state,
-      country: yacht.country,
-      lat: yacht.lat,
-      lng: yacht.lng,
-      name: yacht.name,
-      description: yacht.description,
-      price: yacht.price,
-      createdAt: formatWithTime(yacht.createdAt),
-      updatedAt: formatWithTime(yacht.updatedAt),
-      avgRating: avgRating,
-      previewImage: previewImage,
-    };
+    yacht.dataValues.createdAt = formatWithTime(yacht.dataValues.createdAt);
+    yacht.dataValues.updatedAt = formatWithTime(yacht.dataValues.updatedAt);
+
+    delete yacht.dataValues.YachtImages;
+    return yacht;
   });
 
-  return res.json({ Yachts: getYachtsRes });
+  const resObj = { Yachts: allYachts, page, size };
+  return res.status(200).json(resObj);
 });
 
 // Delete a Yacht
@@ -229,7 +241,7 @@ router.get("/:yachtId", async (req, res, next) => {
     include: [
       {
         model: YachtImage,
-        attributes: { exclude: ["createdAt", "updatedAt", "yachtId"] },
+        attributes: { exclude: ["createdAt", "updatedAt"] },
       },
       {
         model: Review,
@@ -627,6 +639,54 @@ router.post("/:yachtId/images", requireAuth, async (req, res, next) => {
   }
   return res.status(403).json({ message: "Forbidden" });
 });
+
+//Update image based on yachtId and imageId
+router.put("/:yachtId/images/:imageId", requireAuth, async (req, res, next) => {
+  const { url, preview } = req.body;
+  const { yachtId, imageId } = req.params;
+  const curUserId = req.user.id;
+
+  // Find the yacht
+  const yacht = await Yacht.findByPk(yachtId);
+  if (!yacht) {
+    return res.status(404).json({
+      message: "Yacht couldn't be found",
+    });
+  }
+
+  // Ensure the current user is the owner of the yacht
+  if (curUserId !== yacht.ownerId) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  // Find the yacht image
+  const yachtImage = await YachtImage.findOne({
+    where: {
+      id: imageId,
+      yachtId: yachtId, // Ensure the image belongs to the specified yacht
+    },
+  });
+
+  if (!yachtImage) {
+    return res.status(404).json({
+      message: "Yacht image couldn't be found",
+    });
+  }
+
+  // Update the image details
+  yachtImage.url = url || yachtImage.url;
+  yachtImage.preview = preview !== undefined ? preview : yachtImage.preview;
+  await yachtImage.save();
+
+  const resImage = {
+    id: yachtImage.id,
+    url: yachtImage.url,
+    preview: yachtImage.preview,
+  };
+
+  return res.json(resImage);
+});
+
 //Get All images of the Yacht's id
 
 router.get("/:yachtId/images",  async (req, res, next) => {

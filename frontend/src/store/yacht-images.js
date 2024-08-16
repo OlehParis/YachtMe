@@ -31,7 +31,7 @@ const imagesReducer = (state = initialState, action) => {
       return newState;
     }
     default:
-      return state; // Return the unchanged state for other action types
+      return state; 
   }
 };
 
