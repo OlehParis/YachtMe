@@ -2,7 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import './Yachts.css';
-import { FaStar } from 'react-icons/fa';
+import yacht1 from '/yacht11.svg'
+
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteYachtModal from '../DeleteReviewModal/DeleteYachtModal';
 import { fetchUserYachts } from '../../store/yachts';
@@ -12,6 +13,7 @@ function ManageYachts() {
   const navigate = useNavigate();
   const yachtsData = useSelector(state => state.yachts);
   const session = useSelector(state => state.session);
+  const sessionUser = useSelector(state => state.session.user);
   const curUserId = session.user?.id ?? null;
 
   useEffect(() => {
@@ -49,10 +51,20 @@ function ManageYachts() {
               <h3>
                 {yacht.length}&apos; {yacht.name}
               </h3>
-              <h4>
-                <FaStar color="#ffc107" />{' '}
-                {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
-              </h4>
+              <div className='rank'>
+                    <img
+                src={ yacht1 }
+                alt="Yacht"
+                style={{
+                  
+                  width: '35px', 
+                  transition: 'opacity 0.3s',
+                 
+                }}
+              />
+                     
+                      {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
+                    </div>
             </div>
             <div className="price_gray">
               ${yacht.price4} 4 hours
@@ -74,8 +86,10 @@ function ManageYachts() {
     return (
       <div className='yachts-container'> 
         <h1>Manage Your Yachts</h1>
-        <p>You currently don&apos;t have any yachts listed.</p>
-        <button className='hey' onClick={() => navigate('/yachts/new')}>Create New Yacht</button>
+        <p id='p2p'>You currently don&apos;t have any yachts listed.</p>
+        {sessionUser.image ? (<button className='hey' onClick={() => navigate('/yachts/new')}>Create New Yacht</button>
+        ):(
+          <button className='hey' onClick={() => navigate('/users/profile')}>Create New Yacht</button>)}
       </div>
     );
   }

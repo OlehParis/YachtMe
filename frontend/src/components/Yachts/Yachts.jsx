@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import './Yachts.css';
-import { FaStar } from 'react-icons/fa';
+import yacht1 from '/yacht11.svg'
 import { fetchYachts } from '../../store/yachts';
 import cityImages from '../../cityImages/cities';
 import FullScreenVideo from '../Video/FullScreenVideo';
@@ -79,10 +79,20 @@ function YachtCard() {
                     <h3>
                       {yacht.length}&apos; {yacht.name}
                     </h3>
-                    <h4>
-                      <FaStar color="#ffc107" />{' '}
+                    <div className='rank'>
+                    <img
+                src={ yacht1 }
+                alt="Yacht"
+                style={{
+                  
+                  width: '35px', 
+                  transition: 'opacity 0.3s',
+                 
+                }}
+              />
+                     
                       {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
-                    </h4>
+                    </div>
                   </div>
                   <div className="price_gray">
                     ${yacht.price4} 4 hours

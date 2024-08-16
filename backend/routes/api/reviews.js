@@ -68,10 +68,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
             price: yacht.price,
             previewImage: review.YachtImages[0].url,
           },
-          s: review.s.map((image) => ({
-            id: image.id,
-            url: image.url,
-          })),
+         
         };
       });
 

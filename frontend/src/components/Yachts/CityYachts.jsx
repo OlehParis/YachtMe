@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchYachts } from '../../store/yachts';
 import { useNavigate } from 'react-router-dom'; 
-import { FaStar } from 'react-icons/fa'; 
+import yacht1 from '/yacht11.svg'
 
 function CityYachts() {
     const { city } = useParams();
@@ -57,10 +57,20 @@ function CityYachts() {
               <h3>
                 {yacht.length}&apos; {yacht.name}
               </h3>
-              <h4>
-                      <FaStar color="#ffc107" />{' '}
+              <div className='rank'>
+                    <img
+                src={ yacht1 }
+                alt="Yacht"
+                style={{
+                  
+                  width: '35px', 
+                  transition: 'opacity 0.3s',
+                 
+                }}
+              />
+                     
                       {yacht.avgRating ? yacht.avgRating.toFixed(1) : 'New'}
-                    </h4>
+                    </div>
             </div>
             <div className="price_gray">
                 ${yacht.price4} 4 hours</div>

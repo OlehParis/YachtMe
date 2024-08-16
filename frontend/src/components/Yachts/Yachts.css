@@ -248,3 +248,13 @@ margin-top: 100vh;
 .yacht-list{
   margin-top: 80px;
 }
+
+
+#p2p {
+  margin-left: 20px;
+}
+
+.rank {
+  font-weight: bold;
+  font-size: large;
+}

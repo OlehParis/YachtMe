@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import { fetchUpdateYachtReview } from '../../store/reviews';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import yacht1 from '/yacht11.svg'
+import yacht2 from '/yacht2.svg'
 import { useModal } from '../../context/Modal';
 import './ReviewFromModal.css';
 
@@ -32,16 +33,21 @@ function StarRating({ defaultRating, onChange }) {
               onMouseLeave={() => handleHover(0)}
               onClick={() => handleClick(starValue)}
             >
-              {starValue <= (hoverRating || selectedRating) ? (
-                <FaStar color="#ffc107" />
-              ) : (
-                <FaRegStar color="#e4e5e9" />
-              )}
+              <img
+                src={starValue <= (hoverRating || selectedRating) ? yacht1 : yacht2}
+                alt="Yacht"
+                style={{
+                  
+                  width: '48px', 
+                  transition: 'opacity 0.3s',
+                  opacity: starValue <= (hoverRating || selectedRating) ? 1 : 0.5,
+                }}
+              />
             </span>
           );
         })}
       </div>
-      <span className='stars-text'>Stars</span>
+      
     </div>
   );
 }
