@@ -14,7 +14,8 @@ function UserProfile() {
   const [title, setTitle] = useState(sessionUser?.title || 'Yacht Owner');
   const [message, setMessage] = useState('');
   const [copyMessage, setCopyMessage] = useState(''); 
-
+  const [referralCode, setReferralCode] = useState(sessionUser?.referralCode || '');
+  const [credit, setCredit] = useState(sessionUser?.credit || 0);
 
   useEffect(() => {
     if (sessionUser) {
@@ -22,9 +23,8 @@ function UserProfile() {
       setPhoneNumber(sessionUser.phoneNumber || '');
       setImage(sessionUser.image || '');
       setTitle(sessionUser.title || 'Yacht Owner')
-      if (!sessionUser.image) {
-        alert('Please upload a profile image to get started');
-      }
+      setReferralCode(sessionUser.referralCode || ''); 
+      setCredit(sessionUser.credit || 0); 
     }
   }, [sessionUser]);
 
@@ -33,7 +33,7 @@ function UserProfile() {
       setImageFile(e.target.files[0]);
     }
   };
-
+console.log(referralCode, credit)
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -83,16 +83,17 @@ function UpdateReviewFromModal({ reviewId}) {
   let buttonCheck = stars === 0 || review.length < 10;
   
   return (
-    <div className="field">
+    <div className="modal-calendar">
       <h2>How was your stay?</h2>
       <textarea
+        className='rev-text'
         placeholder="Leave your review here..."
         value={review}
         onChange={handleReviewChange}
       ></textarea>
       <StarRating defaultRating={stars} className='stars2' onChange={handleRatingChange} />
 
-      <button onClick={handleSubmit} disabled={buttonCheck }>
+      <button id='rev-but' onClick={handleSubmit} disabled={buttonCheck }>
         Submit Your Review
       </button>
     </div>

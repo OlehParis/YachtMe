@@ -2,6 +2,7 @@
 
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
+const referral = require("../models/referral");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -19,6 +20,7 @@ module.exports = {
           email: "demo@user.io",
           phoneNumber: "7863043243", // Use string for phone number
           hashedPassword: bcrypt.hashSync("password"),
+          referralCode: 'sa2daf'
         },
         {
           firstName: "Nick",

@@ -7,7 +7,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User, Referral } = require("../../db/models");
 const referral = require("../../db/models/referral");
-
+const DEFAULT_IMAGE_URL = 'https://crosstalkappbuck.s3.us-east-2.amazonaws.com/1723769225167_elon.jpg'
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -45,7 +45,8 @@ router.post('/', validateSignup, async (req, res) => {
     firstName,
     lastName,
     phoneNumber,
-    referralCode
+    referralCode,
+    image: DEFAULT_IMAGE_URL
   });
 
  // Check for a valid referral code and update credits
@@ -86,6 +87,7 @@ router.post('/', validateSignup, async (req, res) => {
     referralCode:user.referralCode,
     phoneNumber:user.phoneNumber,
     credit: user.credit,
+    image: user.image,
   };
 
   await setTokenCookie(res, safeUser);
