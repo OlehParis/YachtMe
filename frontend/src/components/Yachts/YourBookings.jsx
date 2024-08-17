@@ -4,7 +4,7 @@ import {  useEffect } from 'react';
 import './Yachts.css';
 import { fetchUserBookings } from '../../store/bookings';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import ModalCalendar from '../YachtDetails/ModalCalendar'
+// import ModalCalendar from '../YachtDetails/ModalCalendar'
 import DeleteReservation from '../DeleteReviewModal/DeleteReservation';
 
 function YourBookings() {
@@ -21,13 +21,13 @@ function YourBookings() {
     // const handleClick = (id) => {
     //     navigate(`/yachts/${id}`); 
     //   };
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'short' }); // Get abbreviated month name
-        const formattedDate = `${day} ${month}`;
-        return formattedDate;
-    }
+    // function formatDate(dateString) {
+    //     const date = new Date(dateString);
+    //     const day = date.getDate();
+    //     const month = date.toLocaleString('default', { month: 'short' }); // Get abbreviated month name
+    //     const formattedDate = `${day} ${month}`;
+    //     return formattedDate;
+    // }
  
    
     if (yachtsData && Object.keys(yachtsData).length > 0) {
@@ -40,20 +40,21 @@ function YourBookings() {
                             return (
                                 <div key={yacht.id} className="yacht">
                                     <div className="tooltip">
-                                        <span className="tooltiptext">{yacht.Yacht.name}</span>
+                                    <span className="tooltiptext">{yacht.Yacht.name}</span>
                                         <img className="yacht-img" src={yacht.Yacht.previewImage} alt={yacht.Yacht.name} />
                                         <div className="address-price">
                                             <div>{yacht.Yacht.city}, {yacht.Yacht.state}</div>
-                                            <div>${yacht.Yacht.price} per night</div>
+                                           
                                         </div>
                                         <div className="address-price">
-                                            <div>Dates: {formatDate(yacht.startDate)} - {formatDate(yacht.endDate)}</div>
+                                            <div>Date: {yacht.startDateTime} </div>
                                             <div>Total: ${yacht.totalPrice}</div>
                                         </div>
                                         <div className="address-price">
                                             <OpenModalButton
                                                 buttonText="Change Reservation"
-                                                modalComponent={<ModalCalendar />}
+                                                // onButtonClick={(alert('feature coming soon'))}
+                                                // modalComponent={<ModalCalendar />}
                                             />
                                             <OpenModalButton
                                                 buttonText="Cancel"

@@ -12,6 +12,8 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const bookings = useSelector((state) => state.bookings);
+  const credit = useSelector(state => state.session.user.credit)
+  console.log(credit)
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -164,7 +166,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
       totalPrice,
     };
 
-    console.log('Booking Data:', bookingData);
+    // console.log('Booking Data:', bookingData);
 
     try {
       await dispatch(fetchCreateBooking(bookingData));
@@ -246,6 +248,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
           <div>Price {duration} hours: ${price.toFixed(2)}</div>
           <div>Booking fee: ${bookingFee.toFixed(2)}</div>
           <div>Tax: ${tax.toFixed(2)}</div>
+           <div>Credit: ${credit} </div>
           <div>Total price: ${totalPrice.toFixed(2)}</div>
           <div className="all-buttons">
             <button onClick={() => setIsFirstPartVisible(true)}>Back</button>
