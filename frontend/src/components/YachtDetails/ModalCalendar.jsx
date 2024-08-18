@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
 import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
 
-import {  formatDate2, convertTo12HourFormat } from '../../../utilities/utils';
+import { formatToLocalDateTime, formatDate2, convertTo12HourFormat } from '../../../utilities/utils';
 
 function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yachtData }) {
   const { closeModal } = useModal();
@@ -159,8 +159,8 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
 
     const bookingData = {
       yachtId,
-      startDateTime: (startDate.toISOString()),
-      endDateTime: (endDate.toISOString()),
+      startDateTime: formatToLocalDateTime(startDate.toISOString()),
+      endDateTime: formatToLocalDateTime(endDate.toISOString()),
       duration,
       guests,
       totalPrice,
