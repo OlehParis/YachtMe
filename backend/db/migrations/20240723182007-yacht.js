@@ -67,11 +67,11 @@ module.exports = {
       },
       builder:{
         type: Sequelize.STRING,
-        allowNull: false,
+        
       },
       guests:{
         type: Sequelize.INTEGER,
-        allowNull: false,
+        
       },
      
       cabins:{

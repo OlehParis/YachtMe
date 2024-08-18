@@ -60,8 +60,7 @@ const CreateYacht = () => {
       });
       setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl}));
 
-      console.log('form data from image', formData);
-      console.log('form data from respone', response);
+
     } catch (error) {
       console.error('Error uploading image:', error);
       setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Failed to upload image" }));
