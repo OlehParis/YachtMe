@@ -823,8 +823,8 @@ const validateBooking = [
       const startDate = new Date(value); // Already in UTC
       const now = new Date(); // Also in UTC
       // Log the values for debugging
-      const nowAdjusted = adjustDateByOffset(new Date(now));
-      const StartDateTAdjusted = adjustDateByOffset(startDate)
+      const nowAdjusted = adjustDateByOffset(new Date(now), -4);
+      const StartDateTAdjusted = adjustDateByOffset(startDate, -4)
       console.log('startDate:', StartDateTAdjusted.toISOString());
       console.log('now:', nowAdjusted.toISOString());
 

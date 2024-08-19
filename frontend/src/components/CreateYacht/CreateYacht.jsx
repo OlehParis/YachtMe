@@ -127,7 +127,25 @@ const CreateYacht = () => {
     if (formData.name.length < 1) newErrors.name = "Name is required.";
     if (formData.price4 < 1 || formData.price6 < 1 || formData.price8 < 1) newErrors.price = "Prices for all durations are required.";
     if (formData.previewUrl.length < 1) newErrors.previewUrl = "Preview Image is required.";
-
+    if (formData.builder.length < 1) newErrors.builder = "Builder is required.";
+    if (!formData.year || isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear()) {
+      newErrors.year = "Please enter a valid year.";
+    }
+    if (!formData.bathrooms || isNaN(formData.bathrooms) || formData.bathrooms < 1) {
+      newErrors.bathrooms = "Please enter a valid number of bathrooms.";
+    }
+    if (!formData.cabins || isNaN(formData.cabins) || formData.cabins < 1) {
+      newErrors.cabins = "Please enter a valid number of cabins.";
+    }
+    if (!formData.length || isNaN(formData.length) || formData.length < 1) {
+      newErrors.length = "Please enter a valid length.";
+    }
+    if (!formData.guests || isNaN(formData.guests) || formData.guests < 1) {
+      newErrors.guests = "Please enter a valid number of guests.";
+    }
+    if (!formData.speed || isNaN(formData.speed) || formData.speed < 1) {
+      newErrors.speed = "Please enter a valid speed.";
+    }
     return newErrors;
   };
 
@@ -284,6 +302,8 @@ const CreateYacht = () => {
               value={formData.builder}
               onChange={handleChange}
             />
+            {errors.builder && <div className="error">{errors.builder}</div>}
+
           </div>
           <div>
           
@@ -295,6 +315,8 @@ const CreateYacht = () => {
               value={formData.year}
               onChange={handleChange}
             />
+            {errors.year && <div className="error">{errors.year}</div>}
+
           </div>
           <div>
            
@@ -306,6 +328,8 @@ const CreateYacht = () => {
               value={formData.bathrooms}
               onChange={handleChange}
             />
+            {errors.bathrooms && <div className="error">{errors.bathrooms}</div>}
+
           </div>
           <div>
           
@@ -317,6 +341,8 @@ const CreateYacht = () => {
               value={formData.cabins}
               onChange={handleChange}
             />
+            {errors.cabins && <div className="error">{errors.cabins}</div>}
+
           </div>
           <div>
            
@@ -328,6 +354,8 @@ const CreateYacht = () => {
               value={formData.length}
               onChange={handleChange}
             />
+            {errors.length && <div className="error">{errors.length}</div>}
+
           </div>
           <div>
          
@@ -339,6 +367,8 @@ const CreateYacht = () => {
               value={formData.guests}
               onChange={handleChange}
             />
+            {errors.guests && <div className="error">{errors.guests}</div>}
+
           </div>
           <div>
            
@@ -350,6 +380,8 @@ const CreateYacht = () => {
               value={formData.speed}
               onChange={handleChange}
             />
+            {errors.speed && <div className="error">{errors.speed}</div>}
+
           </div>
           </div>
           <h4>Liven up your yacht with photos</h4>
