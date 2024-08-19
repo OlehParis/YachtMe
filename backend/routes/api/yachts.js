@@ -113,7 +113,7 @@ router.get("/", handleValidateQuery, async (req, res) => {
   }
 
   let allYachts = await Yacht.findAll(options);
-  console.log('line112', allYachts)
+
   allYachts = allYachts.map((yacht) => {
     const reviews = yacht.Reviews;
     const numReviews = reviews?.length;
@@ -676,7 +676,7 @@ router.put("/:yachtId/images/:imageId", requireAuth, async (req, res, next) => {
     url: yachtImage.url,
     preview: yachtImage.preview,
   };
-  console.log('resIMan', resImage)
+ 
   return res.json(resImage);
 });
 
@@ -825,8 +825,7 @@ const validateBooking = [
       // Log the values for debugging
       const nowAdjusted = adjustDateByOffset(new Date(now), -4);
       const StartDateTAdjusted = adjustDateByOffset(startDate, -4)
-      console.log('startDate:', StartDateTAdjusted.toISOString());
-      console.log('now:', nowAdjusted.toISOString());
+ 
 
       // Adjust 'now' to match the expected local time for comparison
       if (StartDateTAdjusted.getTime() < nowAdjusted.getTime()) {

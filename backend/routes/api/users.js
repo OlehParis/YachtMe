@@ -64,9 +64,9 @@ router.post('/', validateSignup, async (req, res) => {
 
      // Update credits for both the referrer and the new user
      await referrer.increment('credit', { by: 250 });
-     console.log(user.credit)
+    
      await user.increment('credit', { by: 250 });
-     console.log(user.credit)
+     
    } else {
      // Create a referral record with status 'invalid' if the code doesn't match
      await Referral.create({

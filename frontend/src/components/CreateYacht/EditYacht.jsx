@@ -18,7 +18,7 @@ const EditYacht = () => {
     ([, value]) => value.preview === true
   )?.[0]; 
   
-  console.log(imageId);
+
   const [placeSelected, setPlaceSelected] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -81,8 +81,7 @@ const EditYacht = () => {
       });
       setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl }));
 
-      console.log('form data from image', formData);
-      console.log('form data from respone', response);
+      
     } catch (error) {
       console.error('Error uploading image:', error);
       setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Failed to upload image" }));

@@ -100,19 +100,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     guests: {
       type: DataTypes.INTEGER,
-     
+      defaultValue: 1,
       
     },
     cabins: {
       type: DataTypes.INTEGER,
-      
+      defaultValue: 0,
     },
     speed: {
       type: DataTypes.INTEGER,
-      
+    
     },
     bathrooms: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
       validate: {
         min: 0,
         max: 20,

@@ -118,7 +118,7 @@ const CreateYacht = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    console.log(formData, 'form dataaaaaa');
+   
     if (formData.description.length < 30) newErrors.description = "Description must be at least 30 characters long.";
     if (formData.country.length < 1) newErrors.country = "Country is required.";
     if (formData.address.length < 1) newErrors.address = "Address is required.";
@@ -317,6 +317,7 @@ const CreateYacht = () => {
               name="bathrooms"
               value={formData.bathrooms}
               onChange={handleChange}
+              min="0"
             />
             {errors.bathrooms && <div className="error">{errors.bathrooms}</div>}
 
@@ -330,6 +331,7 @@ const CreateYacht = () => {
               name="cabins"
               value={formData.cabins}
               onChange={handleChange}
+              min="0"
             />
             {errors.cabins && <div className="error">{errors.cabins}</div>}
 

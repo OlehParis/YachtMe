@@ -19,7 +19,7 @@ const upload = multer({ dest: "uploads/" });
 // POST route to upload an image
 router.post("/", requireAuth, upload.single("image"), async (req, res) => {
   const fileContent = fs.readFileSync(req.file.path);
-  console.log("S3 Bucket Name:", process.env.AWS_S3_BUCKET_NAME);
+
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
