@@ -894,8 +894,8 @@ const formatWithTime = (date) => {
     }
 
     // Adjust startDateTime and endDateTime by -4 hours
-    const adjustedStartDateTime = adjustDateByOffset(startDateTime, -4);
-    const adjustedEndDateTime = adjustDateByOffset(endDateTime, -4);
+    const adjustedStartDateTime = adjustDateByOffset(startDateTime, -0);
+    const adjustedEndDateTime = adjustDateByOffset(endDateTime, -0);
     // Create new booking
     const newBooking = await Booking.create({
       yachtId: yachtId,
@@ -911,8 +911,8 @@ const formatWithTime = (date) => {
       yachtId: Number(newBooking.yachtId),
       userId: newBooking.userId,
       totalPrice: newBooking.totalPrice,
-      startDateTime: formatWithTime(startDateTime),
-      endDateTime: formatWithTime(endDateTime),
+      startDateTime: formatWithTime(adjustedStartDateTime),
+      endDateTime: formatWithTime(adjustedEndDateTime),
       duration: newBooking.duration,
       guests: newBooking.guests,
       createdAt: formatWithTime(newBooking.createdAt),
