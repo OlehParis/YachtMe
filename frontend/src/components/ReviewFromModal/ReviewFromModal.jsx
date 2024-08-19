@@ -86,6 +86,7 @@ function ReviewFromModal({ yachtId}) {
     <div className="modal-calendar">
       <h2>How was this yacht?</h2>
       <textarea
+      id='text-rev1'
         placeholder="Leave your review here..."
         value={review}
         onChange={handleReviewChange}

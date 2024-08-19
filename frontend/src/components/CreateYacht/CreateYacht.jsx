@@ -131,8 +131,8 @@ const CreateYacht = () => {
     if (!formData.year || isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear()) {
       newErrors.year = "Please enter a valid year.";
     }
-    if (formData.bathrooms < 0 || isNaN(formData.bathrooms)) {newErrors.bathrooms = "Please enter a valid number of bathrooms."; }
-    if (formData.cabins < 0 || isNaN(formData.cabins)) { newErrors.cabins = "Please enter a valid number of cabins.";}
+    if (formData.bathrooms < 0 || !formData.bathrooms || isNaN(formData.bathrooms)) {newErrors.bathrooms = "Please enter a valid number of bathrooms."; }
+    if (formData.cabins < 0 || !formData.cabins || isNaN(formData.cabins)) { newErrors.cabins = "Please enter a valid number of cabins.";}
     if (!formData.length || isNaN(formData.length) || formData.length < 1) {newErrors.length = "Please enter a valid length.";}
     if (!formData.guests || isNaN(formData.guests) || formData.guests < 1) {newErrors.guests = "Please enter a valid number of guests.";}
     if (!formData.speed || isNaN(formData.speed) || formData.speed < 1) {newErrors.speed = "Please enter a valid speed.";}
