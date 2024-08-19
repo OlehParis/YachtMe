@@ -1,10 +1,32 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import './CreateYacht.css';
 import { fetchNewYacht } from '../../store/yachts';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useGoogle from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
+
+const loadGoogleMapsAPI = () => {
+  return new Promise((resolve, reject) => {
+    if (typeof window.google === 'object' && window.google.maps) {
+      resolve(); // Google Maps API is already loaded
+    } else {
+      const existingScript = document.getElementById('googleMaps');
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_PLACES_API_KEY}&libraries=places&language=en`;
+        script.id = 'googleMaps';
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      } else {
+        resolve(); // Script is already loaded
+      }
+    }
+  });
+};
 
 const CreateYacht = () => {
   const dispatch = useDispatch();
@@ -34,10 +56,14 @@ const CreateYacht = () => {
   });
 
   useEffect(() => {
-    // console.log('Updated form data:', formData);
-  }, [formData]); // This will run whenever formData changes
+    loadGoogleMapsAPI().then(() => {
+      console.log("Google Maps API loaded.");
+    }).catch((error) => {
+      console.error('Error loading Google Maps API:', error);
+    });
+  }, []);
 
-  const [imageFile, setImageFile] = useState(null); // For image upload
+  const [imageFile, setImageFile] = useState(null);
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -49,7 +75,7 @@ const CreateYacht = () => {
       return;
     }
 
-    const imageData = new FormData(); // Change the variable name to avoid conflicts
+    const imageData = new FormData();
     imageData.append('image', imageFile);
 
     try {
@@ -58,9 +84,7 @@ const CreateYacht = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl}));
-
-
+      setFormData((prevData) => ({ ...prevData, previewUrl: response.data.imageUrl }));
     } catch (error) {
       console.error('Error uploading image:', error);
       setErrors((prevErrors) => ({ ...prevErrors, previewUrl: "Failed to upload image" }));
@@ -85,6 +109,11 @@ const CreateYacht = () => {
 
   const handlePlaceSelected = (place) => {
     const { formatted_address, address_components, geometry } = place;
+    if (!geometry || !formatted_address) {
+      console.error('Place details are missing.');
+      return;
+    }
+
     const { lat, lng } = geometry.location;
 
     let city = '';
@@ -150,6 +179,8 @@ const CreateYacht = () => {
       });
     }
   };
+
+  
 
   return (
     <div className="createyacht-container">
