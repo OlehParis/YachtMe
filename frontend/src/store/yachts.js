@@ -157,17 +157,23 @@ export const fetchEditNewYacht = (yacht, yachtId, imageId) => {
 
     console.log(imageId, '158')
 
+    const imageBody = {
+      url: yacht.previewUrl, 
+      preview: true,
+    };
+  
     const responseImages = await csrfFetch(`/api/yachts/${yachtId}/images/${imageId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(yacht),
+      body: JSON.stringify(imageBody),
     });
     const images = await responseImages.json();
 
     const newYachtDataWithImg = {
       ...data,
+      // previewImage: images.url,
       YachtImages: [images],
     };
 
