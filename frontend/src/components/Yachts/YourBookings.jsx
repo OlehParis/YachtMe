@@ -48,7 +48,7 @@ function YourBookings() {
                                         </div>
                                         <div className="address-price">
                                             <div>Date: {yacht.startDateTime} </div>
-                                            <div>Total: ${yacht.totalPrice}</div>
+                                            <div>Total: ${yacht.totalPrice.toFixed(2)}</div>
                                         </div>
                                         <div className="address-price">
                                             <OpenModalButton
