@@ -4,6 +4,8 @@ import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 import { useSelector, useDispatch } from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
+
+
 import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
 
 import { formatToLocalDateTime, formatDate2, convertTo12HourFormat } from '../../../utilities/utils';
@@ -11,9 +13,9 @@ import { formatToLocalDateTime, formatDate2, convertTo12HourFormat } from '../..
 function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yachtData }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+
   const bookings = useSelector((state) => state.bookings);
   const credit = useSelector(state => state.session.user.credit)
-  console.log(credit)
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -170,8 +172,10 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
 
     try {
       await dispatch(fetchCreateBooking(bookingData));
-      console.log('Booking created successfully!');
       closeModal();
+      window.location.href = '/bookings/manage';
+      alert('Booking created successfully!');
+      
     } catch (error) {
       console.error('Error creating booking:', error);
       alert('Failed to create booking. Please try again.');
