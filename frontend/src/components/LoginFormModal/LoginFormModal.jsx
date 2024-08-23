@@ -28,12 +28,18 @@ function LoginFormModal() {
 
   const isSubmitDisabled = credential.length < 4 || password.length < 6;
 
-  const handleDemoUserLogin = () => {
-    setCredential('demo@user.io');
-    setPassword('password');
-   
+  const handleDemoUserLogin = async () => {
+    setErrors({});
+    try {
+     
+      await dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }));
+      closeModal();   
+    } catch (error) {
+      if (error.status === 401) {
+        setErrors({ invalidCredentials: 'Demo user login failed.' });
+      }
+    }
   };
-
   return (
     <div className='modal-login'>
       <h1>Log In</h1>

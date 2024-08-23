@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch, } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 import { fetchUpdateYachtReview } from '../../store/reviews';
 import yacht1 from '/yacht11.svg'
 import yacht2 from '/yacht2.svg'
@@ -10,6 +10,10 @@ function StarRating({ defaultRating, onChange }) {
   const totalStars = 5;
   const [hoverRating, setHoverRating] = useState(0);
   const [selectedRating, setSelectedRating] = useState(defaultRating);
+
+  useEffect(() => {
+    setSelectedRating(defaultRating);
+  }, [defaultRating]);
 
   const handleHover = (value) => {
     setHoverRating(value);
@@ -55,8 +59,13 @@ function StarRating({ defaultRating, onChange }) {
 function UpdateReviewFromModal({ reviewId}) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [review, setReview] = useState('');
-  const [stars, setStars] = useState(0);
+
+  const reviewFromStore = useSelector((state) => state.reviews[reviewId]);
+  const [review, setReview] = useState(reviewFromStore ? reviewFromStore.review : '');
+  const [stars, setStars] = useState(reviewFromStore ? reviewFromStore.stars : 0);
+
+
+
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
@@ -84,7 +93,7 @@ function UpdateReviewFromModal({ reviewId}) {
   
   return (
     <div className="modal-calendar">
-      <h2>How was your stay?</h2>
+      <h2>How was your charter?</h2>
       <textarea
         className='rev-text'
         placeholder="Leave your review here..."

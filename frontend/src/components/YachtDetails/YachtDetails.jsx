@@ -9,7 +9,7 @@ import ReviewFromModal from '../ReviewFromModal/ReviewFromModal'
 import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
 import PriceModal from './PriceModal';
 import CalendarModal from './ModalCalendar';
-
+import UpdateReviewModal from '../ReviewFromModal/UpdateReviewModal'
 import yacht1 from '/yacht11.svg'
 import yacht2 from '/yacht2.svg' 
 import { calculateStarsAndReviews, formatDate } from '../../../utilities/utils';
@@ -94,7 +94,7 @@ function YachtDetails() {
       }  
 
     const dontShowButton = reviewMatchCurUserId || curUserId === yachtOwnerId;
-    const onwerOfYacht = curUserId === yachtOwnerId;
+    const ownerOfYacht = curUserId === yachtOwnerId;
     
     const { avgStars, reviewCount } = calculateStarsAndReviews(reviews, yachtId);
     const yachtImageObj = yachtData?.YachtImages;
@@ -118,7 +118,7 @@ function YachtDetails() {
               <p>  {yachtData.Owner?.title || 'Yacht Broker'} </p>
               </div>
            </div>
-          <div className='container-inner'> {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
+          <div className='container-inner'> {!notLogIn && !ownerOfYacht &&  < div className='bookingContainer'> 
                     <OpenModalMenuItem
                     itemText={`From $${yachtData.price4} for 4 hours`}
                     modalComponent={<PriceModal yachtData={yachtData}/>}
@@ -126,7 +126,7 @@ function YachtDetails() {
                     />
                     </div>}
                   
-                    {!notLogIn && !onwerOfYacht &&  < div className='bookingContainer'> 
+                    {!notLogIn && !ownerOfYacht &&  < div className='bookingContainer'> 
                    <OpenModalButton 
                         onButtonClick={() => {setBeError(null)}}
                         buttonText={'Reserve'}
@@ -222,13 +222,20 @@ function YachtDetails() {
               <img src={review.User?.image || session.user?.image} alt="Profile"  className='prof-img'  />
               
               </div>
-              {review.userId === curUserId && (
-                    <OpenModalButton
-                    
-                        buttonText="Delete"
-                        modalComponent={<DeleteReviewModal reviewId={review.id} />}
-                    />
-                )}
+              <div id='r3'>
+  {review.userId === curUserId && (
+    <>
+      <OpenModalButton
+        buttonText="Edit"
+        modalComponent={<UpdateReviewModal reviewId={review.id} />}
+      />
+      <OpenModalButton
+        buttonText="Delete"
+        modalComponent={<DeleteReviewModal reviewId={review.id} />}
+      />
+    </>
+  )}
+</div>
                 </div>
               <div className='review-name'>
                 <h3>{review.User?.firstName || session.user.firstName} {review.User?.lastName || session.user.lastName}</h3>

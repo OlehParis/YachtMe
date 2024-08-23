@@ -475,11 +475,11 @@ margin-left: 0px;
 
 .modal-calendar select:focus {
   border-color: #007bff; /* Highlight border on focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add subtle shadow on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
   outline: none; /* Remove default outline */
 }
 
-/* Optional: Add a custom arrow using a pseudo-element */
+
 .modal-calendar select::after {
   content: '';
   position: absolute;
@@ -487,9 +487,9 @@ margin-left: 0px;
   right: 12px; /* Align with padding */
   width: 8px;
   height: 8px;
-  background-color: #333; /* Arrow color */
+  background-color: #333; 
   clip-path: polygon(100% 0%, 0% 0%, 50% 100%); /* Create a triangle */
-  pointer-events: none; /* Ensure the arrow does not interfere with interactions */
+  pointer-events: none; 
 }
 .modal-calendar{
   margin-top: 67px;
@@ -497,4 +497,9 @@ margin-left: 0px;
 }
 .yff {
   margin-left: 20px;
+}
+
+#r3 {
+  display: flex;
+  flex-direction: column;
 }

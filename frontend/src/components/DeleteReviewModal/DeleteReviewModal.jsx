@@ -18,9 +18,9 @@ function DeleteReviewModal({ reviewId, yachtId }) {
 
     return (
         <div className="modal">
-            <div className="modal-content">
+            <div className="modal-calendar">
                 <span className="close" onClick={closeModal}>&times;</span>
-                <h2>Confirm Delete</h2>
+                <h2 id='conf-del'>Confirm Delete</h2>
                 <p>Are you sure you want to delete this review?</p>
                 <div className="modal-buttons">
                 <button id='yes' onClick={() => handleDelete(reviewId, yachtId)}>Yes (Delete Review)</button>
