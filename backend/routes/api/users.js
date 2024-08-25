@@ -101,7 +101,7 @@ router.post('/', validateSignup, async (req, res) => {
 // Update user profile route
 router.put("/profile", requireAuth, async (req, res) => {
   const userId = req.user.id;
-  const { email, phoneNumber, image, password,title  } = req.body;
+  const { email, phoneNumber, image, password, title, credit  } = req.body;
 
   if (!email || !phoneNumber) {
     return res.status(400).json({ message: "Email and phone number cannot be null or empty" });
@@ -117,7 +117,7 @@ router.put("/profile", requireAuth, async (req, res) => {
     user.email = email;
     user.phoneNumber = phoneNumber;
     user.title =title
-    
+    user.credit = credit
     if (image) user.image = image;
     if (password) user.hashedPassword = bcrypt.hashSync(password);
 
@@ -129,7 +129,7 @@ router.put("/profile", requireAuth, async (req, res) => {
       phoneNumber: user.phoneNumber,
       image: user.image,
       title:user.title,
-      
+      credit: user.credit
     };
 
     return res.json({ user: updatedUser });

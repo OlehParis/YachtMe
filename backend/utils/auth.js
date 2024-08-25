@@ -74,10 +74,20 @@ const formatWithTime = function (date) {
   const formattedTime = dateToStringIso.split("T")[1].split(".")[0];
   return `${formattedDate} ${formattedTime}`;
 };
+const formatWithTimeLocal = function (date) {
+  const localDate = new Date(date);
+  
+  // Get the formatted date and time in the local timezone
+  const formattedDate = localDate.toLocaleDateString(); 
+  const formattedTime = localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return `${formattedDate} ${formattedTime}`;
+};
+
 module.exports = {
   setTokenCookie,
   restoreUser,
   requireAuth,
   formatDate,
   formatWithTime,
+  formatWithTimeLocal
 };

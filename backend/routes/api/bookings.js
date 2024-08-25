@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { Op } = require("sequelize");
 const { handleValidationErrors } = require("../../utils/validation");
-const { requireAuth, formatDate, formatWithTime } = require("../../utils/auth");
+const { requireAuth, formatDate, formatWithTime, formatWithTimeLocal } = require("../../utils/auth");
 const {
   Yacht,
   User,
@@ -52,8 +52,8 @@ router.get("/current", requireAuth, async (req, res, next) => {
         previewImage: previewImage,
       },
       userId: booking.userId,
-      startDateTime: formatDate(booking.startDateTime),
-      endDateTime: formatDate(booking.endDateTime),
+      startDateTime: formatWithTimeLocal(booking.startDateTime),
+      endDateTime: formatWithTimeLocal(booking.endDateTime),
       createdAt: formatWithTime(booking.createdAt),
       updatedAt: formatWithTime(booking.updatedAt),
     };

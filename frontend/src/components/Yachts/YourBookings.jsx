@@ -1,16 +1,16 @@
 import { useSelector , useDispatch} from 'react-redux';
-// import { useNavigate } from 'react-router-dom'
+
 import {  useEffect } from 'react';
 import './Yachts.css';
 import { fetchUserBookings } from '../../store/bookings';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-// import ModalCalendar from '../YachtDetails/ModalCalendar'
+
 import DeleteReservation from '../DeleteReviewModal/DeleteReservation';
 
 function YourBookings() {
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
-    // const yachtsData = useSelector(state => state.yachts);
+    const credit = useSelector(state => state.session.user.credit)
+   
     useEffect(() => {
         dispatch(fetchUserBookings()); 
     }, [dispatch]);
@@ -40,15 +40,15 @@ function YourBookings() {
                             return (
                                 <div key={yacht.id} className="yacht">
                                     <div className="tooltip">
-                                    <span className="tooltiptext">{yacht.Yacht.name}</span>
+                                    <span className="yacht-name-booking">{yacht.Yacht.name}</span>
                                         <img className="yacht-img" src={yacht.Yacht.previewImage} alt={yacht.Yacht.name} />
                                         <div className="address-price">
                                             <div>{yacht.Yacht.city}, {yacht.Yacht.state}</div>
                                            
                                         </div>
                                         <div className="address-price">
-                                            <div>Date: {yacht.startDateTime} </div>
-                                            <div>Total: ${yacht.totalPrice.toFixed(2)}</div>
+                                            <div>Date and Time: {yacht.startDateTime} </div>
+                                            <div>Total: ${yacht.totalPrice - credit}</div>
                                         </div>
                                         <div className="address-price">
                                             <OpenModalButton

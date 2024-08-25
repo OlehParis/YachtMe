@@ -69,7 +69,7 @@ module.exports = (sequelize) => {
       },
       credit: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0, // Default credits to 0
       },
       phoneNumber: {

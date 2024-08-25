@@ -860,9 +860,11 @@ router.post(
   async (req, res, next) => {
     const curUserId = req.user.id;
     const { startDateTime, endDateTime, totalPrice , duration, guests} = req.body;
- 
+    const user = req.user;
     const { yachtId } = req.params;
 
+
+    
 // Helper function to adjust date by a specified hour offset
 const adjustDateByOffset = (dateString, hourOffset) => {
   const date = new Date(dateString);
@@ -905,6 +907,13 @@ const formatWithTime = (date) => {
       duration,
       guests,
     });
+    
+    if( user.credit > 0) {
+      user.credit -= 250;
+      await user.save();
+    }
+
+
     const resBooking = {
       id: newBooking.id,
       yachtId: Number(newBooking.yachtId),

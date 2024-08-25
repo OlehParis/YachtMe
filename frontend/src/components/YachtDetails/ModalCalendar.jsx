@@ -4,16 +4,14 @@ import { useModal } from '../../context/Modal';
 import Calendar from 'react-calendar';
 import { useSelector, useDispatch } from 'react-redux';
 import 'react-calendar/dist/Calendar.css';
-
-
+import { updateUser } from '../../store/session';
 import { fetchCreateBooking, fetchBookings } from '../../store/bookings';
-
 import { formatToLocalDateTime, formatDate2, convertTo12HourFormat } from '../../../utilities/utils';
 
 function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yachtData }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.session.user)
   const bookings = useSelector((state) => state.bookings);
   const credit = useSelector(state => state.session.user.credit)
   const [checkInDate, setCheckInDate] = useState(null);
@@ -168,10 +166,15 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
       totalPrice,
     };
 
-    // console.log('Booking Data:', bookingData);
+    const updatedCredit = {
+      credit: credit - 250,
+      email:user.email,
+      phoneNumber: user.phoneNumber
+    };
 
     try {
       await dispatch(fetchCreateBooking(bookingData));
+      await dispatch(updateUser(updatedCredit))
       closeModal();
       window.location.href = '/bookings/manage';
       alert('Booking created successfully!');
@@ -253,7 +256,7 @@ function CalendarModal({ onCheckInDateChange, yachtId, onCheckOutDateChange, yac
           <div>Booking fee: ${bookingFee.toFixed(2)}</div>
           <div>Tax: ${tax.toFixed(2)}</div>
            <div>Credit: ${credit} </div>
-          <div>Total price: ${totalPrice.toFixed(2)}</div>
+          <div>Total price: ${totalPrice.toFixed(2) - credit}</div>
           <div className="all-buttons">
             <button onClick={() => setIsFirstPartVisible(true)}>Back</button>
             <button onClick={handleSubmitBooking}>Confirm</button>
