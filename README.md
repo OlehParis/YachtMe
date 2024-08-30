@@ -8,7 +8,7 @@ This web application is built using Express and Render. It provides a platform f
 
 ### Full CRUD Operations on Yachts
 
-- **CreCXZ Sghjate:** Users can add new yachts to the platform.
+- **Create:** Users can add new yachts to the platform.
 - **Read:** Users can view details of individual yachts and get a list of yachts by city.
 - **Update:** Users can update the details of existing yachts.
 - **Delete:** Users can remove yachts from the platform.
@@ -20,11 +20,13 @@ This web application is built using Express and Render. It provides a platform f
 - **Update:** Users can modify existing bookings.
 - **Delete:** Users can cancel bookings.
 
-### Partial CRUD on Reviews
+### Full Partial CRUD on Reviews
 
 - **Create:** Create Review: Users can post reviews after booking a yacht.
 - **Read:** View Review: Users can view Reviews and star ratings.
+- **Update:** Update Review: User can update Review and star rating.
 - **Delete:** Delete Review: Users can delete a review that belongs to them.
+
 
 ### Post a Yacht
 
