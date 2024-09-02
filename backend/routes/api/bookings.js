@@ -21,7 +21,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     include: [
       {
         model: Yacht,
-        attributes: { exclude: ["createdAt", "updatedAt", "description"] },
+        attributes: { exclude: ["createdAt", "updatedAt"] },
         include: [
           {
             model: YachtImage,
@@ -34,10 +34,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
   const resBookings = curBookings.map((booking) => {
     const previewImage = booking.Yacht.YachtImages.length > 0 ? booking.Yacht.YachtImages[0].url : null;
     return {
-      
-      id: booking.id,
-      yachtId: booking.Yacht.id,
-      totalPrice: booking.totalPrice,
       Yacht: {
         id: booking.Yacht.id,
         ownerId: booking.Yacht.ownerId,
@@ -48,9 +44,16 @@ router.get("/current", requireAuth, async (req, res, next) => {
         lat: booking.Yacht.lat,
         lng: booking.Yacht.lng,
         name: booking.Yacht.name,
-        price: booking.Yacht.price,
+        price4: booking.Yacht.price4,
+        price6: booking.Yacht.price6,
+        price8: booking.Yacht.price8,
         previewImage: previewImage,
       },
+      id: booking.id,
+      yachtId: booking.Yacht.id,
+      totalPrice: booking.totalPrice,
+      duration:booking.duration,
+      guests: booking.guests,
       userId: booking.userId,
       startDateTime: formatWithTimeLocal(booking.startDateTime),
       endDateTime: formatWithTimeLocal(booking.endDateTime),
@@ -135,95 +138,145 @@ const validateBooking = [
 
 //Edit booking (Auth require)
 
+// router.put(
+//   "/:bookingId",
+//   requireAuth,
+//   validateBooking,
+//   async (req, res, next) => {
+//     const curUserId = req.user.id;
+//     // const user = req.user;
+//     const { startDateTime, endDateTime } = req.body;
+//     const { bookingId } = req.params;
+//     const bookingById = await Booking.findAll({
+//       where: { id: bookingId },
+//     });
+//     if (bookingById.length === 0 || !bookingById) {
+//       return res.status(404).json({
+//         message: "Booking couldn't be found",
+//       });
+//     }
+//     if (curUserId !== bookingById[0].userId) {
+//       return res.status(403).json({
+//         message: "Forbidden",
+//       });
+//     }
+
+//     const bs = new Date(bookingById[0].startDateTime).getTime();
+//     const be = new Date(bookingById[0].endDateTime).getTime();
+//     const s = new Date(startDateTime).getTime();
+//     const e = new Date(endDateTime).getTime();
+//     const curTime = new Date().getTime();
+
+//     if (curTime > be) {
+//       return res.status(403).json({
+//         message: "Past bookings can't be modified",
+//       });
+//     }
+
+//     // Check for overlap between the existing booking and the new booking
+//     const otherBookings = await Booking.findAll({
+//       where: {
+//         id: {
+//           [Op.ne]: bookingId,
+//         },
+//         yachtId: bookingById[0].yachtId,
+//       },
+//     });
+
+//     let conflicts = {};
+//     let hasConflict = false;
+
+//     for (let booking of otherBookings) {
+//       const oS = new Date(booking.startDateTime).getTime();
+//       const oE = new Date(booking.endDateTime).getTime();
+
+//       if ((s <= oE && e > oS) || (oS <= e && oE > s)) {
+//         hasConflict = true;
+//         if ((s >= oS && s <= oE) || (s < oS && e > oE)) {
+//           conflicts.startDateTime = "Start date conflicts with an existing booking";
+//         }
+//         if ((e >= oS && e <= oE) || (e > oE && s < oS)) {
+//           conflicts.endDateTime = "End date conflicts with an existing booking";
+//         }
+//       }
+//     }
+
+//     if (hasConflict) {
+//       return res.status(403).json({
+//         message: "Sorry, this Yacht is already booked for the specified dates",
+//         errors: conflicts,
+//       });
+//     }
+//     if (curUserId === bookingById[0].userId) {
+//       const editBooking = await bookingById[0].update({
+//         startDateTime: startDateTime,
+//         endDateTime: endDateTime,
+//         createdAt: bookingById[0].createdAt,
+//         updatedAt: bookingById[0].updatedAt,
+//       });
+//       const resBooking = {
+//         id: editBooking.id,
+//         yachtId: editBooking.yachtId,
+//         userId: editBooking.userId,
+//         startDateTime: formatDate(editBooking.startDateTime),
+//         endDateTime: formatDate(editBooking.endDateTime),
+//         createdAt: formatWithTime(editBooking.createdAt),
+//         updatedAt: formatWithTime(editBooking.updatedAt),
+//       };
+//       return res.status(200).json(resBooking);
+//     }
+//   },
+
+//   handleValidationErrors
+// );
+
 router.put(
   "/:bookingId",
   requireAuth,
   validateBooking,
   async (req, res, next) => {
     const curUserId = req.user.id;
-    const { startDateTime, endDateTime } = req.body;
+    const { startDateTime, endDateTime, totalPrice, duration, guests } = req.body;
+    const user = req.user;
     const { bookingId } = req.params;
-    const bookingById = await Booking.findAll({
-      where: { id: bookingId },
-    });
-    if (bookingById.length === 0 || !bookingById) {
+
+    const booking = await Booking.findByPk(bookingId);
+
+    if (!booking) {
       return res.status(404).json({
         message: "Booking couldn't be found",
       });
     }
-    if (curUserId !== bookingById[0].userId) {
+
+    if (curUserId !== booking.userId) {
       return res.status(403).json({
         message: "Forbidden",
       });
     }
 
-    const bs = new Date(bookingById[0].startDateTime).getTime();
-    const be = new Date(bookingById[0].endDateTime).getTime();
-    const s = new Date(startDateTime).getTime();
-    const e = new Date(endDateTime).getTime();
-    const curTime = new Date().getTime();
+    booking.startDateTime = startDateTime;
+    booking.endDateTime = endDateTime;
+    booking.totalPrice = totalPrice;
+    booking.duration = duration;
+    booking.guests = guests;
 
-    if (curTime > be) {
-      return res.status(403).json({
-        message: "Past bookings can't be modified",
-      });
-    }
+    await booking.save();
 
-    // Check for overlap between the existing booking and the new booking
-    const otherBookings = await Booking.findAll({
-      where: {
-        id: {
-          [Op.ne]: bookingId,
-        },
-        yachtId: bookingById[0].yachtId,
-      },
-    });
+    const resBooking = {
+      id: booking.id,
+      yachtId: booking.yachtId,
+      userId: booking.userId,
+      totalPrice: booking.totalPrice,
+      startDateTime: booking.startDateTime,
+      endDateTime: booking.endDateTime,
+      duration: booking.duration,
+      guests: booking.guests,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+    };
 
-    let conflicts = {};
-    let hasConflict = false;
-
-    for (let booking of otherBookings) {
-      const oS = new Date(booking.startDateTime).getTime();
-      const oE = new Date(booking.endDateTime).getTime();
-
-      if ((s <= oE && e > oS) || (oS <= e && oE > s)) {
-        hasConflict = true;
-        if ((s >= oS && s <= oE) || (s < oS && e > oE)) {
-          conflicts.startDateTime = "Start date conflicts with an existing booking";
-        }
-        if ((e >= oS && e <= oE) || (e > oE && s < oS)) {
-          conflicts.endDateTime = "End date conflicts with an existing booking";
-        }
-      }
-    }
-
-    if (hasConflict) {
-      return res.status(403).json({
-        message: "Sorry, this Yacht is already booked for the specified dates",
-        errors: conflicts,
-      });
-    }
-    if (curUserId === bookingById[0].userId) {
-      const editBooking = await bookingById[0].update({
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
-        createdAt: bookingById[0].createdAt,
-        updatedAt: bookingById[0].updatedAt,
-      });
-      const resBooking = {
-        id: editBooking.id,
-        yachtId: editBooking.yachtId,
-        userId: editBooking.userId,
-        startDateTime: formatDate(editBooking.startDateTime),
-        endDateTime: formatDate(editBooking.endDateTime),
-        createdAt: formatWithTime(editBooking.createdAt),
-        updatedAt: formatWithTime(editBooking.updatedAt),
-      };
-      return res.status(200).json(resBooking);
-    }
-  },
-
-  handleValidationErrors
+    return res.status(200).json(resBooking);
+  }
 );
 
 module.exports = router;

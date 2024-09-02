@@ -4,7 +4,7 @@ import {  useEffect } from 'react';
 import './Yachts.css';
 import { fetchUserBookings } from '../../store/bookings';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-
+import EditBookingModal from '../YachtDetails/EditBookingModal';
 import DeleteReservation from '../DeleteReviewModal/DeleteReservation';
 
 function YourBookings() {
@@ -15,27 +15,16 @@ function YourBookings() {
         dispatch(fetchUserBookings()); 
     }, [dispatch]);
     
-    const yachtsData = useSelector(state => state.bookings)
-
-    
-    // const handleClick = (id) => {
-    //     navigate(`/yachts/${id}`); 
-    //   };
-    // function formatDate(dateString) {
-    //     const date = new Date(dateString);
-    //     const day = date.getDate();
-    //     const month = date.toLocaleString('default', { month: 'short' }); // Get abbreviated month name
-    //     const formattedDate = `${day} ${month}`;
-    //     return formattedDate;
-    // }
+    const bookings = useSelector(state => state.bookings)
  
+
    
-    if (yachtsData && Object.keys(yachtsData).length > 0) {
+    if (bookings && Object.keys(bookings).length > 0) {
         return (
             <><div id='h1-bok'>
                 <h2 >Your Bookings</h2>
                 <div className="yacht-card">
-                    {Object.values(yachtsData).map((yacht) => {
+                    {Object.values(bookings).map((yacht) => {
                         if (yacht.Yacht) {
                             return (
                                 <div key={yacht.id} className="yacht">
@@ -53,8 +42,7 @@ function YourBookings() {
                                         <div className="address-price">
                                             <OpenModalButton
                                                 buttonText="Change Reservation"
-                                                // onButtonClick={(alert('feature coming soon'))}
-                                                // modalComponent={<ModalCalendar />}
+                                                modalComponent={<EditBookingModal yachtData={yacht.Yacht} existingBooking={yacht} yachtId={yacht.Yacht.id} />} 
                                             />
                                             <OpenModalButton
                                                 buttonText="Cancel"

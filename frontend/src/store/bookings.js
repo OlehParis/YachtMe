@@ -5,6 +5,7 @@ const POST_BOOKING = 'POST_BOOKING';
 const GET_BOOKINGS = 'GET_BOOKINGS';
 const USER_BOOKINGS = 'USER_BOOKINGS';
 const DELETE_BOOKING = 'DELETE_BOOKING';
+const UPDATE_BOOKING = 'UPDATE_BOOKING';
 
 export const postBooking = (bookings) => ({
   type: POST_BOOKING,
@@ -23,6 +24,11 @@ export const getUserBookings = (bookings) => ({
 export const deleteBookingById = (bookingId) => ({
   type: DELETE_BOOKING,
   payload: bookingId,
+});
+
+export const updateBooking = (booking) => ({
+  type: UPDATE_BOOKING,
+  payload: booking,
 });
 
 export const deleteBooking = (bookingId) => {
@@ -86,6 +92,22 @@ export const fetchCreateBooking = (bookings) => {
   };
 };
 
+export const fetchUpdateBooking = (booking) => { 
+  return async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/${booking.bookingId}`, {
+      method: "PUT", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    });
+
+    const data = await response.json();
+
+    dispatch(updateBooking(data));
+  };
+};
+
 const initialState = {};
 
 const bookingsReducer = (state = initialState, action) => {
@@ -112,6 +134,12 @@ const bookingsReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState[action.payload];
       return newState;
+    }
+    case UPDATE_BOOKING: { 
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
     }
     default:
       return state;
