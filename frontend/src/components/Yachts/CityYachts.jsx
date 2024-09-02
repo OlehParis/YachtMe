@@ -7,7 +7,7 @@ import yacht1 from '/yacht11.svg'
 
 function CityYachts() {
     const { city } = useParams();
-    console.log(city, 'line 8')
+    
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [filteredYachts, setFilteredYachts] = useState([]);

@@ -34,7 +34,8 @@ function YachtDetails() {
     const navigate = useNavigate();
 
  
-    console.log(beError,checkIn, checkOut)
+    let mm = beError + checkIn + checkOut
+    mm
   const handleShowAllPhotos = () => {
         navigate('./gallery');
     };

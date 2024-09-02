@@ -94,14 +94,14 @@ export const fetchYacht = (yachtId) => {
       ...yachtDetails[0],
       YachtImages: normalizedImages,
     };
-    console.log(normalizedYachtDetails);
+   
     dispatch(fetchYachtByID(normalizedYachtDetails));
     dispatch(loadReviewData(reviews.Reviews));
   };
 };
 
 export const fetchNewYacht = (yacht) => {
-  console.log(yacht , 'from store 86')
+
   return async (dispatch) => {
     const response = await csrfFetch("/api/yachts", {
       method: "POST",
@@ -155,7 +155,7 @@ export const fetchEditNewYacht = (yacht, yachtId, imageId) => {
     }
     const data = await response.json();
 
-    console.log(imageId, '158')
+   
 
     const imageBody = {
       url: yacht.previewUrl, 

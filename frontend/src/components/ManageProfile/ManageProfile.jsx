@@ -33,7 +33,8 @@ function UserProfile() {
       setImageFile(e.target.files[0]);
     }
   };
-console.log(referralCode, credit)
+  let nn = referralCode + credit
+  nn 
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -13,7 +13,7 @@ export const fetchImages = (yachtId) => {
     }
 
     const imagesObj = await res.json();
-    console.log(imagesObj);
+    
     return dispatch(getYachtImages({ id: yachtId, images: imagesObj }));
   };
 };

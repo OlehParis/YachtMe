@@ -139,7 +139,7 @@ const EditYacht = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    console.log(formData, 'form data');
+   
     if (formData.description.length < 30) newErrors.description = "Description must be at least 30 characters long.";
     if (formData.country.length < 1) newErrors.country = "Country is required.";
     if (formData.address.length < 1) newErrors.address = "Address is required.";

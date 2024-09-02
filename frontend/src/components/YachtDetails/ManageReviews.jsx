@@ -30,7 +30,7 @@ function ManageReviews() {
        <div className="yff">
                 {Object.keys(reviewsById).map(reviewId => {
                     const review = reviewsById[reviewId];
-                   {console.log(review)}
+                   
                     if (review.userId === curUserId) {
                     return (
                         <div key={reviewId} >
