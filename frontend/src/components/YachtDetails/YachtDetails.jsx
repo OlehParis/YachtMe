@@ -242,7 +242,7 @@ function YachtDetails() {
                 <h3>{review.User?.firstName || session.user.firstName} {review.User?.lastName || session.user.lastName}</h3>
                 <p className='date-review1' style={{  color: 'gray' }}>{formatDate(review.updatedAt.split(" ")[0])}</p>
                 <StarRating stars={review.stars} />
-                <p>{review.review}</p>
+                <p className='rev-main-text'>{review.review}</p>
                
                 </div>
                 </div>

@@ -85,6 +85,8 @@ function ReviewFromModal({ yachtId}) {
   return (
     <div className="modal-calendar">
       <h2>How was this yacht?</h2>
+      <div className='error-val'>{buttonCheck && <p className='rev-valid'> review should be minimum 20 characters 
+        </p>}</div>
       <textarea
       id='text-rev1'
         placeholder="Leave your review here..."

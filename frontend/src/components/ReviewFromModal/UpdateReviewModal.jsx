@@ -94,6 +94,8 @@ function UpdateReviewFromModal({ reviewId}) {
   return (
     <div className="modal-calendar">
       <h2>How was your charter?</h2>
+      <div className='error-val'>{buttonCheck && <p className='rev-valid'> review should be minimum 20 characters 
+        </p>}</div>
       <textarea
         className='rev-text'
         placeholder="Leave your review here..."

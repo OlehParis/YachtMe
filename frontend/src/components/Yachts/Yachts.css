@@ -19,7 +19,13 @@
   justify-content: center;
   align-content: center;
 }
+.city-card:hover {
+  cursor: pointer;
+}
 
+.yacht-card:hover {
+  cursor: pointer;
+}
 .city-container {
   position: relative;
   width: 250px;

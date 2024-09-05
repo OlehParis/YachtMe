@@ -16,129 +16,153 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  // Helper function to check if a value is a valid number
+  const isNumber = (value) => /^[0-9]+$/.test(value);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      return dispatch(
-        sessionActions.signup({
-          email,
-          phoneNumber,
-          firstName,
-          lastName,
-          password,
-          referralCode
-        })
-      )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
+    const validationErrors = {};
+
+    if (!email.includes('@')) {
+      validationErrors.email = "Please enter valid email";
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+    if (!isNumber(phoneNumber)) {
+      validationErrors.phoneNumber = "Phone number must be numeric";
+    } else if (phoneNumber.length <= 6) {
+      validationErrors.phoneNumber = "Phone number must be longer than 6 characters";
+    }
+    if (firstName.length <= 1) {
+      validationErrors.firstName = "Please type your first name ";
+    }
+    if (lastName.length <= 1) {
+      validationErrors.lastName = "Please type your last name";
+    }
+    if (password.length < 6) {
+      validationErrors.password = "Password must be at least 6 characters";
+    }
+    if (password !== confirmPassword) {
+      validationErrors.confirmPassword = "Passwords must match";
+    }
+
+    
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    return dispatch(
+      sessionActions.signup({
+        email,
+        phoneNumber,
+        firstName,
+        lastName,
+        password,
+        referralCode
+      })
+    )
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
+      });
   };
-  const isDisabled = email.trim() === ""  || phoneNumber.trim().length <= 6   || firstName.trim() === "" || lastName.trim() === "" || password.trim().length < 6 || confirmPassword.trim() === "" || confirmPassword.trim() != password.trim();
-  
+
   return (
-   <div className='modal-signup'>
-     <h1>Sign Up</h1> 
-     <div id="error-placeholder">
-     {/* {errors.confirmPassword && (
-          <p id='passwordErrors'>{errors.confirmPassword}</p>
-        )} */}
-      <p id='passwordErrors'>{errors.confirmPassword}</p>
-      </div>
-      {errors.email && <p>{errors.email}</p>}
-      {errors.phoneNumber && <p>{errors.phoneNumber}</p>}
-      {errors.firstName && <p>{errors.firstName}</p>}
-      {errors.lastName && <p>{errors.lastName}</p>}
-      {errors.referralCode && <p>{errors.referralCode}</p>}
+    <div className='modal-signup'>
+      <h1>Sign Up</h1>
       
       <form onSubmit={handleSubmit}>
-      <span className="required">*</span>
         <label>
-          <input
+        <div className='error-val'>
+          {errors.email && <p className="error">{errors.email}</p>}
+          </div> 
+         <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder={'Email'}
+             
+            placeholder='Email'
           />
         </label>
-       
+
         <label>
-        <span className="required">*</span>
+        <div className='error-val'>
+          {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
+          </div> 
           <input
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-            placeholder='phoneNumber'
+             
+            placeholder='Phone Number'
           />
         </label>
-        <span className="required">*</span>
+
         <label>
+        <div className='error-val'>
+          {errors.firstName && <p className="error">{errors.firstName}</p>}
+          </div> 
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
+             
             placeholder='First Name'
           />
         </label>
-      
+
         <label>
-        <span className="required">*</span>
+        <div className='error-val'>
+          {errors.lastName && <p className="error">{errors.lastName}</p>}
+          </div> 
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
+             
             placeholder='Last Name'
           />
         </label>
-        
+
         <label>
-        <span className="required">*</span>
+        <div className='error-val'>{errors.password && <p className="error">{errors.password}</p>}
+          </div>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+             
             placeholder='Password'
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+
         <label>
-        <span className="required">*</span>
-          <input
+        <div className='error-val'>
+          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+         </div> <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+             
             placeholder='Confirm Password'
           />
         </label>
+
         <label>
           <input
             type="text"
             value={referralCode}
             onChange={(e) => setReferralCode(e.target.value)}
-            
-            placeholder='ReferralCode'
+            placeholder='Referral Code (optional)'
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-       
-        <button type="submit" disabled={isDisabled}>Sign Up</button>
+
+        <button type="submit">Sign Up</button>
       </form>
-      </div>
- 
+    </div>
   );
 }
 

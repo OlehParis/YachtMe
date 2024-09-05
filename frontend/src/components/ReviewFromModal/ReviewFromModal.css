@@ -76,3 +76,12 @@
   margin-left: 15px;
   font-family: 'Poppins', sans-serif; 
 } 
+
+.rev-valid {
+  color: red;
+ margin-left: 20px;
+
+}
+.error-val {
+  min-height: 25px;
+}

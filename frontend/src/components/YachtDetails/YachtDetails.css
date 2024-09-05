@@ -7,9 +7,7 @@
   font-size: 24px; 
   margin-bottom: 10px; }
 
- h1 {
-  margin-left: 40px;
-}
+
 .yacht-details p {
   width: auto;
   margin-bottom: 10px;
@@ -319,9 +317,26 @@ font-size: larger;
   
 }
 .review-name {
+  position: relative;
   max-width: 200px;
   height: 211px;
   padding-right: 10px;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+}
+
+.rev-main-text {
+  height:94px; 
+  overflow-x: hidden; 
+  word-wrap: break-word; 
+  text-overflow: ellipsis; 
+  transition: max-height 0.3s ease; 
+  background-color: white;
+}
+
+.review-name:hover .rev-main-text {
+  max-height: none; 
+  white-space: normal; 
 }
 
 #tt4 button.hey {

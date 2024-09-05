@@ -1,1 +1,10 @@
 /* TODO: Add sitewide styles */
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+
+  .scrollable-div {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
