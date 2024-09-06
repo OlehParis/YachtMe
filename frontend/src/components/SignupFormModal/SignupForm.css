@@ -1,6 +1,6 @@
 
 .modal-signup {
- height: 75vh;
+ height: 50vh;
     display: flex;
     flex-direction: column;
   
@@ -26,8 +26,8 @@
 
   .modal-signup h1 {
     /* margin-top: 5px; */
-    font-size: 1.5rem;
-  margin-bottom: -10px;
+    font-size: 2rem;
+  margin-bottom: 20px;
     text-align: center;
   }
 
