@@ -68,10 +68,10 @@ header.scrolled {
   cursor: pointer;
 }
 .profile-dropdown {
-  position: absolute;
+
   z-index: 1;
-  margin-left: 100px;
-  margin-top: 40px;
+  grid-column: 2;
+
   border: 1px solid #ccc;
   background-color: white;
   border-radius: 15px;
