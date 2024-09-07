@@ -21,8 +21,9 @@ function YourBookings() {
    
     if (bookings && Object.keys(bookings).length > 0) {
         return (
-            <><div id='h1-bok'>
-                <h2 >Your Bookings</h2>
+            <>
+            <div id='h1-bok'>
+                <h1 >Your Bookings</h1>
                 <div className="yacht-card">
                     {Object.values(bookings).map((yacht) => {
                         if (yacht.Yacht) {
@@ -62,6 +63,7 @@ function YourBookings() {
         );
     } else {
         return (<div id='h1-bok'>
+            <h1 >Your Bookings</h1>
         <div>You currently don&apos;t have any bookings</div>
         </div>
         )

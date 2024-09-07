@@ -3,11 +3,8 @@
  height: 55vh;
     display: flex;
     flex-direction: column;
-  
     background-color: white;
     padding: 10px 30px 30px 30px;
- 
-  
     align-content: center;
     justify-content: center;
   }

@@ -15,7 +15,7 @@
 
 .header {
   display: grid;
-  grid-template-columns: auto 1fr 25%;
+  grid-template-columns: auto 1fr 30%;
   height: 3em;
   padding-top: 13px;
   padding-left: 20px;
@@ -47,7 +47,7 @@ header.scrolled {
 }
 
 .newYacht {
-  margin-left: 50px;
+  /* margin-left: 50px; */
   margin-top: 5px;
 }
 .profilebutton {
@@ -71,7 +71,7 @@ header.scrolled {
 
   z-index: 1;
   grid-column: 2;
-
+  min-width: 120px;
   border: 1px solid #ccc;
   background-color: white;
   border-radius: 15px;
