@@ -18,15 +18,16 @@ module.exports = {
           firstName: "Mike",
           lastName: "Doe",
           email: "demo@user.io",
-          phoneNumber: "7863043243", // Use string for phone number
+          phoneNumber: "7863043243",
           hashedPassword: bcrypt.hashSync("password"),
-          referralCode: 'sa2daf'
+          referralCode: 'sa2daf',
+          image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
         {
           firstName: "Nick",
           lastName: "Robson",
           email: "user1@user.io",
-          phoneNumber: "7863043143", // Use string for phone number
+          phoneNumber: "7863043143",
           hashedPassword: bcrypt.hashSync("password2"),
            image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
@@ -34,7 +35,7 @@ module.exports = {
           firstName: "Lina",
           lastName: "Pudge",
           email: "user2@user.io",
-          phoneNumber: "7863043043", // Use string for phone number
+          phoneNumber: "7863043043",
           hashedPassword: bcrypt.hashSync("password3"),
           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
@@ -42,7 +43,7 @@ module.exports = {
           firstName: "Henry",
           lastName: "London",
           email: "user2sdd@user.io",
-          phoneNumber: "7863043043", // Use string for phone number
+          phoneNumber: "7863043043", 
           hashedPassword: bcrypt.hashSync("password3"),
            image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
@@ -50,7 +51,7 @@ module.exports = {
           firstName: "Nick",
           lastName: "Milas",
           email: "fake2asdddd22@user.io",
-          phoneNumber: "7863043243", // Use string for phone number
+          phoneNumber: "7863043243", 
           hashedPassword: bcrypt.hashSync("vbnhj123"),
              image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
@@ -58,7 +59,7 @@ module.exports = {
           firstName: "Michel",
           lastName: "Hopkins",
           email: "fake11@user.io",
-          phoneNumber: "7863243043", // Use string for phone number
+          phoneNumber: "7863243043",
           hashedPassword: bcrypt.hashSync("vbnhj123"),
            image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
@@ -66,7 +67,7 @@ module.exports = {
           firstName: "Anna",
           lastName: "Posh",
           email: "fake2asdadd32@user.io",
-          phoneNumber: "7863043643", // Use string for phone number
+          phoneNumber: "7863043643", 
           hashedPassword: bcrypt.hashSync("vbnhj123"),
              image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/elon.jpg"
         },
@@ -74,7 +75,7 @@ module.exports = {
           firstName: "Nina",
           lastName: "Blitz",
           email: "fakeasda@user.io",
-          phoneNumber: "7863143043", // Use string for phone number
+          phoneNumber: "7863143043", 
           hashedPassword: bcrypt.hashSync("vbnhj123"),
           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
         },
