@@ -67,7 +67,7 @@
 }
 .tooltip {
   display: inline-block;
-  /* max-width: 250px; */
+  max-width: 250px;
 }
 
 .avgRating {

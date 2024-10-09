@@ -22,6 +22,7 @@ module.exports = {
           hashedPassword: bcrypt.hashSync("password"),
           referralCode: 'sa2daf',
           image:"https://crosstalkappbuck.s3.us-east-2.amazonaws.com/jeff.jpeg"
+          
         },
         {
           firstName: "Nick",
