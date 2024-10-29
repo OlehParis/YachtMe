@@ -24,8 +24,10 @@ function Navigation({ isLoaded }) {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      
     };
   }, []);
+
 
 if(!sessionUser) {
   return (
